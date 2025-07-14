@@ -10,5 +10,6 @@ public class Main {
         NotificationClient client3 = new NotificationClient(null);
         client3.notifyUser("Thong bao bang Email qua seter");
         //ket thuc
+        //test
     }
 }
