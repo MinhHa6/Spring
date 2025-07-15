@@ -1,7 +1,7 @@
 package Devmaster_Leson3.Entity;
 
 public class Student {
-    long id;
+    Long id;
     String name;
     int age;
     String gender;
@@ -10,7 +10,7 @@ public class Student {
     String email;
     public Student (){};
 
-    public Student(long id, String name, int age, String gender, String address, String phone, String email) {
+    public Student(Long id, String name, int age, String gender, String address, String phone, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -20,11 +20,11 @@ public class Student {
         this.email = email;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
