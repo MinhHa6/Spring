@@ -4,7 +4,7 @@ public class MonHoc {
     String maMH;
     String tenMH;
     int soTiet;
-
+    public MonHoc (){}
     public MonHoc(String maMH, String tenMH, int soTiet) {
         this.maMH = maMH;
         this.tenMH = tenMH;
