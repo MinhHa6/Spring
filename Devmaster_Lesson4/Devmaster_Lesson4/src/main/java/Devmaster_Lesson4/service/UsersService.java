@@ -27,7 +27,7 @@ public class UsersService {
         {
             User user = new User();
             user.setId(users.stream().count()+1);
-            user.setUserName(userDTO.getClass());
+            user.setUserName(user.getUserName());
             user.setPassWord(user.getPassWord());
             user.setEmail(user.getEmail());
             user.setAge(user.getAge());
