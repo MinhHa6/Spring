@@ -1,21 +1,23 @@
 package Devmaster_Lesson4.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import jakarta.*;
 import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EntityScan
+@Entity
 @Getter@Setter
 public class User {
-    @Id;
-
+    @Id
+            @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String userName;
     String passWord;
@@ -25,4 +27,5 @@ public class User {
     String phone;
     int age;
     Boolean status;
+   
 }

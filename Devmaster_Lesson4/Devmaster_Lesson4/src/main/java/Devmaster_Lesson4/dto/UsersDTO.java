@@ -8,6 +8,8 @@ import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
