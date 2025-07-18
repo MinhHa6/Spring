@@ -5,16 +5,19 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import java.time.LocalDate;
 
-@Data
+@Data // đã bao gồm @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
 @Builder
-@AllArgsConstructor@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 public class User {
     @Id
-            @GeneratedValue(strategy = GenerationType.AUTO)
-    Long Id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+
     String userName;
     String passWord;
     String fullName;
@@ -23,5 +26,4 @@ public class User {
     String phone;
     int age;
     Boolean status;
-
 }
