@@ -11,10 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,17 @@ public class KhoaController {
     {
         khoaService.create(kh);
         return ResponseEntity.badRequest().body("Users created successfully");
+    }
+    @GetMapping("/khoa/{makh}")
+    public Khoa getKhoa(@PathVariable String makh)
+    {
+        String par=makh;
+        return khoaService.getKhoa(makh);
+    }
+    @DeleteMapping("/khoa/{makh}")
+    public Boolean deleteKhoa(@PathVariable String makh)
+    {
+        String param=makh;
+        return khoaService.deleteKhoa(makh);
     }
 }

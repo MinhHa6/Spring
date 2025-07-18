@@ -35,4 +35,15 @@ public class KhoaService {
         }
 
     }
+    //lay khoa theo ma khoa
+    public Khoa getKhoa(String makh)
+    {
+        return khoas.stream().filter(khoa->khoa.getMaKh().equals(makh)).findFirst().orElse(null);
+    }
+    //xoa khoa
+    public Boolean deleteKhoa(String makh)
+    {
+        Khoa check=getKhoa(makh);
+        return khoas.remove(check);
+    }
 }
