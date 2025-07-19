@@ -1,0 +1,41 @@
+package Devmaster_Leson3.Controller;
+
+import Devmaster_Leson3.Entity.Khoa;
+import Devmaster_Leson3.Entity.Student;
+import Devmaster_Leson3.Service.ServiceKhoa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class KhController {
+    @Autowired
+    private ServiceKhoa serviceKhoa;
+    @GetMapping("/Khoa-list")
+    public List<Khoa> getAll()
+    {
+        return serviceKhoa.getKhoas();
+    }
+//    @GetMapping("/khoa/{makh}")
+//    public Khoa getAllKhoa(@PathVariable String makh)
+//    {
+//        String param=makh;
+//    }
+//    @PostMapping("/student-add")
+//    public Student addStudent(@RequestBody Student student)
+//    {
+//        return servicesStudent.addStudents(student);
+//    }
+//    @PutMapping("/student/{id}")
+//    public Student updateStudent(@PathVariable String id,@RequestBody Student student)
+//    {
+//        Long param=Long.parseLong(id);
+//        return servicesStudent.updateStudent(param,student);
+//    }
+//    @DeleteMapping("/Khoa/{makh})")
+//    public Boolean deleteKh(@PathVariable String maKh)
+//    {
+//        return ServiceKhoa.
+//    }
+}
