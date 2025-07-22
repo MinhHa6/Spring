@@ -34,9 +34,10 @@ public class KhController {
         String param=makh;
         return serviceKhoa.updateKh(param,khoa);
     }
-    @DeleteMapping("/Khoa/{makh})")
+    @DeleteMapping("/khoa/{makh})")
     public Boolean deleteKh(@PathVariable String maKh)
     {
-        return serviceKhoa.deleteKh(maKh);
+        String par=maKh;
+        return serviceKhoa.deleteKh(par);
     }
 }
