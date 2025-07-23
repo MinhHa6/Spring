@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-// Home controller 
+// Home controller
 @Controller
 @RequestMapping
 public class HomeController {
