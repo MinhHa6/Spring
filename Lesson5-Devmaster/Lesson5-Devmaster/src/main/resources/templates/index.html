@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Gioi thieu Thymeleaf</title>
-    <!-- Css-->
-    <link th:href="@{/css/boostrap.min.css}" rel="stylesheet"/>
-    <!-- Javascript-->
-    <script th:src="@{/css/boostrap.min.css}"></script>
+    <title>Giới thiệu Thymeleaf</title>
+    <!-- CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- JS -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
 
 <header class="container d-flex align-items-center">
     <img src="https://devmaster.edu.vn/images/logo.png" alt="Devmaster">
     <div>
-        <h1 th:text="${environment.getProperty{'app.name'}}"></h1>
-        <p
-            th:text="${environment.getProperty{'app.welcome.message'}}"></p>
+        <h1 th:text="${@environment.getProperty('app.name')}">Tên app</h1>
+        <p th:text="${@environment.getProperty('app.welcome.message')}">Lời chào</p>
     </div>
 </header>
+
 <section class="container">
-    <a th:href="@{/profile}"
-    class="btn btn-success"></a>
+    <a th:href="@{/profile}" class="btn btn-success">Trang cá nhân</a>
 </section>
+
 </body>
 </html>
