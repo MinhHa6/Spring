@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @NoArgsConstructor
@@ -22,6 +23,16 @@ public class StudentService {
     public List<Student> fillAll()
     {
         return studentRepository.findAll();
+    }
+    public Optional<StudentDTO> findById(Long id)
+    {
+        Student student= studentRepository.findById(id).orElse(null);
+        StudentDTO studentDTO= new StudentDTO();
+        studentDTO.setId(id);
+        studentDTO.setName(student.getName());
+        studentDTO.setEmail(student.getEmail());
+        studentDTO.setAge(student.getAge());
+        return Optional.of(studentDTO);
     }
     //Sava
     public Boolean save(StudentDTO studentDTO)
