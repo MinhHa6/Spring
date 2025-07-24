@@ -30,6 +30,12 @@ public class StudentControler {
         model.addAttribute("student", new Student());
         return "students/student-add";
     }
+    @PostMapping
+    public String saveStudent(@ModelAttribute("student")StudentDTO student)
+    {
+        studentService.save(student);
+        return "redirect:/students";
+    }
     @PostMapping("/update/{id}")
     public String updatestudent(@PathVariable(value = "id")Long id, @ModelAttribute("student")StudentDTO student)
     {
