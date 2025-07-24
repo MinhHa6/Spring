@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sinh viên</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<header class="container bg-white py-3">
+    <div class="logo">
+        <img src="https://devmaster.edu.vn/images/logo.png" alt="Logo Devmaster" />
+    </div>
+</header>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Danh sách sinh viên</h2>
+
+    <a class="btn btn-primary mb-3" th:href="@{/students/add}">Thêm sinh viên</a>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Tuổi</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}">1</td>
+            <td th:text="${student.name}">Nguyễn Văn A</td>
+            <td th:text="${student.email}">a@gmail.com</td>
+            <td th:text="${student.age}">20</td>
+            <td>
+                <a class="btn btn-warning btn-sm"
+                   th:href="@{/students/edit/{id}(id=${student.id})}">Sửa</a>
+                <a class="btn btn-danger btn-sm"
+                   th:href="@{/students/delete/{id}(id=${student.id})}"
+                   onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

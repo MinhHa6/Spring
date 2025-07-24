@@ -1,4 +1,4 @@
-package Lesson6_Datajpa;
+package Lesson6_Datajpa.service;
 
 import Lesson6_Datajpa.dto.StudentDTO;
 import Lesson6_Datajpa.entity.Student;
