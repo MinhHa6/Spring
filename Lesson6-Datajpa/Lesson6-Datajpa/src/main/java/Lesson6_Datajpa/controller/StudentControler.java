@@ -36,6 +36,13 @@ public class StudentControler {
         studentService.save(student);
         return "redirect:/students";
     }
+    @GetMapping("/edit/{id}")
+    public String showFormUpdate(@PathVariable(value = "id")Long id,Model model)
+    {
+        StudentDTO student=studentService.findById(id).orElseThrow(()->new IllegalArgumentException("Invail studentId:"+id));
+        model.addAttribute("student",student);
+        return "redirect:/students";
+    }
     @PostMapping("/update/{id}")
     public String updatestudent(@PathVariable(value = "id")Long id, @ModelAttribute("student")StudentDTO student)
     {
