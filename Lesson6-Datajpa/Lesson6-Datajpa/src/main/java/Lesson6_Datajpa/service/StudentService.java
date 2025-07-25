@@ -20,9 +20,19 @@ public class StudentService {
         this.studentRepository=studentRepository;
     }
     //List all
-    public List<Student> fillAll()
+    public List<StudentDTO> fillAll()
     {
-        return studentRepository.findAll();
+        return studentRepository.findAll()
+                .stream()
+                .map(student -> {
+                    StudentDTO dto = new StudentDTO();
+                    dto.setId(student.getId());
+                    dto.setName(student.getName());
+                    dto.setEmail(student.getEmail());
+                    dto.setAge(student.getAge());
+                    return dto;
+                })
+                .toList(); // Hoặc .collect(Collectors.toList())
     }
     public Optional<StudentDTO> findById(Long id)
     {
@@ -57,7 +67,7 @@ public class StudentService {
             student.setName(studentDTO.getName());
             student.setEmail(studentDTO.getEmail());
             student.setAge(studentDTO.getAge());
-            return student; // phải có return trong map
+            return studentRepository.save(student); // phải có return trong map
         }).orElseThrow(() -> new IllegalArgumentException("Invalid student Id: " + id));
     }
 

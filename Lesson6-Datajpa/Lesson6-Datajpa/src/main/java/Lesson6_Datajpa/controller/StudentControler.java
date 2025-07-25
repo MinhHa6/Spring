@@ -41,7 +41,7 @@ public class StudentControler {
     {
         StudentDTO student=studentService.findById(id).orElseThrow(()->new IllegalArgumentException("Invail studentId:"+id));
         model.addAttribute("student",student);
-        return "redirect:/students";
+        return "students/student-edit";
     }
     @PostMapping("/update/{id}")
     public String updatestudent(@PathVariable(value = "id")Long id, @ModelAttribute("student")StudentDTO student)
