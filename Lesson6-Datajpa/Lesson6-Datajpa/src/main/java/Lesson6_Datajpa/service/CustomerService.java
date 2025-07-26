@@ -19,53 +19,36 @@ public class CustomerService {
     {
         this.customerRepository=customerRepository;
     }
-    //ListAll
-    public List<CustomerDTO>fillAll()
-    {
+
+    // lay thong tin theo dia chi Id
+    public List<CustomerDTO> fillAll() {
         return customerRepository.findAll()
                 .stream().map(customer -> {
-                    CustomerDTO customerDTO= new CustomerDTO();
+                    CustomerDTO customerDTO = new CustomerDTO();
                     customerDTO.setId(customer.getId());
-                    customerDTO.setUserName(customer.getUserName());
-                    customerDTO.setPassWord(customer.getPassWord());
+                    customerDTO.setUsername(customer.getUsername());
+                    customerDTO.setPassword(customer.getPassword());  // ✅ sửa
                     customerDTO.setFullName(customer.getFullName());
-                    customerDTO.setAdress(customer.getAdress());
+                    customerDTO.setAddress(customer.getAddress());    // ✅ sửa
                     customerDTO.setPhone(customer.getPhone());
                     customerDTO.setEmail(customer.getEmail());
-                    customerDTO.setBirthDay(customer.getBirthDay())
+                    customerDTO.setBirthDay(customer.getBirthDay());
                     customerDTO.setActive(customer.getActive());
 
                     return customerDTO;
                 }).toList();
     }
-    // lay thong tin theo dia chi Id
-    public Optional<CustomerDTO>findById(Long id)
-    {
-        Customer customer= customerRepository.findById(id).orElse(null);
-        CustomerDTO customerDTO=new CustomerDTO();
-        customerDTO.setId(id);
-        customerDTO.setUserName(customer.getUserName());
-        customerDTO.setPassWord(customer.getPassWord());
-        customerDTO.setFullName(customer.getFullName());
-        customerDTO.setAdress(customer.getAdress());
-        customerDTO.setPhone(customer.getPhone());
-        customerDTO.setEmail(customer.getEmail());
-        customerDTO.setBirthDay(customer.getBirthDay())
-        customerDTO.setActive(customer.getActive());
-        return Optional.of(customerDTO);
-
-    }
     //Luu thong tin
     public Boolean save(CustomerDTO customerDTO)
     {
         Customer customer= new Customer();
-        customer.setUserName(customerDTO.getUserName());
-        customer.setPassWord(customerDTO.getPassWord());
+        customer.setUsername(customerDTO.getUsername());
+        customer.setPassword(customerDTO.getPassword());
         customer.setFullName(customerDTO.getFullName());
-        customer.setAdress(customerDTO.getAdress());
+        customer.setAddress(customerDTO.getAddress());
         customer.setPhone(customerDTO.getPhone());
         customer.setEmail(customerDTO.getEmail());
-        customer.setBirthDay(customerDTO.getBirthDay())
+        customer.setBirthDay(customerDTO.getBirthDay());
         customer.setActive(customerDTO.getActive());
         try
         {
@@ -82,10 +65,10 @@ public class CustomerService {
     public Customer updateCustomerById(Long id, CustomerDTO customerDTO) {
         return customerRepository.findById(id)
                 .map(customer -> {
-                    customer.setUserName(customerDTO.getUserName());
-                    customer.setPassWord(customerDTO.getPassWord());
+                    customer.setUsername(customerDTO.getUsername());
+                    customer.setPassword(customerDTO.getPassword());
                     customer.setFullName(customerDTO.getFullName());
-                    customer.setAdress(customerDTO.getAdress()); // Nếu có sai chính tả thì nên đổi thành setAddress
+                    customer.setAddress(customerDTO.getAddress()); // Nếu có sai chính tả thì nên đổi thành setAddress
                     customer.setPhone(customerDTO.getPhone());
                     customer.setEmail(customerDTO.getEmail());
                     customer.setBirthDay(customerDTO.getBirthDay()); // Đã sửa thiếu dấu ;
