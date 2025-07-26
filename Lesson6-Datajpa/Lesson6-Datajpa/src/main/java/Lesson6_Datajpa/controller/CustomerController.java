@@ -1,5 +1,6 @@
 package Lesson6_Datajpa.controller;
 
+import Lesson6_Datajpa.entity.Customer;
 import Lesson6_Datajpa.service.CustomerService;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class CustomerController {
     public String getCustomers(Model model)
     {
         model.addAttribute("customers",customerService.fillAll());
-        return "customers/customer-list";
+        return  "students/customer-list";
+    }
+    @GetMapping("/add-new")
+    public String addNeCustomer(Model model)
+    {
+        model.addAttribute("customer",new Customer());
+        return "customers/customer-add";
     }
 }
