@@ -31,7 +31,7 @@ public class CustomerController {
     @GetMapping("/add")
     public String addNewCustomer(Model model) {
         model.addAttribute("customer", new CustomerDTO());
-        return "templates.students/customer-add";  // ✅ Trùng với file bạn đã tạo
+        return "students/customer-add";  // ✅ Trùng với file bạn đã tạo
     }
 
 
