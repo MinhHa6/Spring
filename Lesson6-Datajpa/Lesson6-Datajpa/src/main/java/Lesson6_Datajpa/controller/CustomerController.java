@@ -28,10 +28,10 @@ public class CustomerController {
         model.addAttribute("customers",customerService.fillAll());
         return  "students/customer-list";
     }
-    @GetMapping("/add-new")
+    @GetMapping("/add")
     public String addNewCustomer(Model model) {
         model.addAttribute("customer", new CustomerDTO());
-        return "students/customer-add"; // ✅ Trùng với file bạn đã tạo
+        return "templates.students/customer-add";  // ✅ Trùng với file bạn đã tạo
     }
 
 
