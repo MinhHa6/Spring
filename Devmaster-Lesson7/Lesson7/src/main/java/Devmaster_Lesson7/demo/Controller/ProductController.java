@@ -18,13 +18,13 @@ public class ProductController {
     public String listCategories (Model model)
     {
         model.addAttribute("products",productService.getAllProduct());
-        return "category/product-list";
+        return "product/product-list";
     }
     @GetMapping("/create")
     public String showCreateForm(Model model)
     {
         model.addAttribute("product",new Product());
-        return "category/product-form";
+        return "product/product-form";
     }
     @PostMapping("/create")
     public String saveProduct (@ModelAttribute("product")Product product)
@@ -36,7 +36,7 @@ public class ProductController {
     public String showEditForm(@PathVariable("id")Long id, Model model)
     {
         model.addAttribute("product",productService.findbyId(id).orElse(null));
-        return "category/product-form";
+        return "product/product-form";
     }
     @PostMapping("/create/{id}")
     public  String updateProduct(@PathVariable Long id,@ModelAttribute Product product)
