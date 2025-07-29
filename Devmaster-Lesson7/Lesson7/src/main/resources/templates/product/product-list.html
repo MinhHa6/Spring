@@ -21,24 +21,24 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Content</th>
+            <th>Product Name</th>
             <th>Image</th>
-            <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Category</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
             <td th:text="${product.id}"></td>
-            <td th:text="${product.content}"></td>
-            <td><img th:src="${product.imageUrl}" width="50"/></td>
             <td th:text="${product.name}"></td>
+            <td><img th:src="${product.imageUrl}" width="50"/></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.quantity}"></td>
-            <td th:text="${product.category != null ? product.category.categoryName : 'No Category'}"></td>
+            <td th:text="${product.category.categoryName}"></td>
+            <td th:text="${product.status ? 'Available' : 'Out of stock'"></td>
             <td>
                 <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-warning btn-sm">Edit</a>
                 <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger btn-sm"
