@@ -48,16 +48,16 @@
         </div>
 
         <!-- Danh mục -->
-        <div class="mb-3">
-            <label class="form-label">Category:</label>
-            <select class="form-select" th:field="*{category}" required>
-                <option value="" disabled selected>-- Select Category --</option>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Category:</label>
+                <div class="col-sm-10">
+                    <select th:field="*{category.id}"class="form-control"required>
                 <option th:each="cat : ${categories}"
-                        th:value="${cat}"
-                        th:text="${cat.categoryName}"
-                        th:selected="${product.category != null and cat.id == product.category.id}">
+                        th:value="${cat.id}"
+                        th:text="${cat.categoryName}">
                 </option>
             </select>
+                </div>
         </div>
 
         <!-- Nút lưu và quay lại -->
