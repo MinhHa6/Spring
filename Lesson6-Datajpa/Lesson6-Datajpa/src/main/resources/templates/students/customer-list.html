@@ -44,6 +44,13 @@
             <td th:text="${customer.email}">email@example.com</td>
             <td th:text="${customer.birthDay}">1999-01-01</td>
             <td th:text="${customer.active}">true</td>
+            <td>
+                <a class="btn btn-sm btn-outline-warning me-1"
+                   th:href="@{/customers/edit/{id}(id=${customer.id})}">Sửa</a>
+                <a class="btn btn-sm btn-outline-danger"
+                   th:href="@{/customers/delete/{id}(id=${customer.id})}"
+                   onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a>
+            </td>
         </tr>
 
         </tbody>
