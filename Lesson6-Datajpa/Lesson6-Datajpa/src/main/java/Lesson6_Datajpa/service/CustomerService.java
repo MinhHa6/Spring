@@ -38,6 +38,21 @@ public class CustomerService {
                     return customerDTO;
                 }).toList();
     }
+    public Optional<CustomerDTO>findById(Long id)
+    {
+        Customer customer=customerRepository.findById(id).orElse(null);
+        CustomerDTO customerDTO= new CustomerDTO();
+        customerDTO.setId(customer.getId());
+        customerDTO.setUsername(customer.getUsername());
+        customerDTO.setPassword(customer.getPassword());  // ✅ sửa
+        customerDTO.setFullName(customer.getFullName());
+        customerDTO.setAddress(customer.getAddress());    // ✅ sửa
+        customerDTO.setPhone(customer.getPhone());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setBirthDay(customer.getBirthDay());
+        customerDTO.setActive(customer.getActive());
+        return Optional.of(customerDTO);
+    }
     //Luu thong tin
     public Boolean save(CustomerDTO customerDTO)
     {
