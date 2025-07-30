@@ -30,8 +30,10 @@ public class ProductService {
         System.out.println(product);
         return productRepository.save(product);
     }
+    // xoa product theo id
     public void deleteProduct(Long id)
     {
         productRepository.deleteById(id);
     }
+
 }
