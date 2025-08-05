@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book") // ✅ giữ đúng theo chuẩn
+@RequestMapping("/books") // ✅ giữ đúng theo chuẩn
 public class BookController {
 
     @Autowired
@@ -75,8 +75,6 @@ public class BookController {
                 book.setImgUrl("/" + UPLOAD_PathFile + newFileName);
             } catch (IOException e) {
                 e.printStackTrace();
-                model.addAttribute("error", "Lỗi khi lưu ảnh!");
-                return "books/book-form";
             }
         }
 
@@ -85,9 +83,8 @@ public class BookController {
         book.setAuthors(authors);
         bookService.saveBook(book);
 
-        return "redirect:/book"; // ✅ Đã sửa: đúng đường dẫn @RequestMapping
+        return "redirect:/books"; // ✅ Đã sửa: đúng đường dẫn @RequestMapping
     }
-
     // ✅ Hiển thị form chỉnh sửa sách
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
@@ -101,6 +98,6 @@ public class BookController {
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) { // ✅ đã thêm @PathVariable
         bookService.deleteBook(id);
-        return "redirect:/book"; // ✅ giữ đúng với RequestMapping
+        return "redirect:/books"; // ✅ giữ đúng với RequestMapping
     }
 }
