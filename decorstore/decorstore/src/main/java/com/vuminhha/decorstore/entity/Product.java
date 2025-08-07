@@ -6,30 +6,39 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "Product")
 @Data
 @Builder
-@Table(name = "Category")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
 
+    private Long id;
     @Column(length = 500)
-    private  String name;
+    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-    @Column(columnDefinition = "Text")
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
-    @Column(length = 250)
-    private String icon;
+    @Column(length = 550)
+    private String image;
 
-    private Long idParent;
-    @Column(columnDefinition = "TINYINT")
-    private Integer type;
+    @Column(name = "idCategory")
+    private Long idCategory;
+
+    @Column(columnDefinition = "TEXT")
+    private String contents;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
+
+    private Integer quatity;
 
     @Column(length = 160)
     private String slug;
@@ -37,10 +46,10 @@ public class Category {
     @Column(length = 100)
     private String metaTitle;
 
-    @Column(length = 300)
+    @Column(length = 500)
     private String metaKeyword;
 
-    @Column(length = 300)
+    @Column(length = 500)
     private String metaDescription;
 
     private LocalDateTime createdDate;
@@ -56,6 +65,7 @@ public class Category {
 
     @Column(columnDefinition = "TINYINT", nullable = false)
     private Boolean isActive = true;
+
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
