@@ -3,6 +3,7 @@ package com.vuminhha.decorstore.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,7 +39,7 @@ public class Product {
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
-    private Integer quatity;
+    private Integer quantity;
 
     @Column(length = 160)
     private String slug;
