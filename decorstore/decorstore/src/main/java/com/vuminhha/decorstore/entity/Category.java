@@ -51,6 +51,10 @@ public class Category {
 
     private Long updatedBy;
 
+    @Column(columnDefinition = "TINYINT", nullable = false)
+    private Boolean isDelete = false;
 
+    @Column(columnDefinition = "TINYINT", nullable = false)
+    private Boolean isActive = true;
 
 }
