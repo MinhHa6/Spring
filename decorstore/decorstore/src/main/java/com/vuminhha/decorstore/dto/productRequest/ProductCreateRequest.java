@@ -5,18 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-@Data
-@Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductCreateRequest {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-        private Long id;
         @Column(length = 500)
         private String name;
         @Column(columnDefinition = "TEXT")
@@ -74,5 +64,150 @@ public class ProductCreateRequest {
         @PreUpdate
         protected void onUpdate() {
             this.updatedDate = LocalDateTime.now();
+        }
+
+
+        public String getName() {
+                return name;
+        }
+
+        public void setName(String name) {
+                this.name = name;
+        }
+
+        public String getDescription() {
+                return description;
+        }
+
+        public void setDescription(String description) {
+                this.description = description;
+        }
+
+        public String getNotes() {
+                return notes;
+        }
+
+        public void setNotes(String notes) {
+                this.notes = notes;
+        }
+
+        public String getImage() {
+                return image;
+        }
+
+        public void setImage(String image) {
+                this.image = image;
+        }
+
+        public Long getIdCategory() {
+                return idCategory;
+        }
+
+        public void setIdCategory(Long idCategory) {
+                this.idCategory = idCategory;
+        }
+
+        public String getContents() {
+                return contents;
+        }
+
+        public void setContents(String contents) {
+                this.contents = contents;
+        }
+
+        public BigDecimal getPrice() {
+                return price;
+        }
+
+        public void setPrice(BigDecimal price) {
+                this.price = price;
+        }
+
+        public Integer getQuantity() {
+                return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+                this.quantity = quantity;
+        }
+
+        public String getSlug() {
+                return slug;
+        }
+
+        public void setSlug(String slug) {
+                this.slug = slug;
+        }
+
+        public String getMetaTitle() {
+                return metaTitle;
+        }
+
+        public void setMetaTitle(String metaTitle) {
+                this.metaTitle = metaTitle;
+        }
+
+        public String getMetaKeyword() {
+                return metaKeyword;
+        }
+
+        public void setMetaKeyword(String metaKeyword) {
+                this.metaKeyword = metaKeyword;
+        }
+
+        public String getMetaDescription() {
+                return metaDescription;
+        }
+
+        public void setMetaDescription(String metaDescription) {
+                this.metaDescription = metaDescription;
+        }
+
+        public LocalDateTime getCreatedDate() {
+                return createdDate;
+        }
+
+        public void setCreatedDate(LocalDateTime createdDate) {
+                this.createdDate = createdDate;
+        }
+
+        public LocalDateTime getUpdatedDate() {
+                return updatedDate;
+        }
+
+        public void setUpdatedDate(LocalDateTime updatedDate) {
+                this.updatedDate = updatedDate;
+        }
+
+        public Long getCreatedBy() {
+                return createdBy;
+        }
+
+        public void setCreatedBy(Long createdBy) {
+                this.createdBy = createdBy;
+        }
+
+        public Long getUpdatedBy() {
+                return updatedBy;
+        }
+
+        public void setUpdatedBy(Long updatedBy) {
+                this.updatedBy = updatedBy;
+        }
+
+        public Boolean getDelete() {
+                return isDelete;
+        }
+
+        public void setDelete(Boolean delete) {
+                isDelete = delete;
+        }
+
+        public Boolean getActive() {
+                return isActive;
+        }
+
+        public void setActive(Boolean active) {
+                isActive = active;
         }
 }

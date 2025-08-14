@@ -1,18 +1,13 @@
-package com.vuminhha.decorstore.entity;
+package com.vuminhha.decorstore.dto.productRequest;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "Product")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-
-    private Long id;
+public class ProductUpdateRequest {
     @Column(length = 500)
     private String name;
     @Column(columnDefinition = "TEXT")
@@ -72,13 +67,6 @@ public class Product {
         this.updatedDate = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
