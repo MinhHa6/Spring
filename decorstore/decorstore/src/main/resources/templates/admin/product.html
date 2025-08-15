@@ -1,12 +1,4 @@
-<?php
-session_start();
-include ("control.php");
-$get_data = new data(); $get_user = new data_user();
-if (empty($_SESSION['user'])) {
-  echo "<script>alert('Bạn cần đăng nhập để thực hiện thao tác này');
-window.location = 'sign-in.php';</script>";
-}
-?>
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -567,6 +559,6 @@ if (isset($_GET['del'])) {
                               });
                             });
                         </script>
-                        
+
 </body>
 </html>
