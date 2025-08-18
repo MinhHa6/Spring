@@ -14,27 +14,32 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @GetMapping("/products")
+    // lay tat ca product
+    @GetMapping
     public List<Product> getAllProduct()
     {
         return productService.getAll();
     }
+    // tao moi product
     @PostMapping
     public Product createProduct(@RequestBody ProductCreateRequest request)
     {
-        return createProduct(request);
+        return productService.CreateProduct(request);
     }
-    @GetMapping("/products/{id}")
+    // lay product theo id
+    @GetMapping("/{id}")
     public Product getProductId(@PathVariable Long id)
     {
         return productService.getProductId(id);
     }
-    @PutMapping("/products/{id}")
-    public Product updateProduct(@PathVariable Long ids, @RequestBody ProductUpdateRequest request)
+    // update product
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request)
     {
-        return productService.updateProductById(ids,request);
+        return productService.updateProductById(id,request);
     }
-    @DeleteMapping("/products/{id}")
+    // xoa product
+    @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable Long id)
     {
         productService.deleteProduct(id);
