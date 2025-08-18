@@ -16,40 +16,24 @@ import java.util.logging.Handler;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-    public Product CreateProduct(ProductCreateRequest request)
-    {
-        Product product= new Product();
-        BeanUtils.copyProperties(request, product); // copy toàn bộ các field trùng tên
 
-        // Nếu muốn auto set ngày tạo & ngày cập nhật
-        if (product.getCreatedDate() == null) {
-            product.setCreatedDate(LocalDateTime.now());
-        }
-        product.setUpdatedDate(LocalDateTime.now());
-
-        return productRepository.save(product);
-    }
-    public Product updateProductById(Long id, ProductUpdateRequest request)
-    {
-        Product product=getProductId(id);
-        BeanUtils.copyProperties(request, product); // copy toàn bộ các field trùng tên
-
-        // Nếu muốn auto set ngày tạo & ngày cập nhật
-        if (product.getCreatedDate() == null) {
-            product.setCreatedDate(LocalDateTime.now());
-        }
-        product.setUpdatedDate(LocalDateTime.now());
-
-        return productRepository.save(product);
-    }
+    //lay tat ca product
     public List<Product> getAll()
     {
         return productRepository.findAll();
     }
+    // Cap nhat create/update
+    public Product saveProduct (Product product)
+    {
+        System.out.println(product);
+        return productRepository.save(product);
+    }
+    // lay product theo id
     public Product getProductId(Long id)
     {
         return productRepository.findById(id).orElseThrow(()-> new RuntimeException("Not Product"));
     }
+    // xoa product theo id
     public void deleteProduct(Long id)
     {
         productRepository.deleteById(id);
