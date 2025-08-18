@@ -2,9 +2,11 @@ package com.vuminhha.decorstore.Controller.Admin;
 
 import com.vuminhha.decorstore.dto.productRequest.ProductCreateRequest;
 import com.vuminhha.decorstore.dto.productRequest.ProductUpdateRequest;
+import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,34 +18,43 @@ public class ProductController {
     private ProductService productService;
     // lay tat ca product
     @GetMapping
-    public List<Product> getAllProduct()
+   public String listProduct(Model model)
     {
-        return productService.getAll();
+        model.addAttribute("products",productService.getAll());
+        return "admin/product-list";
     }
     // tao moi product
-    @PostMapping
-    public Product createProduct(@RequestBody ProductCreateRequest request)
+    @GetMapping("/create")
+   public String showCreateForm(Model model)
     {
-        return productService.CreateProduct(request);
+        model.addAttribute("product",new Product());
+        return "admin/product-form";
     }
-    // lay product theo id
-    @GetMapping("/{id}")
-    public Product getProductId(@PathVariable Long id)
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model)
     {
-        return productService.getProductId(id);
+        model.addAttribute("product",productService.getProductId(id));
+        return "admin/product-form";
     }
-    // update product
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request)
+    @PostMapping("/create")
+    public String savaProduct(@ModelAttribute("product")Product product)
     {
-        return productService.updateProductById(id,request);
+        productService.saveProduct(product);
+        return "redirect:/product";
     }
-    // xoa product
-    @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id)
+    @PostMapping("/create/{id}")
+    public String updateProduct(@PathVariable Long id,@ModelAttribute Product product)
+    {
+        product.setId(id);
+        productService.saveProduct(product);
+        return "redirect:/product";
+    }
+    @GetMapping("/delete/{id}")
+            public String deleteProduct(@PathVariable Long id)
     {
         productService.deleteProduct(id);
-        return "Delete have been";
+        return "redirect:/product";
+
     }
 
 }
