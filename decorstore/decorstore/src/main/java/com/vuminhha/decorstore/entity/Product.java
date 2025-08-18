@@ -24,8 +24,6 @@ public class Product {
     @Column(length = 550)
     private String image;
 
-    @Column(name = "idCategory")
-    private Long idCategory;
 
     @Column(columnDefinition = "TEXT")
     private String contents;
@@ -115,13 +113,6 @@ public class Product {
         this.image = image;
     }
 
-    public Long getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(Long idCategory) {
-        this.idCategory = idCategory;
-    }
 
     public String getContents() {
         return contents;

@@ -3,10 +3,11 @@ package com.vuminhha.decorstore.Controller.Admin;
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Category - List</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4"> Category-List</h2>
+    <!-- Nut them moi category-->
+    <a th:href="@{/category/create}" class="btn btn-primary mb-3">Add new Category</a>
+
+    <!--kiem tra neu danh sach trong-->
+    <div th:if="${categories.size() == 0}">
+        <p>No products available</p>
+    </div>
+
+    <!--Hien thi ds category-->
+    <!-- Hiển thị danh sách category -->
+    <table class="table table-bordered table-striped" th:if="${categories.size() > 0}">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Notes</th>
+            <th>Icon</th>
+            <th>ParentId</th>
+            <th>Type</th>
+            <th>Slug</th>
+            <th>Meta Title</th>
+            <th>Meta Keyword</th>
+            <th>Meta Description</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+            <th>Created By</th>
+            <th>Updated By</th>
+            <th>Active</th>
+            <th>Deleted</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.notes}"></td>
+            <td><img th:src="${category.icon}" width="40"/></td>
+            <td th:text="${category.idParent}"></td>
+            <td th:text="${category.type}"></td>
+            <td th:text="${category.slug}"></td>
+            <td th:text="${category.metaTitle}"></td>
+            <td th:text="${category.metaKeyword}"></td>
+            <td th:text="${category.metaDescription}"></td>
+            <td th:text="${#temporals.format(category.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(category.updatedDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${category.createdBy}"></td>
+            <td th:text="${category.updatedBy}"></td>
+            <td>
+                <span th:text="${category.isActive ? 'Active' : 'Inactive'}"
+                      th:classappend="${category.isActive ? 'text-success' : 'text-danger'}"></span>
+            </td>
+            <td>
+                <span th:text="${category.isDelete ? 'Deleted' : 'Available'}"
+                      th:classappend="${category.isDelete ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+                <a th:href="@{/category/edit/{id}(id=${category.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/category/delete/{id}(id=${category.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
