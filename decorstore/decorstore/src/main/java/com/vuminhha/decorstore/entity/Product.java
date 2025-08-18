@@ -72,6 +72,9 @@ public class Product {
         this.updatedDate = LocalDateTime.now();
     }
 
+    @ManyToOne
+    @JoinColumn(name = "idCategory",nullable = false )
+    Category category;
     public Long getId() {
         return id;
     }
