@@ -29,7 +29,7 @@ public class CategoryController {
     public String showEditForm(@PathVariable ("id")Long id,Model model)
     {
         model.addAttribute("category",categoryService.getCategoryId(id));
-        return "index/category-form";
+        return "admin/category-form";
     }
     @PostMapping("/create")
     public String saveCategory(@ModelAttribute ("category")Category category )
