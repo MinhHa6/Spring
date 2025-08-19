@@ -7,7 +7,7 @@
 </head>
 <body style="background: #f0f0f0">
 <div class="container bg-white mt-5 p-3">
-    <form th:action="@{/product/create}" th:object="${product}" method="post">
+    <form th:action="@{/products/create}" th:object="${product}" method="post">
         <div class="card m-3">
             <div class="card-header">
                 <h1 th:text="${product.id != null ? 'Edit Product' : 'Create Product'}">Product Form</h1>

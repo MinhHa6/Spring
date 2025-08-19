@@ -41,20 +41,20 @@ public class ProductController {
     public String savaProduct(@ModelAttribute("product")Product product)
     {
         productService.saveProduct(product);
-        return "redirect:/product";
+        return "redirect:/products";
     }
     @PostMapping("/create/{id}")
     public String updateProduct(@PathVariable Long id,@ModelAttribute Product product)
     {
         product.setId(id);
         productService.saveProduct(product);
-        return "redirect:/product";
+        return "redirect:/products";
     }
     @GetMapping("/delete/{id}")
             public String deleteProduct(@PathVariable Long id)
     {
         productService.deleteProduct(id);
-        return "redirect:/product";
+        return "redirect:/products";
 
     }
 
