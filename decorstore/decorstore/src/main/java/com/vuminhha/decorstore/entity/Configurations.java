@@ -7,12 +7,8 @@ import java.lang.reflect.Type;
 
 @Entity
 @Table(name = "Configurations")
-@Data
 @Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Configurations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +23,43 @@ public class Configurations {
      @Column(columnDefinition = "TINYINT",nullable = false)
     private Boolean isActive =true;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }
