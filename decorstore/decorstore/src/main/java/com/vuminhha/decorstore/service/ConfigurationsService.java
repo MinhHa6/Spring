@@ -19,6 +19,7 @@ public class ConfigurationsService {
     {
         return configurationsRepository.findById(id).orElseThrow(()->new RuntimeException("No configurations"));
     }
+    //update-create
     public Configurations saveConfigurations(Configurations configurations)
     {
         return configurationsRepository.save(configurations);
