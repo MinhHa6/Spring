@@ -20,4 +20,11 @@ public class Product_Config {
     private Long idConfig;
     @Column(columnDefinition = "TEXT")
     private String value;
+    @ManyToOne
+    @JoinColumn(name = "idProduct")
+    private Product product;
+    // map voi bang configurations
+    @ManyToOne
+    @JoinColumn(name = "idConfig")
+    private Configurations configurations;
 }

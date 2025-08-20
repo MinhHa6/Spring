@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 @Entity
 @Table(name = "Configurations")
@@ -22,6 +23,10 @@ public class Configurations {
     private Boolean isDelete =false;
      @Column(columnDefinition = "TINYINT",nullable = false)
     private Boolean isActive =true;
+
+    // Quan hệ với ProductConfig
+    @OneToMany(mappedBy = "configuration", cascade = CascadeType.ALL)
+    private List<Product_Config> productConfigs;
 
     public Long getId() {
         return id;

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Product")
@@ -73,6 +74,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "idCategory",nullable = false )
     Category category;
+    // Quan hệ với ProductConfig
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Product_Config> productConfigs;
     public Long getId() {
         return id;
     }
