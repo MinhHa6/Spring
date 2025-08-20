@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Product_Config")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
 public class Product_Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +24,52 @@ public class Product_Config {
     @ManyToOne
     @JoinColumn(name = "idConfig")
     private Configurations configurations;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public Long getIdConfig() {
+        return idConfig;
+    }
+
+    public void setIdConfig(Long idConfig) {
+        this.idConfig = idConfig;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Configurations getConfigurations() {
+        return configurations;
+    }
+
+    public void setConfigurations(Configurations configurations) {
+        this.configurations = configurations;
+    }
 }

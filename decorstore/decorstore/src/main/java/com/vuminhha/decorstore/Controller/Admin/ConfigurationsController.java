@@ -43,7 +43,7 @@ public class ConfigurationsController {
         configurationsService.saveConfigurations(configurations);
         return "redirect:/configurations";
     }
-    @DeleteMapping
+    @GetMapping("/delete/{id}")
     public String deleteConfigurations(@PathVariable Long id)
     {
         configurationsService.deleteConfigurations(id);
