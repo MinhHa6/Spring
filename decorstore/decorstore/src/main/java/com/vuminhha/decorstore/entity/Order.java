@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -57,4 +58,7 @@ public class Order {
 
     @Column(nullable = false)
     private Boolean isActive = true;
+    // Một Order có nhiều OrderDetail
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
 }

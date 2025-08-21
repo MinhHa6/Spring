@@ -80,6 +80,9 @@ public class Product {
     public Long getId() {
         return id;
     }
+    // Một Product có thể nằm trong nhiều OrderDetail
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
 
     public void setId(Long id) {
         this.id = id;

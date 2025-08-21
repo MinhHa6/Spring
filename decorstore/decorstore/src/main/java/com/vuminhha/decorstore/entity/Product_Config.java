@@ -13,8 +13,6 @@ public class Product_Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idProduct;
-    private Long idConfig;
     @Column(columnDefinition = "TEXT")
     private String value;
     @ManyToOne
@@ -22,7 +20,7 @@ public class Product_Config {
     private Product product;
     // map voi bang configurations
     @ManyToOne
-    @JoinColumn(name = "idConfig")
+    @JoinColumn(name = "idConfig",nullable = false)
     private Configurations configurations;
 
     public Long getId() {
@@ -33,21 +31,6 @@ public class Product_Config {
         this.id = id;
     }
 
-    public Long getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public Long getIdConfig() {
-        return idConfig;
-    }
-
-    public void setIdConfig(Long idConfig) {
-        this.idConfig = idConfig;
-    }
 
     public String getValue() {
         return value;
