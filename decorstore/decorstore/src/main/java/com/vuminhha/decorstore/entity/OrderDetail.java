@@ -34,4 +34,12 @@ public class OrderDetail {
     private BigDecimal total;
 
     private Integer returnQty;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
