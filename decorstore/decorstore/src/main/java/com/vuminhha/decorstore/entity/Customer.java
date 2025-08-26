@@ -65,4 +65,12 @@ public class Customer {
     protected void onUpdate() {
         this.updatedDate = LocalDateTime.now();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
