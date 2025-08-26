@@ -36,7 +36,7 @@ public class CustomerController {
         return "redirect:/customers";
     }
     @PostMapping("/edit/{id}")
-    public String updateCustomer (@ModelAttribute("customer")Customer customer ,@PathVariable Long id
+    public String updateCustomer (@ModelAttribute("customer")Customer customer ,@PathVariable Long id)
     {
         customer.setId(id);
         customerService.saveCustomer(customer);
