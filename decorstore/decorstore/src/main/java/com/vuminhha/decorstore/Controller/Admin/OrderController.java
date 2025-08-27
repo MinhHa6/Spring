@@ -21,23 +21,23 @@ public class OrderController {
     @GetMapping("/create")
     public String showCreateForm(Model model)
     {
-        model.addAttribute("orders",new Order());
+        model.addAttribute("order",new Order());
         return "admin/order-form";
     }
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id,Model model)
     {
-        model.addAttribute("orders",ordersService.getByOrder(id));
+        model.addAttribute("order",ordersService.getByOrder(id));
         return "admin/order-form";
     }
     @PostMapping("/create")
-    public String saveOrder(@ModelAttribute("orders")Order order)
+    public String saveOrder(@ModelAttribute("order")Order order)
     {
         ordersService.saveOrder(order);
         return "redirect:/orders";
     }
     @PostMapping("/edit/{id}")
-  public String updateOrder(@PathVariable Long id,@ModelAttribute("orders")Order order)
+  public String updateOrder(@PathVariable Long id,@ModelAttribute("order")Order order)
     {
         order.setId(id);
         ordersService.saveOrder(order);
