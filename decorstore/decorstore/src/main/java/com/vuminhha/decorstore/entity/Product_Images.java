@@ -21,8 +21,11 @@ public class Product_Images {
     @Column(length = 250)
     private String urlImg;
 
-    private Long idProduct;
 
+    // tham chieu nguoc ve product
+    @ManyToOne
+    @JoinColumn(name = "idProduct")
+    private Product product;
     public Long getId() {
         return id;
     }

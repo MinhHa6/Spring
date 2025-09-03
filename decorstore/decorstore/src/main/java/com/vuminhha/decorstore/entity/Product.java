@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -83,6 +84,8 @@ public class Product {
     // Một Product có thể nằm trong nhiều OrderDetail
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, orphanRemoval = true )
+    private List<Product_Images>images= new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
