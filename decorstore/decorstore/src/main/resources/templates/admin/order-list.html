@@ -45,9 +45,9 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.idOrders}"></td>
             <td th:text="${#temporals.format(order.ordersDate, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${order.customer.name}"></td>
-            <td th:text="${order.paymentMethod.name}"></td>
-            <td th:text="${order.transportMethod.name}"></td>
+            <td th:text="${order.customer != null ? order.customer.name : 'N/A'}"></td>
+            <td th:text="${order.paymentMethod != null ? order.paymentMethod.name : 'N/A'}"></td>
+            <td th:text="${order.transportMethod != null ? order.transportMethod.name : 'N/A'}"></td>
             <td th:text="${order.totalMoney}"></td>
             <td th:text="${order.notes}"></td>
             <td th:text="${order.nameReciver}"></td>
@@ -55,12 +55,12 @@
             <td th:text="${order.email}"></td>
             <td th:text="${order.phone}"></td>
             <td>
-                <span th:text="${order.isActive ? 'Active' : 'Inactive'}"
-                      th:classappend="${order.isActive ? 'text-success' : 'text-danger'}"></span>
+        <span th:text="${order.isActive ? 'Active' : 'Inactive'}"
+              th:classappend="${order.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
-                <span th:text="${order.isDelete ? 'Deleted' : 'Available'}"
-                      th:classappend="${order.isDelete ? 'text-danger' : 'text-success'}"></span>
+        <span th:text="${order.isDelete ? 'Deleted' : 'Available'}"
+              th:classappend="${order.isDelete ? 'text-danger' : 'text-success'}"></span>
             </td>
             <td>
                 <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="btn btn-warning btn-sm">Edit</a>
@@ -69,6 +69,7 @@
             </td>
         </tr>
         </tbody>
+
     </table>
 </div>
 </body>
