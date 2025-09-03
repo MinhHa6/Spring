@@ -30,10 +30,14 @@ public class CustomerController {
         return "admin/customer-form";
     }
     @PostMapping("/create")
-    public String saveCustomer(@ModelAttribute("customer")Customer customer)
-    {
-        customerService.saveCustomer(customer);
-        return "redirect:/customers";
+    public String saveCustomer(@ModelAttribute("customer") Customer customer, Model model) {
+        try {
+            customerService.saveCustomer(customer);
+            return "redirect:/customers";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi lưu dữ liệu: " + e.getMessage());
+            return "customer-form"; // quay lại form và show lỗi
+        }
     }
     @PostMapping("/edit/{id}")
     public String updateCustomer (@ModelAttribute("customer")Customer customer ,@PathVariable Long id)
@@ -42,6 +46,7 @@ public class CustomerController {
         customerService.saveCustomer(customer);
         return "redirect:/customers";
     }
+    @GetMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id )
     {
         customerService.deleteCustomer(id);
