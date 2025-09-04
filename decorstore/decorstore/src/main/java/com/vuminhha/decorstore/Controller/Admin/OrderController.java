@@ -1,6 +1,7 @@
 package com.vuminhha.decorstore.Controller.Admin;
 
 import com.vuminhha.decorstore.entity.Order;
+import com.vuminhha.decorstore.service.CustomerService;
 import com.vuminhha.decorstore.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrdersService ordersService;
+    private final CustomerService customerService;
+    private final OrdersService ordersService;
+
+    public OrderController(CustomerService customerService, OrdersService ordersService) {
+        this.customerService = customerService;
+        this.ordersService = ordersService;
+    }
     @GetMapping
     public String listOrder(Model model)
     {
@@ -22,6 +28,8 @@ public class OrderController {
     public String showCreateForm(Model model)
     {
         model.addAttribute("order",new Order());
+        model.addAttribute("customers",customerService.getAll());
+
         return "admin/order-form";
     }
     @GetMapping("/edit/{id}")

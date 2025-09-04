@@ -51,9 +51,9 @@
             <td th:text="${order.totalMoney}"></td>
             <td th:text="${order.notes}"></td>
             <td th:text="${order.nameReciver}"></td>
-            <td th:text="${order.address}"></td>
-            <td th:text="${order.email}"></td>
-            <td th:text="${order.phone}"></td>
+            <td th:text="${order.customer != null ? order.customer.name : 'N/A'}"></td>
+            <td th:text="${order.customer != null ? order.customer.email : 'N/A'}"></td>
+            <td th:text="${order.customer != null ? order.customer.phone : 'N/A'}"></td>
             <td>
         <span th:text="${order.isActive ? 'Active' : 'Inactive'}"
               th:classappend="${order.isActive ? 'text-success' : 'text-danger'}"></span>
