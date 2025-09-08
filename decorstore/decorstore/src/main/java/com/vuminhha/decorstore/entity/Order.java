@@ -28,6 +28,14 @@ public class Order {
     @JoinColumn(name = "idCustomer")
     private Customer customer;
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @ManyToOne
     @JoinColumn(name = "idPayment")
     private PaymentMethod paymentMethod;
@@ -68,5 +76,45 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdOrders() {
+        return idOrders;
+    }
+
+    public void setIdOrders(String idOrders) {
+        this.idOrders = idOrders;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNameReciver() {
+        return nameReciver;
+    }
+
+    public void setNameReciver(String nameReciver) {
+        this.nameReciver = nameReciver;
     }
 }

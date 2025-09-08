@@ -1,5 +1,6 @@
 package com.vuminhha.decorstore.Controller.Admin;
 
+import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.Order;
 import com.vuminhha.decorstore.service.CustomerService;
 import com.vuminhha.decorstore.service.OrdersService;
@@ -39,8 +40,12 @@ public class OrderController {
         return "admin/order-form";
     }
     @PostMapping("/create")
-    public String saveOrder(@ModelAttribute("order")Order order)
-    {
+    public String saveOrder(@ModelAttribute("order") Order order) {
+        Customer cus = customerService.getCustomerById(order.getCustomer().getId());
+        order.setEmail(cus.getEmail());
+        order.setPhone(cus.getPhone());
+        order.setAddress(cus.getAddress());
+        order.setNameReciver(cus.getName());
         ordersService.saveOrder(order);
         return "redirect:/orders";
     }
