@@ -22,16 +22,16 @@ public class TransportMethodController {
     public String showForm(Model model)
     {
         model.addAttribute("transportMethod",new TransportMethod());
-        return "index/transportMethod-form";
+        return "admin/transportMethod-form";
     }
     @GetMapping("/edit/{id}")
     public String showEditForm(Model model, @PathVariable Long id)
     {
         model.addAttribute("transportMethod",transportMethodService.getById(id));
-        return "index/transportMethod-form";
+        return "admin/transportMethod-form";
     }
-    @PostMapping("/create/{id}")
-    public String saveTransport(@ModelAttribute("transportMethod")TransportMethod transportMethod,@PathVariable Long id)
+    @PostMapping("/create")
+    public String saveTransport(@ModelAttribute("transportMethod")TransportMethod transportMethod)
     {
         transportMethodService.saveTransportMethod(transportMethod);
         return "redirect:/transportMethods";

@@ -2,8 +2,11 @@ package com.vuminhha.decorstore.Controller.Admin;
 
 import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.Order;
+import com.vuminhha.decorstore.entity.PaymentMethod;
 import com.vuminhha.decorstore.service.CustomerService;
 import com.vuminhha.decorstore.service.OrdersService;
+import com.vuminhha.decorstore.service.PaymentMethodService;
+import com.vuminhha.decorstore.service.TransportMethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final CustomerService customerService;
     private final OrdersService ordersService;
+    @Autowired
+    private  PaymentMethodService paymentMethodService;
+    @Autowired
+    private TransportMethodService transportMethodService;
+
 
     public OrderController(CustomerService customerService, OrdersService ordersService) {
         this.customerService = customerService;
@@ -30,13 +38,15 @@ public class OrderController {
     {
         model.addAttribute("order",new Order());
         model.addAttribute("customers",customerService.getAll());
-
+        model.addAttribute("paymentMethods",paymentMethodService.getAll());
         return "admin/order-form";
     }
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id,Model model)
     {
         model.addAttribute("order",ordersService.getByOrder(id));
+        model.addAttribute("customers",customerService.getAll());
+        model.addAttribute("paymentMethods",paymentMethodService.getAll());
         return "admin/order-form";
     }
     @PostMapping("/create")

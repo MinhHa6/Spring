@@ -60,6 +60,34 @@
                     <textarea class="form-control" th:field="*{metaDescription}" rows="3"></textarea>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Created Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${#temporals.format(category.createdDate, 'yyyy-MM-dd HH:mm')}"
+                           readonly/>
+                    <!-- Hidden để không mất createdDate khi submit -->
+                    <input type="hidden" th:field="*{createdDate}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Updated Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${#temporals.format(category.updatedDate, 'yyyy-MM-dd HH:mm')}"
+                           readonly/>
+                    <!-- Hidden để không mất updatedDate khi submit -->
+                    <input type="hidden" th:field="*{updatedDate}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Created By:</label>
+                    <input type="text" class="form-control" th:field="*{createdBy}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Updated By:</label>
+                    <input type="text" class="form-control" th:field="*{updatedBy}"/>
+                </div>
+
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
                     <label class="form-check-label">Active</label>
