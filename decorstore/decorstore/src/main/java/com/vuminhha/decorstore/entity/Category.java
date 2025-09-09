@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -56,6 +58,9 @@ public class Category {
 
     @Column(columnDefinition = "TINYINT", nullable = false)
     private Boolean isActive = true;
+    // ⚡ Mapping ngược với Product (One-to-Many)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();

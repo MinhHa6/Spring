@@ -1,0 +1,25 @@
+<div th:fragment="navbar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+        <div class="container-fluid">
+            <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-user dropdown hidden-caret" th:if="${session.user != null}">
+                    <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#">
+                        <div class="avatar-sm">
+                            <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle"/>
+                        </div>
+                        <span class="profile-username">
+                            <span class="op-7">Hi,</span>
+                            <span class="fw-bold" th:text="${session.user.username}"></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user animated fadeIn">
+                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a th:href="@{/login}">Đăng nhập</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

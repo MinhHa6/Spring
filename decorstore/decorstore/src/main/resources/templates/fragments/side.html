@@ -1,0 +1,11 @@
+<div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="sidebar" data-background-color="dark">
+        <!-- Menu như bạn có ở dashboard -->
+        <ul class="nav nav-secondary">
+            <li class="nav-item"><a th:href="@{/admin}"><i class="fas fa-home"></i> Trang chủ</a></li>
+            <li class="nav-item"><a th:href="@{/products}"><i class="icon-book-open"></i> Sản phẩm</a></li>
+            <li class="nav-item"><a th:href="@{/category}"><i class="icon-menu"></i> Danh mục</a></li>
+            <!-- ... các menu khác ... -->
+        </ul>
+    </div>
+</div>

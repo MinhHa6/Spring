@@ -20,7 +20,7 @@
     </div>
 
     <!-- Hiển thị danh sách phuong thuc thanh toan  -->
-    <table class="table table-bordered table-striped" th:if="${orders.size() > 0}">
+    <table class="table table-bordered table-striped" th:if="${paymentMethods.size() > 0}">
         <thead>
         <tr>
             <th>ID</th>
@@ -37,22 +37,16 @@
             <td th:text="${payment.id}"></td>
             <td th:text="${payment.name}"></td>
             <td th:text="${payment.notes}"></td>
-            <td th:text="${order.customer != null ? order.customer.name : 'N/A'}"></td>
-            <td th:text="${order.paymentMethod != null ? order.paymentMethod.name : 'N/A'}"></td>
-            <td th:text="${order.transportMethod != null ? order.transportMethod.name : 'N/A'}"></td>
-            <td th:text="${order.totalMoney}"></td>
-            <td th:text="${order.notes}"></td>
-            <td th:text="${order.nameReciver}"></td>
-            <td th:text="${order.customer != null ? order.customer.name : 'N/A'}"></td>
-            <td th:text="${order.customer != null ? order.customer.email : 'N/A'}"></td>
-            <td th:text="${order.customer != null ? order.customer.phone : 'N/A'}"></td>
+            <td th:text="${#temporals.format(payment.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#temporals.format(payment.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
             <td>
         <span th:text="${payment.isActive ? 'Active' : 'Inactive'}"
               th:classappend="${payment.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
         <span th:text="${payment.isDelete ? 'Deleted' : 'Available'}"
-              th:classappend="${order.isDelete ? 'text-danger' : 'text-success'}"></span>
+              th:classappend="${payment.isDelete ? 'text-danger' : 'text-success'}"></span>
             </td>
             <td>
                 <a th:href="@{/paymentMethods/edit/{id}(id=${payment.id})}" class="btn btn-warning btn-sm">Edit</a>

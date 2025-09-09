@@ -27,6 +27,19 @@ public class Product {
     private String image;
 
 
+    // ⚡ Mapping với Category (Many-to-One)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false) // FK trong bảng Product
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Column(columnDefinition = "TEXT")
     private String contents;
 
@@ -72,9 +85,6 @@ public class Product {
         this.updatedDate = LocalDateTime.now();
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idCategory",nullable = false )
-    Category category;
     // Quan hệ với ProductConfig
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Product_Config> productConfigs;

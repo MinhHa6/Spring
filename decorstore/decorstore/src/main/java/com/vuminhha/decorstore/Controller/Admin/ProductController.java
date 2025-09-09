@@ -4,6 +4,7 @@ import com.vuminhha.decorstore.dto.productRequest.ProductCreateRequest;
 import com.vuminhha.decorstore.dto.productRequest.ProductUpdateRequest;
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.entity.Product;
+import com.vuminhha.decorstore.service.CategoryService;
 import com.vuminhha.decorstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
     // lay tat ca product
     @GetMapping
    public String listProduct(Model model)
@@ -29,12 +32,14 @@ public class ProductController {
    public String showCreateForm(Model model)
     {
         model.addAttribute("product",new Product());
+        model.addAttribute("categories", categoryService.getAll()); // load list category
         return "admin/product-form";
     }
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model)
     {
         model.addAttribute("product",productService.getProductId(id));
+        model.addAttribute("categories", categoryService.getAll());
         return "admin/product-form";
     }
     @PostMapping("/create")
@@ -43,7 +48,7 @@ public class ProductController {
         productService.saveProduct(product);
         return "redirect:/products";
     }
-    @PostMapping("/create/{id}")
+    @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id,@ModelAttribute Product product)
     {
         product.setId(id);

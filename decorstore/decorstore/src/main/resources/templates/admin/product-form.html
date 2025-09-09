@@ -36,6 +36,18 @@
                     <input type="text" class="form-control" th:field="*{image}"/>
                 </div>
 
+                <!-- Category -->
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <select th:field="*{category}" class="form-select">
+                        <option value="" disabled selected>-- Select Category --</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"
+                                th:selected="${product.category != null and product.category.id == cat.id}">
+                        </option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Contents:</label>
                     <textarea class="form-control" th:field="*{contents}" rows="3"></textarea>
@@ -71,6 +83,33 @@
                     <textarea class="form-control" th:field="*{metaDescription}" rows="3"></textarea>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Created Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${#temporals.format(product.createdDate, 'yyyy-MM-dd HH:mm')}"
+                           readonly/>
+                    <!-- Hidden để không mất createdDate khi submit -->
+                    <input type="hidden" th:field="*{createdDate}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Updated Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${#temporals.format(product.updatedDate, 'yyyy-MM-dd HH:mm')}"
+                           readonly/>
+                    <!-- Hidden để không mất updatedDate khi submit -->
+                    <input type="hidden" th:field="*{updatedDate}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Created By:</label>
+                    <input type="text" class="form-control" th:field="*{createdBy}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Updated By:</label>
+                    <input type="text" class="form-control" th:field="*{updatedBy}"/>
+                </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
                     <label class="form-check-label">Active</label>
@@ -84,7 +123,7 @@
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-success"
                             th:text="${product.id == null ? 'Create' : 'Update'}">Save</button>
-                    <a th:href="@{/product}" class="btn btn-secondary">Back to List</a>
+                    <a th:href="@{/products}" class="btn btn-secondary">Back to List</a>
                 </div>
             </div>
         </div>

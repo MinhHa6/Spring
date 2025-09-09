@@ -29,20 +29,32 @@ public class PaymentMethodController {
     @RequestMapping("/edit/{id}")
     public String showFormEdit(Model model, @PathVariable Long id)
     {
-        model.addAttribute("paymentMethod",paymentMethodService.getById(id));
-        return "redirect:/paymentMethods";
+        PaymentMethod pm = paymentMethodService.getById(id);
+        if (pm == null) {
+            pm = new PaymentMethod(); // tránh null
+        }
+        model.addAttribute("paymentMethod", pm);
+        return "admin/paymentMethod-form"; // không redirect
     }
     @PostMapping("/create")
     public String savePaymentMethod(@ModelAttribute("paymentMethod")PaymentMethod paymentMethod)
     {
         paymentMethodService.savePaymentMethod(paymentMethod);
+
         return "redirect:/paymentMethods";
     }
     @PostMapping("/edit/{id}")
-    public String updatePaymentMethod(@PathVariable Long id,@ModelAttribute("paymentMethod")PaymentMethod paymentMethod)
-    {
-        paymentMethod.setId(id);
-        paymentMethodService.savePaymentMethod(paymentMethod);
+    public String updatePaymentMethod(@PathVariable Long id,
+                                      @ModelAttribute("paymentMethod") PaymentMethod formPayment) {
+        PaymentMethod oldPayment = paymentMethodService.getById(id);
+
+        // Giữ nguyên createdDate
+        formPayment.setCreatedDate(oldPayment.getCreatedDate());
+
+        // UpdatedDate tự động set bằng @PreUpdate
+        formPayment.setId(id);
+
+        paymentMethodService.savePaymentMethod(formPayment);
         return "redirect:/paymentMethods";
     }
     @GetMapping("/delete/{id}")
