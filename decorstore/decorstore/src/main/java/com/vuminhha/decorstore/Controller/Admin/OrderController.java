@@ -39,6 +39,7 @@ public class OrderController {
         model.addAttribute("order",new Order());
         model.addAttribute("customers",customerService.getAll());
         model.addAttribute("paymentMethods",paymentMethodService.getAll());
+        model.addAttribute("transportMethods",transportMethodService.getAll());
         return "admin/order-form";
     }
     @GetMapping("/edit/{id}")
@@ -47,6 +48,7 @@ public class OrderController {
         model.addAttribute("order",ordersService.getByOrder(id));
         model.addAttribute("customers",customerService.getAll());
         model.addAttribute("paymentMethods",paymentMethodService.getAll());
+        model.addAttribute("transportMethods",transportMethodService.getAll());
         return "admin/order-form";
     }
     @PostMapping("/create")

@@ -84,8 +84,8 @@
                 <th>Updated</th>
                 <th>Created By</th>
                 <th>Updated By</th>
-                <th>Status</th>
-                <th>Deleted</th>
+                <th>IsDelete</th>
+                <th>IsActive</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -111,12 +111,12 @@
                 <td th:text="${product.createdBy}"></td>
                 <td th:text="${product.updatedBy}"></td>
                 <td>
-                    <span th:text="${product.isActive ? 'Active' : 'Inactive'}"
-                          th:classappend="${product.isActive ? 'status-active' : 'status-inactive'}"></span>
-                </td>
-                <td>
                     <span th:text="${product.isDelete ? 'Deleted' : 'Available'}"
                           th:classappend="${product.isDelete ? 'status-deleted' : 'status-available'}"></span>
+                </td>
+                <td>
+                    <span th:text="${product.isActive ? 'Active' : 'Inactive'}"
+                          th:classappend="${product.isActive ? 'status-active' : 'status-inactive'}"></span>
                 </td>
                 <td>
                     <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-warning btn-sm">Edit</a>

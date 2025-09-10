@@ -39,14 +39,13 @@
             <td th:text="${payment.notes}"></td>
             <td th:text="${#temporals.format(payment.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${#temporals.format(payment.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-
-            <td>
-        <span th:text="${payment.isActive ? 'Active' : 'Inactive'}"
-              th:classappend="${payment.isActive ? 'text-success' : 'text-danger'}"></span>
-            </td>
             <td>
         <span th:text="${payment.isDelete ? 'Deleted' : 'Available'}"
               th:classappend="${payment.isDelete ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+        <span th:text="${payment.isActive ? 'Active' : 'Inactive'}"
+              th:classappend="${payment.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
                 <a th:href="@{/paymentMethods/edit/{id}(id=${payment.id})}" class="btn btn-warning btn-sm">Edit</a>

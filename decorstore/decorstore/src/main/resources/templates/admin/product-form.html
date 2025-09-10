@@ -110,16 +110,16 @@
                     <label class="form-label">Updated By:</label>
                     <input type="text" class="form-control" th:field="*{updatedBy}"/>
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
-                    <label class="form-check-label">Active</label>
-                </div>
 
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" th:field="*{isDelete}"/>
                     <label class="form-check-label">Deleted</label>
                 </div>
 
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
+                    <label class="form-check-label">Active</label>
+                </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-success"
                             th:text="${product.id == null ? 'Create' : 'Update'}">Save</button>

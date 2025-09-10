@@ -49,6 +49,7 @@
             <td th:text="${customer.phone}"></td>
             <td><img th:src="${customer.avatar}" width="40"/></td>
             <td th:text="${#temporals.format(customer.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(customer.updatedDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${customer.createdBy}"></td>
             <td>
                 <span th:text="${customer.isActive ? 'Active' : 'Inactive'}"
