@@ -23,8 +23,9 @@ public class News {
     private String description;
     @Column(length = 550)
     private String image;
-
-    private Long idNewsCategory;
+    @ManyToOne
+    @JoinColumn(name = "idNewsCategory")  // chính là tên cột hiện có trong DB
+    private News_Category category;
 
     @Column(columnDefinition = "TEXT")
     private  String contents;
@@ -80,5 +81,8 @@ public class News {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setImage(String s) {
     }
 }
