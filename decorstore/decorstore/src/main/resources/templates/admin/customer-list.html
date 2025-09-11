@@ -35,6 +35,7 @@
             <th>Updated Date</th>
             <th>Created By</th>
             <th>Updated By</th>
+            <th>IsDelete</th>
             <th>Active</th>
         </tr>
         </thead>
@@ -52,12 +53,12 @@
             <td th:text="${#temporals.format(customer.updatedDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${customer.createdBy}"></td>
             <td>
-                <span th:text="${customer.isActive ? 'Active' : 'Inactive'}"
-                      th:classappend="${customer.isActive ? 'text-success' : 'text-danger'}"></span>
-            </td>
-            <td>
                 <span th:text="${customer.isDelete ? 'Deleted' : 'Available'}"
                       th:classappend="${customer.isDelete ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+                <span th:text="${customer.isActive ? 'Active' : 'Inactive'}"
+                      th:classappend="${customer.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
                 <a th:href="@{/customers/edit/{id}(id=${customer.id})}" class="btn btn-warning btn-sm">Edit</a>

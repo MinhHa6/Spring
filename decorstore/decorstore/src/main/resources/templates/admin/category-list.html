@@ -60,12 +60,12 @@
             <td th:text="${category.createdBy}"></td>
             <td th:text="${category.updatedBy}"></td>
             <td>
-                <span th:text="${category.isActive ? 'Active' : 'Inactive'}"
-                      th:classappend="${category.isActive ? 'text-success' : 'text-danger'}"></span>
-            </td>
-            <td>
                 <span th:text="${category.isDelete ? 'Deleted' : 'Available'}"
                       th:classappend="${category.isDelete ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+                <span th:text="${category.isActive ? 'Active' : 'Inactive'}"
+                      th:classappend="${category.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
                 <a th:href="@{/category/edit/{id}(id=${category.id})}" class="btn btn-warning btn-sm">Edit</a>

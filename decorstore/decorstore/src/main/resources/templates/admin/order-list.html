@@ -35,8 +35,8 @@
             <th>Address</th>           <!-- Địa chỉ giao hàng (address) -->
             <th>Email</th>             <!-- Email người nhận (email) -->
             <th>Phone</th>             <!-- Số điện thoại liên hệ (phone) -->
-            <th>Active</th>            <!-- Trạng thái hoạt động (isActive: true = Active, false = Inactive) -->
-            <th>Deleted</th>           <!-- Trạng thái xóa mềm (isDelete: true = Deleted, false = Available) -->
+            <th>IsDelete</th>            <!-- Trạng thái hoạt động (isActive: true = Active, false = Inactive) -->
+            <th>IsActive</th>           <!-- Trạng thái xóa mềm (isDelete: true = Deleted, false = Available) -->
             <th>Actions</th>           <!-- Các hành động: Edit, Delete -->
         </tr>
         </thead>
@@ -55,12 +55,12 @@
             <td th:text="${order.customer != null ? order.customer.email : 'N/A'}"></td>
             <td th:text="${order.customer != null ? order.customer.phone : 'N/A'}"></td>
             <td>
-        <span th:text="${order.isActive ? 'Active' : 'Inactive'}"
-              th:classappend="${order.isActive ? 'text-success' : 'text-danger'}"></span>
-            </td>
-            <td>
         <span th:text="${order.isDelete ? 'Deleted' : 'Available'}"
               th:classappend="${order.isDelete ? 'text-danger' : 'text-success'}"></span>
+            </td>
+            <td>
+        <span th:text="${order.isActive ? 'Active' : 'Inactive'}"
+              th:classappend="${order.isActive ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
                 <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="btn btn-warning btn-sm">Edit</a>
