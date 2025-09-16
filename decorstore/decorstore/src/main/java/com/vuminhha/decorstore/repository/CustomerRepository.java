@@ -4,4 +4,6 @@ import com.vuminhha.decorstore.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
+    Customer findByUsernameAndPasswordAndIsDeleteFalseAndIsActiveTrue(String username, String password);
+
 }

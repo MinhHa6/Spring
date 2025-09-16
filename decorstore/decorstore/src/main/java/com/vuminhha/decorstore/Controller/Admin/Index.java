@@ -27,4 +27,9 @@ public class Index {
     {
         return "admin/category-list";
     }
+    @GetMapping("/login")
+    public String login()
+    {
+        return "admin/login";
+    }
 }
