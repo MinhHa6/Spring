@@ -1,7 +1,6 @@
 package com.vuminhha.decorstore.service;
 
 import com.vuminhha.decorstore.entity.Configurations;
-import com.vuminhha.decorstore.repository.ConfigurationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
