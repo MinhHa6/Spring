@@ -1,7 +1,5 @@
 package com.vuminhha.decorstore.Controller.Admin;
 
-import com.vuminhha.decorstore.entity.Customer;
-import com.vuminhha.decorstore.entity.News;
 import com.vuminhha.decorstore.service.CategoryService;
 import com.vuminhha.decorstore.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
