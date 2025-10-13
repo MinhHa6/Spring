@@ -5,61 +5,38 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "Payment_Method")
+@Table(name = "payment_methods")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentMethod {
+    // phuong thuc thanh toan
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 250)
+    @Column(length = 250, nullable = false, unique = true)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 500)
     private String notes;
 
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
+    @UpdateTimestamp
     private LocalDateTime updatedDate;
 
-    @Column(columnDefinition = "TINYINT", nullable = false)
+    @Column(nullable = false)
     private Boolean isDelete = false;
 
-    @Column(columnDefinition = "TINYINT", nullable = false)
+    @Column(nullable = false)
     private Boolean isActive = true;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedDate = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
 }

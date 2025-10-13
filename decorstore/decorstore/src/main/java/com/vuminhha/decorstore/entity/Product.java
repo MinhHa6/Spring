@@ -13,6 +13,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class Product {
+    // San pham
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

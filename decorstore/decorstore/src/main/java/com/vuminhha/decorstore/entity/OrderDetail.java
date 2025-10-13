@@ -6,40 +6,49 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "orders_details")
+@Table(name = "order_details")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class OrderDetail {
+    // bang chi tiet don hang
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idOrd")
+    // Liên kết về Order
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "idProduct")
+    // Liên kết về Product
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(precision = 10, scale = 2)
+    // Giá sản phẩm tại thời điểm mua
+    @Column(name = "price", precision = 12, scale = 2, nullable = false)
     private BigDecimal price;
 
-    private Integer qty;
+    // Số lượng
+    @Column(nullable = false)
+    private Integer qty = 1;
 
-    @Column(precision = 10, scale = 2)
+    // Tổng tiền của dòng sản phẩm
+    @Column(name = "total", precision = 12, scale = 2, nullable = false)
     private BigDecimal total;
 
-    private Integer returnQty;
+    // Số lượng trả (nếu có chức năng trả hàng)
+    @Column(name = "return_qty")
+    private Integer returnQty = 0;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @PrePersist
+    @PreUpdate
+    private void calculateTotal() {
+        if (price != null && qty != null) {
+            this.total = price.multiply(BigDecimal.valueOf(qty));
+        }
     }
 }

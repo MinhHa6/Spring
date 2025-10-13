@@ -12,6 +12,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class Category {
+    // Danh muc san pham
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

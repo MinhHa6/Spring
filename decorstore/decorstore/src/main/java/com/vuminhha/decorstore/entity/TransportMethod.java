@@ -2,28 +2,34 @@ package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transport_method")
+@Table(name = "transport_methods")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class TransportMethod {
+    // phuong  thuc van chuyen
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 250, nullable = false)
+    @Column(length = 250, nullable = false, unique = true)
     private String name;
 
-    @Lob
+    @Column(length = 500)
     private String notes;
 
+    @CreationTimestamp
     private LocalDateTime createdDate;
+
+    @UpdateTimestamp
     private LocalDateTime updatedDate;
 
     @Column(nullable = false)
@@ -31,39 +37,4 @@ public class TransportMethod {
 
     @Column(nullable = false)
     private Boolean isActive = true;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedDate = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
 }

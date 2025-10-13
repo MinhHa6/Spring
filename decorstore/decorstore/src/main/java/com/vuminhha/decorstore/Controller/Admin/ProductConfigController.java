@@ -1,6 +1,5 @@
 package com.vuminhha.decorstore.Controller.Admin;
 
-import com.vuminhha.decorstore.entity.Product_Config;
 import com.vuminhha.decorstore.service.ProductConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

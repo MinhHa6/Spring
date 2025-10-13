@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -14,107 +15,80 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Order {
+    // bang don hang
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, unique = true)
-    private String idOrders;
+    // Mã đơn hàng unique
+    @Column(name = "order_code", length = 50, unique = true, nullable = false, updatable = false)
+    private String orderCode;
 
-    private LocalDateTime ordersDate;
+    @Column(name = "order_date", nullable = false, updatable = false)
+    private LocalDateTime orderDate;
 
-    @ManyToOne
-    @JoinColumn(name = "idCustomer")
+    // Khách hàng đặt
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "idPayment")
+    // Thanh toán
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id", nullable = false)
     private PaymentMethod paymentMethod;
 
-    @ManyToOne
-    @JoinColumn(name = "idTransport")
+    // Vận chuyển
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transport_id", nullable = false)
     private TransportMethod transportMethod;
 
+    @Column(name = "total_money", precision = 12, scale = 2, nullable = false)
     private BigDecimal totalMoney;
 
-    @Lob
+    @Column(length = 1000)
     private String notes;
 
-    @Column(length = 250)
-    private String nameReciver;
+    @Column(name = "receiver_name", length = 250, nullable = false)
+    private String receiverName;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String address;
 
-    @Column(length = 150)
+    @Column(length = 150, nullable = false)
     private String email;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    private Boolean isDelete = false;
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
 
-    @Column(nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
-    // Một Order có nhiều OrderDetail
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
+        this.orderDate = LocalDateTime.now();
+        if (this.orderCode == null) {
+            this.orderCode = "ORD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedDate = LocalDateTime.now();
+    }
+
+    // Một đơn hàng có nhiều chi tiết
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getIdOrders() {
-        return idOrders;
-    }
-
-    public void setIdOrders(String idOrders) {
-        this.idOrders = idOrders;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getNameReciver() {
-        return nameReciver;
-    }
-
-    public void setNameReciver(String nameReciver) {
-        this.nameReciver = nameReciver;
-    }
 }
