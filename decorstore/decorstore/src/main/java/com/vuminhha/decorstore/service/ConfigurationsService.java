@@ -1,33 +1,40 @@
 package com.vuminhha.decorstore.service;
 
-import com.vuminhha.decorstore.entity.Configurations;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vuminhha.decorstore.entity.Configuration;
+import com.vuminhha.decorstore.repository.ConfigurationRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.annotation.Configurations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ConfigurationsService {
-    @Autowired
-    private ConfigurationsRepository configurationsRepository;
+    // service cau hinh
+    private final ConfigurationRepository configurationRepository;
+    public ConfigurationsService (ConfigurationRepository configurationRepository)
+    {
+        this.configurationRepository=configurationRepository;
+    }
     // lay tat ca cau hinh
-    public List<Configurations> getAll()
+    public List<Configuration> getAll()
     {
-        return configurationsRepository.findAll();
+        return configurationRepository.findAll();
     }
-    // lay cau hinh theo id
-    public Configurations getConfigurationsId(Long id)
+    // lay cau hinh theo ID
+    public Configuration getConfigurationId(Long id)
     {
-        return configurationsRepository.findById(id).orElseThrow(()->new RuntimeException("No configurations"));
+        return configurationRepository.findById(id).orElseThrow(()->new RuntimeException("No configurations"));
     }
-    //update-create
-    public Configurations saveConfigurations(Configurations configurations)
+    //Them hoac cap nhat cau hinh
+    public Configuration saveConfiguration(Configuration configuration)
     {
-        return configurationsRepository.save(configurations);
+        return configurationRepository.save(configuration);
     }
     //xoa cau hinh
-    public void deleteConfigurations(Long id)
+    public void deleteConfiguration(Long id)
     {
-        configurationsRepository.deleteById(id);
+        configurationRepository.deleteById(id);
     }
 }
