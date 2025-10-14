@@ -14,21 +14,25 @@ import java.util.logging.Handler;
 
 @Service
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+    private  final ProductRepository productRepository;
 
+    //  inject CategoryRepository
+    public ProductService (ProductRepository productRepository)
+    {
+        this.productRepository=productRepository;
+    }
     //lay tat ca product
     public List<Product> getAll()
     {
         return productRepository.findAll();
     }
-    // Cap nhat create/update
+    // Them hoac cap nhat san pham
     public Product saveProduct (Product product)
     {
         System.out.println(product);
         return productRepository.save(product);
     }
-    // lay product theo id
+    // Lay san pham theo Id
     public Product getProductId(Long id)
     {
         return productRepository.findById(id).orElseThrow(()-> new RuntimeException("Not Product"));
@@ -37,6 +41,17 @@ public class ProductService {
     public void deleteProduct(Long id)
     {
         productRepository.deleteById(id);
+    }
+    // tim kiem theo ten (Chua tu khoa khong phan biet hoa thuong )
+    public List<Product> searchByName(String keyword)
+    {
+        return productRepository.findByNameContainingIgnoreCase(keyword);
+    }
+
+   //Tim kiem theo danh muc
+    public List<Product>findByCategory(Long categoryId)
+    {
+        return productRepository.findByCategoryId(categoryId);
     }
 
 }
