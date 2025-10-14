@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BlogPostCategory extends JpaRepository<BlogPost,Long> {
+public interface BlogPostRepository extends JpaRepository<BlogPost,Long> {
 }
