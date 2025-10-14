@@ -1,35 +1,45 @@
 package com.vuminhha.decorstore.service;
 
+import com.vuminhha.decorstore.entity.ProductConfig;
 import com.vuminhha.decorstore.repository.ProductConfigRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductConfigService {
-    @Autowired
-    private ProductConfigRepository productConfigRepository;
+    private final ProductConfigRepository productConfigRepository;
 
+    public ProductConfigService (ProductConfigRepository productConfigRepository)
+    {
+        this.productConfigRepository=productConfigRepository;
+    }
     // lay tat ca cau hinh cua san pham
-    public List<Product_Config> getAll()
+    public List<ProductConfig> getAll()
     {
         return productConfigRepository.findAll();
     }
-    // Lay theo id
-    public Product_Config getProductConfig (Long id)
+    // Lay theo productConfig theo dia chi Id
+    public ProductConfig getProductConfig (Long id)
     {
-        return productConfigRepository.findById(id).orElseThrow(()->new RuntimeException("Product-config null"));
+        return productConfigRepository.findById(id).orElseThrow(()->new RuntimeException("Product-config  not found with id:"+id));
     }
-    //create/update
-    public Product_Config saveProductConfig(Product_Config productConfig)
+    //Them hoac cap nhat cau hinh
+    public ProductConfig saveProductConfig(ProductConfig productConfig)
     {
         return productConfigRepository.save(productConfig);
     }
-    // xoa cau hinh
+    // xoa cau hinh theo dia chi Id
     public void deleteProductConfig(Long id)
     {
         productConfigRepository.deleteById(id);
+    }
+    // Lay ds cau hinh theo productId
+    public List<ProductConfig>getByProductId(Long productId)
+    {
+        return productConfigRepository.findByProductId(productId);
     }
 
 }

@@ -1,30 +1,32 @@
 package com.vuminhha.decorstore.service;
 
+import com.vuminhha.decorstore.entity.ProductImage;
 import com.vuminhha.decorstore.repository.ProductImagesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductImagesService {
-    @Autowired
-    private ProductImagesRepository productImagesRepository;
-     public List<Product_Images> getAll ()
-     {
-         return productImagesRepository.findAll();
-     }
-     //lay anh san pham them dia chi id
-    public Product_Images getProductImagesById(Long id)
+    private final ProductImagesRepository productImagesRepository;
+    public ProductImagesService (ProductImagesRepository productImagesRepository)
     {
-        return productImagesRepository.findById(id).orElseThrow(()->new RuntimeException("null"));
+        this.productImagesRepository=productImagesRepository;
     }
-    //update create
-    public Product_Images saveProductImages(Product_Images productImages)
+
+    // Lay tat ca anh theo ProductId
+    public List<ProductImage> getByProductId(Long productId)
     {
-        return productImagesRepository.save(productImages);
+        return productImagesRepository.findByProductId(productId);
     }
-    //xoa anh theo dia chi Id
+    //them hoac cap nhat anh moi
+    public ProductImage saveProductImages(ProductImage productImage)
+    {
+        return productImagesRepository.save(productImage);
+    }
+    //xoa anh theo Id
     public void deleteProductImages(Long id)
     {
         productImagesRepository.deleteById(id);
