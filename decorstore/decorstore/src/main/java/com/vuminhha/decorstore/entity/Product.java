@@ -52,6 +52,8 @@ public class Product {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
+    // ton kho
+    private Integer stock;
     // Ảnh phụ
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> images = new ArrayList<>();
@@ -77,5 +79,21 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

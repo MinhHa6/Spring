@@ -2,9 +2,7 @@ package com.vuminhha.decorstore.Controller.Admin;
 
 import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.Order;
-import com.vuminhha.decorstore.entity.PaymentMethod;
 import com.vuminhha.decorstore.service.CustomerService;
-import com.vuminhha.decorstore.service.OrdersService;
 import com.vuminhha.decorstore.service.PaymentMethodService;
 import com.vuminhha.decorstore.service.TransportMethodService;
 import org.springframework.beans.factory.annotation.Autowired;

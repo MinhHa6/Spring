@@ -51,4 +51,53 @@ public class OrderDetail {
             this.total = price.multiply(BigDecimal.valueOf(qty));
         }
     }
+
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getQty() {
+        return qty;
+    }
+
+    public void setQty(Integer qty) {
+        this.qty = qty;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public Integer getReturnQty() {
+        return returnQty;
+    }
+
+    public void setReturnQty(Integer returnQty) {
+        this.returnQty = returnQty;
+    }
 }
