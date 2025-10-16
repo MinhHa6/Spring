@@ -27,11 +27,6 @@ public class User {
     @Column(length = 150)
     private String email;
 
-    @Column(length = 50)
-    private String phone;
-
-    @Column(length = 255)
-    private String fullName;
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
@@ -46,6 +41,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+    // ✅ Thêm liên kết tới Customer (One-to-One, optional)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Customer customer;
+
 
     @PrePersist
     protected void onCreate() {
@@ -84,22 +83,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
@@ -118,6 +101,14 @@ public class User {
 
     public Boolean getActive() {
         return isActive;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public void setActive(Boolean active) {

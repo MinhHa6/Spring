@@ -53,7 +53,6 @@ public class UserService {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(encodePassword);
-        user.setFullName(fullName);
         user.setRoles(roles);
         user.setActive(true);
        return userRepository.save(user);
@@ -83,10 +82,11 @@ public class UserService {
     /**
      * Kiem tra phan quyen( vi du Admin)
      */
-    public boolean hasRole(User user,Role role)
-    {
-        return user.getRoles()==role;
+    public boolean hasRole(User user, String roleName) {
+        return user.getRoles().stream()
+                .anyMatch(r -> r.getName().equals(roleName));
     }
+
     /**
      * 🔍 Tìm user theo ID
      */
