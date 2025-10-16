@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;

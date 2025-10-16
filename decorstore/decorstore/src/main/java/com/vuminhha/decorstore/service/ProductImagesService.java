@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductImagesService {
     private final ProductImagesRepository productImagesRepository;
     public ProductImagesService (ProductImagesRepository productImagesRepository)

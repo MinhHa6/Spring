@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
     private  final OrderRepository orderRepository;
     private final CartRepository cartRepository;

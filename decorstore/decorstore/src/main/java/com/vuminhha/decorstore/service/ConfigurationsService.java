@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ConfigurationsService {
     // service cau hinh
     private final ConfigurationRepository configurationRepository;

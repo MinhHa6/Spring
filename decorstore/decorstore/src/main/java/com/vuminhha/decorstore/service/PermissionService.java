@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class PermissionService {
     private final PermissionRepository permissionRepository;
     public PermissionService(PermissionRepository permissionRepository)

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class TransportMethodService {
     private final TransportMethodRepository transportMethodRepository;
     public TransportMethodService(TransportMethodRepository transportMethodRepository)

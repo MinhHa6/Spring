@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PaymentMethodService {
     private final PaymentMethodRepository paymentMethodRepository;
     public PaymentMethodService(PaymentMethodRepository paymentMethodRepository)

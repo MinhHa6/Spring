@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class RoleService {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
