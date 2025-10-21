@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | DecorStore Admin</title>
+</head>
+<body>
+<div th:insert="~{admin/layout :: content}">
+    <div class="container-fluid mt-4">
+        <h1 class="mb-4">📊 Dashboard</h1>
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card text-bg-primary p-3 shadow-sm text-center">
+                    <h5>Người dùng</h5>
+                    <h2>152</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-success p-3 shadow-sm text-center">
+                    <h5>Đơn hàng</h5>
+                    <h2>87</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-warning p-3 shadow-sm text-center">
+                    <h5>Sản phẩm</h5>
+                    <h2>240</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-danger p-3 shadow-sm text-center">
+                    <h5>Doanh thu</h5>
+                    <h2>$12.4K</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

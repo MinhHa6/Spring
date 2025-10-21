@@ -1,11 +1,12 @@
 <div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="sidebar" data-background-color="dark">
-        <!-- Menu như bạn có ở dashboard -->
-        <ul class="nav nav-secondary">
-            <li class="nav-item"><a th:href="@{/admin}"><i class="fas fa-home"></i> Trang chủ</a></li>
-            <li class="nav-item"><a th:href="@{/products}"><i class="icon-book-open"></i> Sản phẩm</a></li>
-            <li class="nav-item"><a th:href="@{/category}"><i class="icon-menu"></i> Danh mục</a></li>
-            <!-- ... các menu khác ... -->
+    <div class="sidebar bg-dark text-white p-3 vh-100 position-fixed">
+        <h3 class="text-center mb-4">🛒 DecorStore</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="/admin" class="nav-link text-white">🏠 Dashboard</a></li>
+            <li class="nav-item mb-2"><a href="/admin/products" class="nav-link text-white">📦 Quản lý Sản phẩm</a></li>
+            <li class="nav-item mb-2"><a href="/admin/orders" class="nav-link text-white">🧾 Đơn hàng</a></li>
+            <li class="nav-item mb-2"><a href="/admin/users" class="nav-link text-white">👥 Người dùng</a></li>
+            <li class="nav-item mt-4"><a href="/logout" class="nav-link text-danger">🚪 Đăng xuất</a></li>
         </ul>
     </div>
 </div>

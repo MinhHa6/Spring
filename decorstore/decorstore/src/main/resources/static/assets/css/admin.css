@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    width: 250px;
+}
+
+.main-content {
+    margin-left: 250px;
+    width: 100%;
+}
+
+.card {
+    border-radius: 1rem;
+}
