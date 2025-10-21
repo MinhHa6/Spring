@@ -1,0 +1,38 @@
+<!-- Sidebar -->
+<div class="sidebar" data-background-color="dark" th:fragment="slide" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="sidebar-logo">
+        <div class="logo-header" data-background-color="dark">
+            <a th:href="@{/}" class="logo">
+                <img th:src="@{/assets/img/kaiadmin/logo_light.svg}" alt="navbar brand" class="navbar-brand" height="20"/>
+            </a>
+            <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+            </div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+        </div>
+    </div>
+
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="collapsed">
+                        <i class="fas fa-home"></i>
+                        <p>Trang chủ</p>
+                    </a>
+                </li>
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
+                    <h4 class="text-section">Quản lý</h4>
+                </li>
+                <li class="nav-item"><a th:href="@{/product}"><i class="icon-book-open"></i><span class="sub-item">Sản phẩm</span></a></li>
+                <li class="nav-item"><a th:href="@{/category}"><i class="icon-menu"></i><span class="sub-item">Danh mục</span></a></li>
+                <li class="nav-item"><a th:href="@{/contact}"><i class="icon-envelope"></i><span class="sub-item">Liên hệ</span></a></li>
+                <li class="nav-item"><a th:href="@{/order}"><i class="icon-calendar"></i><span class="sub-item">Đơn đặt hàng</span></a></li>
+                <li class="nav-item"><a th:href="@{/register}"><i class="icon-chart"></i><span class="sub-item">Thêm tài khoản</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- End Sidebar -->

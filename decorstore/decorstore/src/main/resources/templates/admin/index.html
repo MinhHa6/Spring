@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/fragments/head::head"></header>
+
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <!-- Header -->
+        <div class="main-header">
+            <div class="main-header-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a th:href="@{/}" class="logo">
+                        <img th:src="@{/assets/img/kaiadmin/logo_light.svg}" alt="navbar brand" class="navbar-brand" height="20"/>
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                        <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+                    </div>
+                    <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+                </div>
+            </div>
+
+            <div th:replace="admin/fragments/navbar::nav"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container">
+            <div class="page-inner">
+                <div class="row">
+                    <!-- Khách hàng -->
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <p class="card-category">Khách hàng</p>
+                                        <h4 class="card-title" th:text="${userCount}">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tổng bán -->
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            <i class="fas fa-luggage-cart"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <p class="card-category">Tổng bán</p>
+                                        <h4 class="card-title" th:text="${#numbers.formatInteger(totalSales, 0, 'POINT')} + ' ₫'">0 ₫</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đơn đặt hàng -->
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                            <i class="far fa-check-circle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <p class="card-category">Đơn đặt hàng</p>
+                                        <h4 class="card-title" th:text="${orderCount}">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biểu đồ doanh thu -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-title">Doanh thu</div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="revenueChart"></canvas>
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/
+                                    var labels = [[${revenues.stream().map(r -> 'Tháng ' + r.month).toList()}]];
+                                    var data = [[${revenues.stream().map(r -> r.total).toList()}]];
+
+                                    new Chart(document.getElementById('revenueChart'), {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [{
+                                                label: 'Doanh số theo tháng',
+                                                data: data,
+                                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                                borderColor: 'rgba(255, 99, 132, 1)',
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: { scales: { y: { beginAtZero: true } } }
+                                    });
+                                    /*]]>*/
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Khách hàng mới -->
+                    <div class="col-md-4">
+                        <div class="card card-round">
+                            <div class="card-body">
+                                <div class="card-title">Khách hàng mới</div>
+                                <div class="card-list py-4">
+                                    <div th:each="u : ${newUsers}" class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..." class="avatar-img rounded-circle"/>
+                                        </div>
+                                        <div class="info-user ms-3">
+                                            <div class="username" th:text="${u.username}">Tên</div>
+                                            <div class="status" th:text="${u.email}">email@example.com</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-link op-8 me-1"><i class="far fa-envelope"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="admin/fragments/script::script"></div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- Navbar -->
+<nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" th:fragment="nav"
+     xmlns:th="">
+    <div class="container-fluid">
+        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                        <i class="fa fa-search search-icon"></i>
+                    </button>
+                </div>
+                <input type="text" placeholder="Search ..." class="form-control"/>
+            </div>
+        </nav>
+
+        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+            <li class="nav-item topbar-icon dropdown hidden-caret">
+                <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+
+            <li class="nav-item topbar-user dropdown hidden-caret">
+                <a th:if="${user != null}" class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#">
+                    <div class="avatar-sm">
+                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle"/>
+                    </div>
+                    <span class="profile-username">
+                                    <span class="op-7">Hi,</span>
+                                    <span class="fw-bold" th:text="${user.username}">Admin</span>
+                                </span>
+                </a>
+                <a th:if="${user == null}" th:href="@{/login}">Đăng nhập</a>
+
+                <ul th:if="${user != null}" class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                        <li>
+                            <div class="user-box">
+                                <div class="avatar-lg">
+                                    <img th:src="@{/assets/img/profile.jpg}" class="avatar-img rounded"/>
+                                </div>
+                                <div class="u-text">
+                                    <h4 th:text="${user.username}">Tên</h4>
+                                    <p class="text-muted" th:text="${user.email}">email@example.com</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
