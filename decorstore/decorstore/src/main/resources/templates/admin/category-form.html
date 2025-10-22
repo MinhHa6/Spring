@@ -7,96 +7,88 @@
 </head>
 <body style="background: #f0f0f0">
 <div class="container bg-white mt-5 p-3">
-    <form th:action="@{/category/create}" th:object="${category}" method="post">
+    <form th:action="@{/category/save}" th:object="${category}" method="post">
         <div class="card m-3">
             <div class="card-header">
                 <h1 th:text="${category.id != null ? 'Edit Category' : 'Create Category'}">Category Form</h1>
             </div>
             <div class="card-body">
+                <!-- Hidden ID (nếu đang update) -->
                 <input type="hidden" th:if="${category.id != null}" th:field="*{id}"/>
 
+                <!-- Name -->
                 <div class="mb-3">
                     <label class="form-label">Name:</label>
                     <input type="text" class="form-control" th:field="*{name}" required/>
                 </div>
 
+                <!-- Description -->
                 <div class="mb-3">
-                    <label class="form-label">Notes:</label>
-                    <textarea class="form-control" th:field="*{notes}" rows="3"></textarea>
+                    <label class="form-label">Description:</label>
+                    <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
                 </div>
 
+                <!-- Icon -->
                 <div class="mb-3">
                     <label class="form-label">Icon (URL):</label>
                     <input type="text" class="form-control" th:field="*{icon}"/>
                 </div>
 
+                <!-- Parent Category -->
                 <div class="mb-3">
-                    <label class="form-label">Parent Id:</label>
-                    <input type="number" class="form-control" th:field="*{idParent}"/>
+                    <label class="form-label">Parent Category:</label>
+                    <select class="form-select" th:field="*{parent}">
+                        <option th:value="${null}">-- None --</option>
+                        <option th:each="p : ${categories}"
+                                th:value="${p}"
+                                th:text="${p.name}"
+                                th:selected="${p.id == category.parent?.id}">
+                        </option>
+                    </select>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Type:</label>
-                    <input type="text" class="form-control" th:field="*{type}"/>
-                </div>
-
+                <!-- Slug -->
                 <div class="mb-3">
                     <label class="form-label">Slug:</label>
                     <input type="text" class="form-control" th:field="*{slug}"/>
                 </div>
 
+                <!-- Meta Title -->
                 <div class="mb-3">
                     <label class="form-label">Meta Title:</label>
                     <input type="text" class="form-control" th:field="*{metaTitle}"/>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Meta Keyword:</label>
-                    <input type="text" class="form-control" th:field="*{metaKeyword}"/>
-                </div>
-
+                <!-- Meta Description -->
                 <div class="mb-3">
                     <label class="form-label">Meta Description:</label>
                     <textarea class="form-control" th:field="*{metaDescription}" rows="3"></textarea>
                 </div>
 
+                <!-- Created & Updated Date (readonly) -->
                 <div class="mb-3">
                     <label class="form-label">Created Date:</label>
                     <input type="text" class="form-control"
-                           th:value="${#temporals.format(category.createdDate, 'yyyy-MM-dd HH:mm')}"
+                           th:value="${category.createdDate != null ? #temporals.format(category.createdDate, 'yyyy-MM-dd HH:mm') : ''}"
                            readonly/>
-                    <!-- Hidden để không mất createdDate khi submit -->
                     <input type="hidden" th:field="*{createdDate}"/>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Updated Date:</label>
                     <input type="text" class="form-control"
-                           th:value="${#temporals.format(category.updatedDate, 'yyyy-MM-dd HH:mm')}"
+                           th:value="${category.updatedDate != null ? #temporals.format(category.updatedDate, 'yyyy-MM-dd HH:mm') : ''}"
                            readonly/>
-                    <!-- Hidden để không mất updatedDate khi submit -->
                     <input type="hidden" th:field="*{updatedDate}"/>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Created By:</label>
-                    <input type="text" class="form-control" th:field="*{createdBy}"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Updated By:</label>
-                    <input type="text" class="form-control" th:field="*{updatedBy}"/>
-                </div>
-
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" th:field="*{isDelete}"/>
-                    <label class="form-check-label">Deleted</label>
-                </div>
-
+                <!-- Active checkbox -->
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
                     <label class="form-check-label">Active</label>
                 </div>
+
+                <!-- Buttons -->
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-success"
                             th:text="${category.id == null ? 'Create' : 'Update'}">Save</button>
