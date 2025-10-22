@@ -7,7 +7,7 @@
 </head>
 <body style="background: #f0f0f0">
 <div class="container bg-white mt-5 p-3">
-    <form th:action="@{/category/save}" th:object="${category}" method="post">
+    <form th:action="@{/category/save}" th:object="${category}" method="post" enctype="multipart/form-data">
         <div class="card m-3">
             <div class="card-header">
                 <h1 th:text="${category.id != null ? 'Edit Category' : 'Create Category'}">Category Form</h1>
@@ -27,11 +27,16 @@
                     <label class="form-label">Description:</label>
                     <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
                 </div>
-
-                <!-- Icon -->
+                <!-- Icon upload -->
                 <div class="mb-3">
-                    <label class="form-label">Icon (URL):</label>
-                    <input type="text" class="form-control" th:field="*{icon}"/>
+                    <label class="form-label">Icon (Chọn từ máy):</label>
+                    <input type="file" class="form-control" name="iconFile" accept="image/*">
+
+                    <!-- Hiển thị ảnh hiện tại nếu đang edit -->
+                    <div th:if="${category.icon}" class="mt-2">
+                        <p>Ảnh hiện tại:</p>
+                        <img th:src="@{'/uploads/' + ${category.icon}}" width="60" alt="icon">
+                    </div>
                 </div>
 
                 <!-- Parent Category -->

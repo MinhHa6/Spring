@@ -10,7 +10,28 @@
     <h2 class="mb-4">Category List</h2>
 
     <!-- Nút thêm mới category -->
-    <a th:href="@{/category/create}" class="btn btn-primary mb-3">Add New Category</a>
+    <!-- Khu vực tìm kiếm -->
+    <form th:action="@{/category/search}" method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="keyword" class="form-control" placeholder="Nhập tên danh mục cần tìm..."
+                   th:value="${keyword}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">
+                <i class="fas fa-search"></i> Tìm kiếm
+            </button>
+        </div>
+        <div class="col-md-2">
+            <a th:href="@{/category}" class="btn btn-secondary w-100">
+                <i class="fas fa-sync"></i> Làm mới
+            </a>
+        </div>
+        <div class="col-md-4 text-end">
+            <a th:href="@{/category/create}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm danh mục
+            </a>
+        </div>
+    </form>
 
     <!-- Kiểm tra nếu danh sách rỗng -->
     <div th:if="${#lists.isEmpty(categories)}">
@@ -41,8 +62,9 @@
             <td th:text="${category.name}"></td>
             <td th:text="${category.description}"></td>
             <td>
-                <img th:if="${category.icon}" th:src="${category.icon}" width="40" alt="icon"/>
+                <img th:if="${category.icon}" th:src="@{'/uploads/' + ${category.icon}}" width="50" alt="icon"/>
             </td>
+
             <!-- Nếu có danh mục cha -->
             <td th:text="${category.parent != null ? category.parent.name : 'None'}"></td>
             <td th:text="${category.slug}"></td>

@@ -36,4 +36,9 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
+    // tim kiem category
+    public List<Category>searchByName(String keyword)
+    {
+        return categoryRepository.findByNameContainingIgnoreCase(keyword);
+    }
 }
