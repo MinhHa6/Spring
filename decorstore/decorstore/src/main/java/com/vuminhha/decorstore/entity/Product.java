@@ -96,4 +96,12 @@ public class Product {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 }
