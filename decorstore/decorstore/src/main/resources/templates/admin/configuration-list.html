@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+
+<body>
+<div class="container mt-5">
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <div class="content p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Danh sách cấu hình sản phẩm</h2>
+            <a th:href="@{/configuration/create}" class="btn btn-primary">
+                <i class="fa fa-plus"></i> Thêm mới
+            </a>
+        </div>
+
+        <form class="d-flex mb-4" th:action="@{/configurations}" method="get">
+            <input type="text" class="form-control me-2" name="keyword"
+                   th:value="${keyword}" placeholder="Nhập tên cấu hình...">
+            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Tên cấu hình</th>
+                <th>Loại</th>
+                <th>Ghi chú</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="config : ${configurations}">
+                <td th:text="${config.id}"></td>
+                <td th:text="${config.name}"></td>
+                <td th:text="${config.type}"></td>
+                <td th:text="${config.notes}"></td>
+                <td>
+                    <span th:if="${config.isActive}" class="badge bg-success">Hoạt động</span>
+                    <span th:unless="${config.isActive}" class="badge bg-secondary">Ẩn</span>
+                </td>
+                <td>
+                    <a th:href="@{'/configuration/edit/' + ${config.id}}" class="btn btn-sm btn-warning">
+                        <i class="fa fa-edit"></i> Sửa
+                    </a>
+                    <a th:href="@{'/configuration/delete/' + ${config.id}}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Bạn có chắc chắn muốn xóa cấu hình này không?')">
+                        <i class="fa fa-trash"></i> Xóa
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(configurations)}" class="alert alert-info text-center">
+            Không có cấu hình nào được tìm thấy.
+        </div>
+    </div>
+</div>
+<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>
