@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Product Form</title>
+    <title th:text="${product.id != null ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}"></title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
-<body style="background: #f0f0f0">
-<div class="container bg-white mt-5 p-3">
-    <form th:action="@{/products/create}" th:object="${product}" method="post">
-        <div class="card m-3">
-            <div class="card-header">
-                <h1 th:text="${product.id != null ? 'Edit Product' : 'Create Product'}">Product Form</h1>
+<body style="background: #f0f0f0;">
+<div class="container bg-white mt-5 p-4 rounded shadow-sm">
+
+    <form th:action="@{/product/save}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <div class="card border-0">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0" th:text="${product.id != null ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}"></h3>
             </div>
+
             <div class="card-body">
+
                 <!-- Hidden ID -->
                 <input type="hidden" th:if="${product.id != null}" th:field="*{id}"/>
 
+                <!-- Tên sản phẩm -->
                 <div class="mb-3">
-                    <label class="form-label">Name:</label>
-                    <input type="text" class="form-control" th:field="*{name}" required/>
+                    <label class="form-label fw-bold">Tên sản phẩm</label>
+                    <input type="text" class="form-control" th:field="*{name}" placeholder="Nhập tên sản phẩm" required/>
                 </div>
 
+                <!-- Mô tả -->
                 <div class="mb-3">
-                    <label class="form-label">Description:</label>
-                    <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                    <label class="form-label fw-bold">Mô tả</label>
+                    <textarea class="form-control" th:field="*{description}" rows="3"
+                              placeholder="Mô tả ngắn gọn về sản phẩm..."></textarea>
                 </div>
 
+                <!-- Hình ảnh -->
                 <div class="mb-3">
-                    <label class="form-label">Notes:</label>
-                    <textarea class="form-control" th:field="*{notes}" rows="3"></textarea>
+                    <label class="form-label fw-bold">Ảnh sản phẩm</label>
+                    <input type="file" name="imageFile" class="form-control" accept="image/*"/>
+                    <div class="mt-2" th:if="${product.mainImage != null}">
+                        <img th:src="@{/uploads/{img}(img=${product.mainImage})}" alt="Ảnh sản phẩm"
+                             width="100" height="100" class="border rounded shadow-sm">
+                    </div>
                 </div>
 
+                <!-- Danh mục -->
                 <div class="mb-3">
-                    <label class="form-label">Image (URL):</label>
-                    <input type="text" class="form-control" th:field="*{image}"/>
-                </div>
-
-                <!-- Category -->
-                <div class="mb-3">
-                    <label class="form-label">Category</label>
-                    <select th:field="*{category}" class="form-select">
-                        <option value="" disabled selected>-- Select Category --</option>
+                    <label class="form-label fw-bold">Danh mục</label>
+                    <select th:field="*{category}" class="form-select" required>
+                        <option value="" disabled selected>-- Chọn danh mục --</option>
                         <option th:each="cat : ${categories}"
                                 th:value="${cat.id}"
                                 th:text="${cat.name}"
@@ -48,86 +54,66 @@
                         </option>
                     </select>
                 </div>
+
+                <!-- Giá -->
                 <div class="mb-3">
-                    <label class="form-label">Contents:</label>
-                    <textarea class="form-control" th:field="*{contents}" rows="3"></textarea>
+                    <label class="form-label fw-bold">Giá (VNĐ)</label>
+                    <input type="number" step="0.01" class="form-control" th:field="*{price}" placeholder="Nhập giá..." required/>
                 </div>
 
+                <!-- Số lượng -->
                 <div class="mb-3">
-                    <label class="form-label">Price:</label>
-                    <input type="number" step="0.01" class="form-control" th:field="*{price}" required/>
+                    <label class="form-label fw-bold">Số lượng</label>
+                    <input type="number" class="form-control" th:field="*{quantity}" placeholder="Nhập số lượng" required/>
                 </div>
 
+                <!-- Slug -->
                 <div class="mb-3">
-                    <label class="form-label">Quantity:</label>
-                    <input type="number" class="form-control" th:field="*{quantity}" required/>
+                    <label class="form-label fw-bold">Slug (đường dẫn SEO)</label>
+                    <input type="text" class="form-control" th:field="*{slug}" placeholder="ví dụ: den-trang-tri-phong-khach"/>
                 </div>
 
+                <!-- Meta Title -->
                 <div class="mb-3">
-                    <label class="form-label">Slug:</label>
-                    <input type="text" class="form-control" th:field="*{slug}" required/>
+                    <label class="form-label fw-bold">Meta Title</label>
+                    <input type="text" class="form-control" th:field="*{metaTitle}" placeholder="Tiêu đề SEO..."/>
                 </div>
 
+                <!-- Meta Description -->
                 <div class="mb-3">
-                    <label class="form-label">Meta Title:</label>
-                    <input type="text" class="form-control" th:field="*{metaTitle}"/>
+                    <label class="form-label fw-bold">Meta Description</label>
+                    <textarea class="form-control" th:field="*{metaDescription}" rows="2"
+                              placeholder="Mô tả SEO..."></textarea>
                 </div>
 
+                <!-- Số lượng tồn kho -->
                 <div class="mb-3">
-                    <label class="form-label">Meta Keyword:</label>
-                    <input type="text" class="form-control" th:field="*{metaKeyword}"/>
+                    <label class="form-label fw-bold">Tồn kho</label>
+                    <input type="number" class="form-control" th:field="*{stock}" placeholder="Số lượng trong kho"/>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Meta Description:</label>
-                    <textarea class="form-control" th:field="*{metaDescription}" rows="3"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Created Date:</label>
-                    <input type="text" class="form-control"
-                           th:value="${#temporals.format(product.createdDate, 'yyyy-MM-dd HH:mm')}"
-                           readonly/>
-                    <!-- Hidden để không mất createdDate khi submit -->
-                    <input type="hidden" th:field="*{createdDate}"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Updated Date:</label>
-                    <input type="text" class="form-control"
-                           th:value="${#temporals.format(product.updatedDate, 'yyyy-MM-dd HH:mm')}"
-                           readonly/>
-                    <!-- Hidden để không mất updatedDate khi submit -->
-                    <input type="hidden" th:field="*{updatedDate}"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Created By:</label>
-                    <input type="text" class="form-control" th:field="*{createdBy}"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Updated By:</label>
-                    <input type="text" class="form-control" th:field="*{updatedBy}"/>
-                </div>
-
+                <!-- Trạng thái -->
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" th:field="*{isDelete}"/>
-                    <label class="form-check-label">Deleted</label>
+                    <input type="checkbox" class="form-check-input" th:field="*{isActive}" id="isActive">
+                    <label class="form-check-label" for="isActive">Kích hoạt sản phẩm</label>
                 </div>
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" th:field="*{isActive}"/>
-                    <label class="form-check-label">Active</label>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success"
-                            th:text="${product.id == null ? 'Create' : 'Update'}">Save</button>
-                    <a th:href="@{/products}" class="btn btn-secondary">Back to List</a>
-                </div>
+            </div>
+
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">
+                    <i class="fas fa-save"></i>
+                    <span th:text="${product.id != null ? 'Cập nhật' : 'Thêm mới'}"></span>
+                </button>
+                <a th:href="@{/product}" class="btn btn-secondary px-4">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
             </div>
         </div>
     </form>
 </div>
+
+<!-- Font Awesome (nếu bạn dùng icon) -->
+<div th:replace="admin/fragments/script::script"></div>
 </body>
 </html>
