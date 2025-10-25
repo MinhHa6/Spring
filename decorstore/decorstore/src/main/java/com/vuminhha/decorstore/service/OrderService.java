@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.net.FileNameMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -29,6 +30,20 @@ public class OrderService {
         this.productRepository=productRepository;
     }
 
+    /**
+     * ds don hang
+     */
+    public List<Order>getAllOrders()
+    {
+        return orderRepository.findAll();
+    }
+    /**
+     * Lay don hang theo Id
+     */
+    public Order getOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+    }
     /**
      * tao don hang tu gio hang
      */
@@ -116,4 +131,10 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Tim kiem don hang
+     */
+    public List<Order> searchOrders(String keyword) {
+        return orderRepository.findByKeyword(keyword);
+    }
 }

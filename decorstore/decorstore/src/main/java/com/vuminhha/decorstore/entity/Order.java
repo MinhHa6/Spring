@@ -65,6 +65,13 @@ public class Order {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
+    @Transient
+    public String getStatus() {
+        if (!Boolean.TRUE.equals(this.isActive)) {
+            return "Đã hủy";
+        }
+        return "Hoạt động";
+    }
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
 
