@@ -24,7 +24,7 @@ public class PostService {
     {
         return blogPostRepository.findById(id).orElseThrow(()-> new RuntimeException("Blog not found with by id:"+id));
     }
-    // them hoac cap nha blog
+    // them hoac cap nhat blog
     public BlogPost saveBlog(BlogPost blogPost)
     {
         return blogPostRepository.save(blogPost);

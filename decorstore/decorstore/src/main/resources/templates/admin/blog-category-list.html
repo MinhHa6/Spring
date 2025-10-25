@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body>
+<div class="container mt-5">
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <div class="content p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Danh sách danh mục Blog</h2>
+            <a th:href="@{/blog-categories/create}" class="btn btn-success">Thêm mới</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(categories)}" class="alert alert-info">
+            Không có danh mục nào.
+        </div>
+
+        <table class="table table-hover" th:if="${!#lists.isEmpty(categories)}">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Tên danh mục</th>
+                <th>Slug</th>
+                <th>Mô tả</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.id}"></td>
+                <td th:text="${category.name}"></td>
+                <td th:text="${category.slug}"></td>
+                <td th:text="${category.description}"></td>
+                <td>
+                    <a th:href="@{'/blog-categories/edit/' + ${category.id}}" class="btn btn-sm btn-info">Sửa</a>
+                    <form th:action="@{'/blog-categories/delete/' + ${category.id}}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Bạn có chắc muốn xóa danh mục này không?')">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>
