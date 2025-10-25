@@ -59,11 +59,10 @@ public class TransportController {
     }
     // tim kiem theo ten
     @GetMapping("/search")
-    public String searchTransport(Model model,@RequestParam("keyword")String keyword)
-    {
-        List<TransportMethod>transports=transportMethodService.searchByName(keyword);
-        model.addAttribute("transportMethods",transports);
-        model.addAttribute("keyword",keyword);
+    public String searchTransport(Model model, @RequestParam("keyword") String keyword) {
+        List<TransportMethod> transports = transportMethodService.searchByName(keyword);
+        model.addAttribute("transports", transports);
+        model.addAttribute("keyword", keyword);
         return "admin/transport-list";
     }
 }
