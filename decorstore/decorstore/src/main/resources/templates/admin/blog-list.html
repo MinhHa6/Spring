@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body>
+<div class="container mt-5">
+    <!-- Sidebar -->
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <!-- Content -->
+    <div class="content p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Danh sách bài viết Blog</h2>
+            <a th:href="@{/blogs/create}" class="btn btn-success">Thêm mới</a>
+        </div>
+
+        <!-- Thông báo nếu trống -->
+        <div th:if="${#lists.isEmpty(blogs)}" class="alert alert-info">
+            Chưa có bài viết nào.
+        </div>
+
+        <!-- Bảng danh sách -->
+        <table class="table table-hover" th:if="${!#lists.isEmpty(blogs)}">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Slug</th>
+                <th>Danh mục</th>
+                <th>Ảnh đại diện</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Ngày cập nhật</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="blog : ${blogs}">
+                <td th:text="${blog.id}"></td>
+                <td th:text="${blog.title}"></td>
+                <td th:text="${blog.slug}"></td>
+                <td th:text="${blog.category != null ? blog.category.name : 'Chưa có'}"></td>
+                <td>
+                    <img th:if="${blog.thumbnail != null}"
+                         th:src="${blog.thumbnail}"
+                         alt="Thumbnail" width="80" height="60"
+                         style="object-fit:cover;border-radius:4px;">
+                    <span th:if="${blog.thumbnail == null}" class="text-muted">Không có</span>
+                </td>
+                <td>
+                    <span th:text="${blog.isActive} ? 'Hiển thị' : 'Ẩn'"
+                          th:classappend="${blog.isActive} ? 'text-success' : 'text-danger'"></span>
+                </td>
+                <td th:text="${#temporals.format(blog.createdDate, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(blog.updatedDate, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{'/blogs/edit/' + ${blog.id}}" class="btn btn-sm btn-info">Sửa</a>
+
+                    <a th:href="@{'/blogs/toggle/' + ${blog.id}}"
+                       th:text="${blog.isActive} ? 'Ẩn' : 'Hiện'"
+                       class="btn btn-sm btn-warning"></a>
+
+                    <form th:action="@{'/blogs/delete/' + ${blog.id}}"
+                          method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Bạn có chắc muốn xóa bài viết này không?')">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body>
+<div class="container mt-5">
+    <!-- Sidebar -->
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <!-- Nội dung -->
+    <div class="content p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 th:text="${blog.id == null ? 'Thêm bài viết mới' : 'Chỉnh sửa bài viết'}"></h2>
+            <a th:href="@{/blogs}" class="btn btn-secondary">Quay lại</a>
+        </div>
+
+        <form th:action="@{/blogs/save}" th:object="${blog}" method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+
+            <!-- ID ẩn khi chỉnh sửa -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <!-- Giữ lại ngày tạo khi update để không bị mất -->
+            <input type="hidden" th:field="*{createdDate}" />
+
+            <!-- Tiêu đề -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Tiêu đề</label>
+                <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Nhập tiêu đề bài viết" required>
+            </div>
+
+            <!-- Slug -->
+            <div class="mb-3">
+                <label for="slug" class="form-label">Slug (đường dẫn SEO)</label>
+                <input type="text" id="slug" th:field="*{slug}" class="form-control" placeholder="slug-bai-viet" required>
+                <small class="text-muted">Slug phải là duy nhất và không chứa khoảng trắng.</small>
+            </div>
+
+            <!-- Danh mục -->
+            <div class="mb-3">
+                <label for="category" class="form-label">Danh mục</label>
+                <select id="category" th:field="*{category}" class="form-select" required>
+                    <option value="">-- Chọn danh mục --</option>
+                    <option th:each="c : ${categories}"
+                            th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:selected="${blog.category != null and c.id == blog.category.id}">
+                    </option>
+
+                </select>
+            </div>
+
+            <!-- Ảnh đại diện -->
+            <div class="mb-3">
+                <label for="thumbnail" class="form-label">Ảnh đại diện (link hoặc upload)</label>
+                <input type="text" id="thumbnail" th:field="*{thumbnail}" class="form-control" placeholder="Nhập URL ảnh hoặc để trống">
+                <div class="mt-2" th:if="${blog.thumbnail != null}">
+                    <img th:src="@{${blog.thumbnail}}" alt="Thumbnail" width="120" height="90"
+                         style="object-fit:cover;border-radius:6px;">
+                </div>
+            </div>
+
+            <!-- Nội dung -->
+            <div class="mb-3">
+                <label for="content" class="form-label">Nội dung</label>
+                <textarea id="content" th:field="*{content}" class="form-control" rows="8" placeholder="Nhập nội dung bài viết..."></textarea>
+            </div>
+
+            <!-- Hiển thị ngày tạo và ngày cập nhật (chỉ khi chỉnh sửa) -->
+            <div th:if="${blog.id != null}" class="mt-4 border-top pt-3">
+                <p><strong>Ngày tạo:</strong>
+                    <span th:text="${#temporals.format(blog.createdDate, 'dd/MM/yyyy HH:mm')}">--</span>
+                </p>
+                <p><strong>Ngày cập nhật gần nhất:</strong>
+                    <span th:text="${#temporals.format(blog.updatedDate, 'dd/MM/yyyy HH:mm')}">--</span>
+                </p>
+            </div>
+            <!-- Trạng thái -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="isActive" th:field="*{isActive}">
+                <label class="form-check-label" for="isActive">Hiển thị bài viết</label>
+            </div>
+
+            <!-- Nút lưu -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-save"></i> Lưu bài viết
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="admin/fragments/script :: script"></div>
+
+<!-- Script tự động sinh slug -->
+<script>
+    document.getElementById('title').addEventListener('input', function() {
+        const slugInput = document.getElementById('slug');
+        const text = this.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        slugInput.value = text.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-');
+    });
+</script>
+</body>
+</html>

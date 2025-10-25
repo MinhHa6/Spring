@@ -51,5 +51,13 @@ public class BlogPost {
     protected void onUpdate() {
         this.updatedDate = LocalDateTime.now();
     }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }
 
