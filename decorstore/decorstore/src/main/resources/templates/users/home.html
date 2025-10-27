@@ -132,16 +132,25 @@
         <div class="row">
             <div class="col-md-6 col-lg-3 ftco-animate" th:each="pro : ${featuredProducts}">
                 <div class="product">
-                    <a th:href="@{'/product/' + ${pro.id}}" class="img-prod">
-                        <img class="img-fluid" th:src="@{'/assets/uploads/' + ${pro.mainImage}}" th:alt="${pro.name}">
+                    <a th:href="@{/product/{id}(id=${pro.id})}" class="img-prod">
+                        <th:block th:with="safeImageName=${#strings.replace(pro.mainImage, ' ', '_')}">
+                            <img class="img-fluid"
+                                 th:src="@{'/assets/uploads/' + ${safeImageName}}"
+                                 th:alt="${pro.name}"
+
+                                 onerror="this.onerror=null; this.src='/images/default-placeholder.png';">
+                        </th:block>
                         <div class="overlay"></div>
                     </a>
                     <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a th:text="${pro.name}"></a></h3>
+                        <h3>
+                            <a th:href="@{/product/{id}(id=${pro.id})}"
+                               th:text="${pro.name}"></a>
+                        </h3>
                         <div class="pricing">
                             <p class="price">
-                               <span th:if="${pro.price != null}"
-                                     th:text="${#numbers.formatInteger(pro.price, 0, 'POINT')} + ' ₫'"></span></span>
+                                <span th:if="${pro.price != null}"
+                                      th:text="${#numbers.formatInteger(pro.price, 0, 'POINT')} + ' ₫'"></span>
                                 <span th:if="${pro.price == null}">Liên hệ</span>
                             </p>
                         </div>
@@ -151,7 +160,6 @@
         </div>
     </div>
 </section>
-
 <footer th:replace="users/fragments/footer :: footer"></footer>
 <div th:replace="users/fragments/script :: script"></div>
 
