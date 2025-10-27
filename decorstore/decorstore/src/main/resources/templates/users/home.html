@@ -6,7 +6,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" th:href="@{/}">Pet Kingdom</a>
+        <a class="navbar-brand" th:href="@{/}">Decor Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav">
             <span class="oi oi-menu"></span> Menu
         </button>
@@ -51,65 +51,73 @@
 <!-- Banner -->
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
-        <div class="slider-item" th:style="'background-image: url(/images/banner2.jpg);'">
+        <div class="slider-item" th:style="'background-image: url(https://images.unsplash.com/photo-1505691938895-1758d7feb511);'">
             <div class="overlay"></div>
         </div>
-        <div class="slider-item" th:style="'background-image: url(/images/bannercho.jpg);'">
+        <div class="slider-item" th:style="'background-image: url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c);'">
             <div class="overlay"></div>
         </div>
     </div>
 </section>
 
+
 <!-- Services -->
 <section class="ftco-section">
     <div class="container">
         <div class="row no-gutters ftco-services">
+            <!-- Giao hàng nhanh -->
             <div class="col-md-3 text-center d-flex ftco-animate">
                 <div class="media block-6 services">
                     <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
                         <span class="flaticon-shipped"></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Giao hàng miễn phí</h3>
-                        <span>Cho đơn hàng trên 2.000.000</span>
+                        <h3 class="heading">Giao hàng toàn quốc</h3>
+                        <span>Miễn phí cho đơn trên 2.000.000₫</span>
                     </div>
                 </div>
             </div>
+
+            <!-- Sản phẩm decor chất lượng -->
             <div class="col-md-3 text-center d-flex ftco-animate">
                 <div class="media block-6 services">
                     <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-                        <span class="flaticon-pet-house"></span>
-                    </div>
+                        <span class="fa-solid fa-couch"></span>  <!-- sofa -->                    </div>
                     <div class="media-body">
-                        <h3 class="heading">Sản phẩm chất lượng</h3>
-                        <span>Đảm bảo nguồn gốc rõ ràng</span>
+                        <h3 class="heading">Sản phẩm cao cấp</h3>
+                        <span>Chất liệu bền đẹp, thiết kế tinh tế</span>
                     </div>
                 </div>
             </div>
+
+            <!-- Đa dạng mẫu mã -->
             <div class="col-md-3 text-center d-flex ftco-animate">
                 <div class="media block-6 services">
                     <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-                        <span class="flaticon-pet-toy"></span>
+                        <span class="fa-solid fa-lightbulb"></span> <!-- lamp -->
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Phụ kiện đa dạng</h3>
-                        <span>Thức ăn, đồ chơi và dụng cụ chăm sóc</span>
+                        <h3 class="heading">Mẫu mã đa dạng</h3>
+                        <span>Phù hợp nhiều phong cách không gian</span>
                     </div>
                 </div>
             </div>
+
+            <!-- Tư vấn tận tâm -->
             <div class="col-md-3 text-center d-flex ftco-animate">
                 <div class="media block-6 services">
                     <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
-                        <span class="flaticon-veterinary"></span>
+                        <span class="fa-solid fa-headset"></span>      <!-- Hỗ trợ -->
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Hỗ trợ chuyên nghiệp</h3>
-                        <span>Dịch vụ tư vấn và chăm sóc thú y</span>
+                        <h3 class="heading">Hỗ trợ tận tâm</h3>
+                        <span>Hỗ trợ chọn sản phẩm & decor không gian</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 </section>
 
 <!-- Sản phẩm nổi bật -->
