@@ -17,13 +17,8 @@ public class UserController {
     {
         this.productService=productService;
     }
-    @GetMapping
-    public String home()
-    {
-        return "users/home";
-    }
     // san pham noi bat o home
-    @GetMapping("/product")
+    @GetMapping
     public String productHome(Model model )
     {
         List<Product> featuredProducts = productService.getFeaturedProducts();
