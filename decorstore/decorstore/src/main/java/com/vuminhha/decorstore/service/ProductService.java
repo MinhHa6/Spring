@@ -54,4 +54,9 @@ public class ProductService {
         return productRepository.findByCategoryId(categoryId);
     }
 
+    // Lay ra san pham noi bat
+    public List<Product>getFeaturedProducts()
+    {
+        return productRepository.findByIsFeaturedTrueAndIsActiveTrue();
+    }
 }

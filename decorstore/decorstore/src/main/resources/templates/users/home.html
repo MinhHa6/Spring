@@ -120,7 +120,6 @@
 </section>
 </section>
 
-<!-- Sản phẩm nổi bật -->
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
@@ -131,29 +130,20 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-lg-3 ftco-animate" th:each="pro : ${products}">
+            <div class="col-md-6 col-lg-3 ftco-animate" th:each="pro : ${featuredProducts}">
                 <div class="product">
                     <a th:href="@{'/product/' + ${pro.id}}" class="img-prod">
-                        <img class="img-fluid" th:src="@{'/uploads/' + ${pro.picture}}" th:alt="${pro.name}">
+                        <img class="img-fluid" th:src="@{'/assets/uploads/' + ${pro.mainImage}}" th:alt="${pro.name}">
                         <div class="overlay"></div>
                     </a>
                     <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a th:href="@{'/product/' + ${pro.id}}" th:text="${pro.name}"></a></h3>
+                        <h3><a th:text="${pro.name}"></a></h3>
                         <div class="pricing">
                             <p class="price">
-                                <span th:text="${#numbers.formatDecimal(pro.price, 0, 'POINT', '.', ',')} + ' ₫'"></span>
+                               <span th:if="${pro.price != null}"
+                                     th:text="${#numbers.formatDecimal(pro.price, 0, 'POINT', '.', ',')} + ' ₫'"></span>
+                                <span th:if="${pro.price == null}">Liên hệ</span>
                             </p>
-                        </div>
-                        <div class="bottom-area d-flex px-3">
-                            <div class="m-auto d-flex">
-                                <a th:href="@{'/product/' + ${pro.id}}" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                    <span><i class="ion-ios-menu"></i></span>
-                                </a>
-                                &nbsp;
-                                <a th:href="@{'/wishlist/add/' + ${pro.id}}" class="heart d-flex justify-content-center align-items-center">
-                                    <span><i class="ion-ios-heart"></i></span>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>

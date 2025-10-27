@@ -48,6 +48,8 @@ public class Product {
     private String metaDescription;
 
     private Boolean isActive = true;
+    @Column(nullable = false)
+    private Boolean isFeatured = false; // San pham noi bat
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;

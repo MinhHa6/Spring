@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByNameContainingIgnoreCase(String name);
     // tim kiem theo CategoryId
     List<Product>findByCategoryId(Long categoryId);
+    // Lay ra san pham noi bat
+    List<Product>findByIsFeaturedTrueAndIsActiveTrue();
 }
