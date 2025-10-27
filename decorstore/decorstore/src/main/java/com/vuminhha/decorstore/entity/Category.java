@@ -45,8 +45,10 @@ public class Category {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    // ✅ QUAN TRỌNG: Không dùng CASCADE.ALL
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @ToString.Exclude // Tránh lỗi StackOverflow
+    @EqualsAndHashCode.Exclude    private List<Product> products = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -73,5 +75,13 @@ public class Category {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

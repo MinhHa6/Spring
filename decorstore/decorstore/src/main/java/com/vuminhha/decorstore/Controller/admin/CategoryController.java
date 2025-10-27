@@ -1,11 +1,13 @@
 package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Category;
+import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,33 +48,59 @@ public class CategoryController {
      */
     @PostMapping("/save")
     public String saveCategory(@ModelAttribute Category category,
-                               @RequestParam("iconFile") MultipartFile file) {
+                               @RequestParam("iconFile") MultipartFile iconFile,
+                               RedirectAttributes redirectAttributes) {
         try {
-            if (!file.isEmpty()) {
-                String uploadDir = new File("src/main/resources/static/uploads/").getAbsolutePath();
-                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                Path path = Paths.get(uploadDir, fileName);
-                Files.createDirectories(path.getParent());
-                Files.write(path, file.getBytes());
+            if (!iconFile.isEmpty()) {
+                // ✅ Đường dẫn chính xác
+                String uploadDir = "src/main/resources/static/uploads/";
+                File directory = new File(uploadDir);
 
-                // Lưu tên file mới vào DB
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                    System.out.println("Created directory: " + uploadDir);
+                }
+
+                String fileName = System.currentTimeMillis() + "_" + iconFile.getOriginalFilename();
+                Path path = Paths.get(uploadDir, fileName);
+                Files.write(path, iconFile.getBytes());
+
+                System.out.println("✅ File saved: " + path.toAbsolutePath()); // Log để check
+
+                // Xóa ảnh cũ
+                if (category.getId() != null) {
+                    Category existing = categoryService.getCategoryId(category.getId());
+                    if (existing != null && existing.getIcon() != null) {
+                        File oldFile = new File(uploadDir + existing.getIcon());
+                        if (oldFile.exists()) {
+                            oldFile.delete();
+                            System.out.println("Deleted old file: " + existing.getIcon());
+                        }
+                    }
+                }
+
                 category.setIcon(fileName);
-            } else {
-                // Giữ lại icon cũ nếu không upload mới
+
+            } else if (category.getId() != null) {
                 Category existing = categoryService.getCategoryId(category.getId());
                 if (existing != null) {
                     category.setIcon(existing.getIcon());
+                    System.out.println("⚠️ Keep old icon: " + existing.getIcon());
                 }
             }
 
             categoryService.saveCategory(category);
+            System.out.println("💾 Category saved with icon: " + category.getIcon());
+
+            redirectAttributes.addFlashAttribute("success", "Lưu thành công!");
+
         } catch (IOException e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi upload: " + e.getMessage());
         }
 
         return "redirect:/category";
     }
-
     /**
      * Form chinh sua category theo id
      */

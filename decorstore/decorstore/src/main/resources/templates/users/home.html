@@ -139,7 +139,11 @@
                     <div class="text py-3 pb-4 px-3 text-center">
                         <h3><a th:text="${pro.name}"></a></h3>
                         <div class="pricing">
-
+                            <p class="price">
+                               <span th:if="${pro.price != null}"
+                                     th:text="${#numbers.formatInteger(pro.price, 0, 'POINT')} + ' ₫'"></span></span>
+                                <span th:if="${pro.price == null}">Liên hệ</span>
+                            </p>
                         </div>
                     </div>
                 </div>

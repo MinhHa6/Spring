@@ -91,6 +91,23 @@
                     <label class="form-label fw-bold">Tồn kho</label>
                     <input type="number" class="form-control" th:field="*{stock}" placeholder="Số lượng trong kho"/>
                 </div>
+                <!-- Created & Updated Date (readonly) -->
+                <div class="mb-3">
+                    <label class="form-label">Created Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${product.createdDate != null ? #temporals.format(product.createdDate, 'yyyy-MM-dd HH:mm') : ''}"
+                           readonly/>
+                    <input type="hidden" th:field="*{createdDate}"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Updated Date:</label>
+                    <input type="text" class="form-control"
+                           th:value="${product.updatedDate != null ? #temporals.format(product.updatedDate, 'yyyy-MM-dd HH:mm') : ''}"
+                           readonly/>
+                    <input type="hidden" th:field="*{updatedDate}"/>
+                </div>
+
 
                 <!-- Trạng thái -->
                 <div class="mb-3 form-check">
