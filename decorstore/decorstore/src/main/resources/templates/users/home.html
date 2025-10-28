@@ -120,6 +120,60 @@
 </section>
 </section>
 
+<section class="ftco-section ftco-category ftco-no-pt">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6 order-md-last align-items-stretch d-flex">
+                        <div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
+                             th:style="'background-image: url(' + @{/assets/img/decor.jpg} + '); background-size: cover; background-position: center center; background-repeat: no-repeat;'">
+                            <div class="text text-center">
+                                <h2>Decor Store</h2>
+                                <p>Không gian sống sang trọng, tinh tế<br>
+                                    Đem đến vẻ đẹp và cảm xúc trong từng góc nhỏ</p>
+                                <p><a th:href="@{/shop}" class="btn btn-primary">Khám phá ngay</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                             th:style="'background-image: url(' + @{/assets/img/den-decor.jpg} + '); background-size: cover; background-position: center center; background-repeat: no-repeat;'">
+                            <div class="text px-3 py-1">
+                                <h2 class="mb-0"><a th:href="@{/shop(category='den')}">Đèn Decor</a></h2>
+                            </div>
+                        </div>
+
+                        <div class="category-wrap ftco-animate img d-flex align-items-end"
+                             th:style="'background-image: url(' + @{/assets/img/sofar.jpg} + '); background-size: cover; background-position: center center; background-repeat: no-repeat;'">
+                            <div class="text px-3 py-1">
+                                <h2 class="mb-0"><a th:href="@{/shop(category='sofa')}">Ghế & Sofa</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="category-wrap ftco-animate img d-flex align-items-end"
+                     th:style="'background-image: url(' + @{/assets/img/tranh-decor.jpg} + '); background-size: cover; background-position: center center; background-repeat: no-repeat;'">
+                    <div class="text px-3 py-1">
+                        <h2 class="mb-0"><a th:href="@{/shop(category='tranh')}">Tranh treo tường</a></h2>
+                    </div>
+                </div>
+
+                <div class="category-wrap ftco-animate img d-flex align-items-end mt-4"
+                     th:style="'background-image: url(' + @{/assets/img/binh-hoa.jpg} + '); background-size: cover; background-position: center center; background-repeat: no-repeat;'">
+                    <div class="text px-3 py-1">
+                        <h2 class="mb-0"><a th:href="@{/shop(category='binh-hoa')}">Bình hoa & Decor nhỏ</a></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
@@ -158,6 +212,102 @@
         </div>
     </div>
 </section>
+
+<section class="ftco-section testimony-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <span class="subheading">Cảm nhận khách hàng</span>
+                <h2 class="mb-4">Khách hàng nói gì về Decor Store</h2>
+                <p class="text-muted">Những phản hồi chân thành từ những người đã tin tưởng và lựa chọn sản phẩm của chúng tôi.</p>
+            </div>
+        </div>
+
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel">
+
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5 shadow-sm bg-white rounded">
+                            <div class="user-img mb-4"
+                                 th:style="'background-image: url(' + @{/assets/img/person_1.jpg} + '); background-size: cover;'">                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-4 line">“Không gian phòng khách của tôi trở nên sang trọng hơn rất nhiều. Chất lượng sản phẩm tuyệt vời!”</p>
+                                <p class="name fw-bold">Trần Hải Quang</p>
+                                <span class="position text-muted">Hà Nội</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5 shadow-sm bg-white rounded">
+                            <div class="user-img mb-4"
+                                 th:style="'background-image: url(' + @{/assets/img/person_2.jpg} + '); background-size: cover;'">                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-4 line">“Dịch vụ tư vấn rất tận tâm, giúp tôi chọn được bộ decor phù hợp với phong cách Scandinavian.”</p>
+                                <p class="name fw-bold">Lại Tuấn</p>
+                                <span class="position text-muted">Nam Định</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5 shadow-sm bg-white rounded">
+                            <div class="user-img mb-4"
+                                 th:style="'background-image: url(' + @{/assets/img/person_3.jpg} + '); background-size: cover;'">                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-4 line">“Sản phẩm decor cực kỳ tinh tế và hiện đại, giao hàng nhanh và đóng gói rất kỹ.”</p>
+                                <p class="name fw-bold">Lâm</p>
+                                <span class="position text-muted">Hà Nội</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5 shadow-sm bg-white rounded">
+                            <div class="user-img mb-4"
+                                 th:style="'background-image: url(' + @{/assets/img/person_4.jpg} + '); background-size: cover;'">                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-4 line">“Tôi mua bộ đèn decor phòng ngủ, ánh sáng ấm và tinh tế, đúng chuẩn phong cách tôi muốn.”</p>
+                                <p class="name fw-bold">Trần Long</p>
+                                <span class="position text-muted">Cần Thơ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5 shadow-sm bg-white rounded">
+                            <div class="user-img mb-4"
+                                 th:style="'background-image: url(' + @{/assets/img/05.jpg} + '); background-size: cover;'">                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-4 line">“Decor Store là lựa chọn hàng đầu của tôi khi muốn làm mới không gian sống.”</p>
+                                <p class="name fw-bold">Đặng Thanh Huyền</p>
+                                <span class="position text-muted">Huế</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end carousel -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <footer th:replace="users/fragments/footer :: footer"></footer>
 <div th:replace="users/fragments/script :: script"></div>
 
