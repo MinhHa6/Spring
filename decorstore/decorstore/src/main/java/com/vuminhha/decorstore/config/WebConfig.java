@@ -12,5 +12,12 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations(uploadPath);
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("classpath:/static/assets/");
+
+        // Debug log
+        System.out.println("=== Static Resources Configured ===");
+        System.out.println("Handler: /assets/**");
+        System.out.println("Location: classpath:/static/assets/");
     }
 }
