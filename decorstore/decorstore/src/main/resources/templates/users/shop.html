@@ -1,105 +1,175 @@
 <!DOCTYPE html>
-<html lang="vi"  xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="users/fragments/head :: head"></head>
+<style>
+    /* === HERO === */
+    .hero-wrap {
+        position: relative;
+        background-attachment: fixed;
+        color: white;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    .hero-bread {
+        background-size: cover;
+        background-position: center;
+    }
+    .breadcrumbs a {
+        color: #fff;
+        text-decoration: underline;
+    }
+    .breadcrumbs a:hover {
+        color: #ffd166;
+    }
 
+    /* === SHOP SECTION === */
+    .ftco-section {
+        background-color: #fafafa;
+        padding: 50px 0;
+    }
 
+    /* Sidebar */
+    .sidebar {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .sidebar h5 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    .category-list {
+        list-style: none;
+        padding: 0;
+    }
+    .category-list li {
+        margin: 8px 0;
+    }
+    .category-list a {
+        text-decoration: none;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+    .category-list a:hover {
+        color: #ff6600;
+        padding-left: 5px;
+    }
+
+    /* Search box */
+    .search-container input {
+        border-radius: 8px;
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    .search-container button {
+        width: 100%;
+        border: none;
+        border-radius: 8px;
+        background: #333;
+        color: #fff;
+        padding: 8px;
+        cursor: pointer;
+    }
+    .search-container button:hover {
+        background: #555;
+    }
+
+    /* === PRODUCTS === */
+    .product {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .product:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+    .product img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .product h6 {
+        font-weight: 600;
+        margin-top: 10px;
+    }
+    .product .price {
+        font-size: 1rem;
+        color: #e63946;
+        font-weight: bold;
+    }
+</style>
 <body class="goto-here">
 
 <!-- Navbar -->
-<div>
-    <nav th:replace="users/fragments/navbar :: nav"></nav>
-</div>
+<nav th:replace="users/fragments/navbar :: nav"></nav>
+
 <!-- HERO -->
-<div class="hero-wrap hero-bread" style="background-image: url('images/banner2.jpg');">
-    <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-            <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span><a href="index.html">Home</a></span> <span>Products</span></p>
-                <h1 class="mb-0 bread">Sản phẩm</h1>
-            </div>
-        </div>
+<div class="hero-wrap hero-bread"
+     th:style="'background-image: url(https://images.unsplash.com/photo-1505691938895-1758d7feb511); background-size: cover; background-position: center;'">
+    <div class="container text-center text-white d-flex flex-column justify-content-center align-items-center" style="height: 300px;">
+
     </div>
 </div>
 
 <!-- SHOP SECTION -->
-<section class="ftco-section">
+<section class="ftco-section py-5">
     <div class="container">
         <div class="row">
             <!-- SIDEBAR -->
-            <div class="col-md-3 mb-5">
-                <div class="search-container">
-                    <input type="text" placeholder="Tìm kiếm">
-                    <button type="button">Tìm kiếm</button>
+            <aside class="col-md-3 mb-5">
+                <div class="sidebar p-4 shadow-sm rounded bg-light">
+                    <form th:action="@{/shop}" method="get">
+                        <input type="text" name="keyword" class="form-control mb-2"
+                               th:value="${searchKeyword}" placeholder="🔍 Tìm kiếm sản phẩm decor...">
+                        <button type="submit" class="btn btn-dark w-100">Tìm kiếm</button>
+                    </form>
+
+                    <h5 class="mb-3 text-uppercase fw-bold">Danh mục Decor</h5>
+                    <ul class="list-unstyled category-list">
+                        <li><a th:href="@{/shop}">✨ Tất cả</a></li>
+                        <li th:each="cat : ${categories}">
+                            <a th:href="@{/shop(categoryId=${cat.id})}" th:text="${cat.name}"></a>
+                        </li>
+                    </ul>
                 </div>
-                <h3>DANH MỤC</h3>
-                <table class="product-category">
-                    <tr><td><a href="#">All</a></td></tr>
-                    <tr><td><a href="#">Chó</a></td></tr>
-                    <tr><td><a href="#">Mèo</a></td></tr>
-                    <tr><td><a href="#">Thức ăn</a></td></tr>
-                    <tr><td><a href="#">Phụ kiện</a></td></tr>
-                </table>
-            </div>
+            </aside>
 
             <!-- PRODUCTS -->
-            <div class="col-md-9 mb-5">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="product">
-                            <a href="#" class="img-prod">
-                                <img class="img-fluid" src="images/product1.jpg" alt="Sản phẩm 1">
+            <div class="col-md-9">
+                <div class="row g-4">
+                    <div class="col-md-3 col-sm-6" th:each="product : ${products}">
+                        <div class="product card border-0 shadow-sm h-100">
+                            <a th:href="@{'/product/' + ${product.id}}" class="img-prod">
+                                <img class="img-fluid"
+                                     th:src="${'/uploads/' + #strings.replace(product.mainImage, ' ', '_')}"
+                                     th:alt="${product.name}"
+                                     onerror="this.onerror=null; this.style.opacity='0.3';">
                             </a>
-                            <div class="text py-3 text-center">
-                                <h3><a href="#">Chó Poodle</a></h3>
-                                <p class="price"><span class="price-sale">3.500.000 ₫</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="product">
-                            <a href="#" class="img-prod">
-                                <img class="img-fluid" src="images/product2.jpg" alt="Sản phẩm 2">
-                            </a>
-                            <div class="text py-3 text-center">
-                                <h3><a href="#">Mèo Anh Lông Ngắn</a></h3>
-                                <p class="price"><span class="price-sale">4.000.000 ₫</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="product">
-                            <a href="#" class="img-prod">
-                                <img class="img-fluid" src="images/product3.jpg" alt="Sản phẩm 3">
-                            </a>
-                            <div class="text py-3 text-center">
-                                <h3><a href="#">Đồ chơi thú cưng</a></h3>
-                                <p class="price"><span class="price-sale">150.000 ₫</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="product">
-                            <a href="#" class="img-prod">
-                                <img class="img-fluid" src="images/product4.jpg" alt="Sản phẩm 4">
-                            </a>
-                            <div class="text py-3 text-center">
-                                <h3><a href="#">Thức ăn hạt</a></h3>
-                                <p class="price"><span class="price-sale">250.000 ₫</span></p>
+                            <div class="card-body text-center">
+                                <h6 class="fw-bold">
+                                    <a th:href="@{'/product/' + ${product.id}}" class="text-dark"
+                                       th:text="${product.name}"></a>
+                                </h6>
+                                <p class="price text-danger fw-bold"
+                                   th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer th:replace="users/fragments/footer :: footer"></footer>
-<!-- JS -->
 <div th:replace="users/fragments/script :: script"></div>
 </body>
 </html>
