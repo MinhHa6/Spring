@@ -7,6 +7,7 @@ import com.vuminhha.decorstore.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,6 +44,13 @@ public class ShopController {
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
         return "users/shop"; // Giao diện shop.html (Decor Store)
+    }
+    @GetMapping("/{id}")
+    public String viewProductDetail(@PathVariable("id")Long id,Model model)
+    {
+        Product product=productService.getProductId(id);
+        model.addAttribute("product",product);
+        return "users/product_detail";
     }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="users/fragments/head :: head"></head>
 <body class="goto-here">
 
@@ -9,10 +9,15 @@
 </div>
 
 <!-- HERO -->
-<div class="hero-wrap hero-bread" style="background-image: url('images/banner2.jpg');">
+<div class="hero-wrap hero-bread"
+     th:style="'background-image: url(https://images.unsplash.com/photo-1505691938895-1758d7feb511); background-size: cover; background-position: center;'">
     <div class="container text-center">
-        <p class="breadcrumbs"><span><a href="index.html">Trang chủ</a></span> <span>Sản phẩm</span> <span>Chi tiết sản phẩm</span></p>
-        <h1 class="mb-0 bread">Chi tiết sản phẩm</h1>
+        <p class="breadcrumbs">
+            <span><a th:href="@{/}">Trang chủ</a></span>
+            <span><a th:href="@{/products}">Sản phẩm</a></span>
+            <span th:text="${product.name}"></span>
+        </p>
+        <h1 class="mb-0 bread" th:text="${product.name}">Chi tiết sản phẩm</h1>
     </div>
 </div>
 
@@ -20,20 +25,29 @@
 <section class="ftco-section">
     <div class="container">
         <div class="row">
+            <!-- Hình ảnh sản phẩm -->
             <div class="col-lg-6 mb-5 ftco-animate">
-                <a id="main-image-link" href="uploads/sample1.jpg" class="image-popup">
-                    <img id="main-image" class="img-fluid main-image" src="uploads/sample1.jpg" alt="Bình hoa decor sang trọng">
+                <a id="main-image-link" th:href="@{'/uploads/' + ${product.mainImage}}" class="image-popup">
+                    <img id="main-image" class="img-fluid main-image"
+                         th:src="@{'/uploads/' + ${product.mainImage}}"
+                         th:alt="${product.name}">
                 </a>
-                <div class="additional-images mt-2 d-flex">
-                    <img src="uploads/sample2.jpg" class="img-thumbnail" style="width:100px; height:100px; margin-right:5px;" onclick="swapImages(this)">
-                    <img src="uploads/sample3.jpg" class="img-thumbnail" style="width:100px; height:100px; margin-right:5px;" onclick="swapImages(this)">
-                    <img src="uploads/sample4.jpg" class="img-thumbnail" style="width:100px; height:100px; margin-right:5px;" onclick="swapImages(this)">
+
+                <!-- Ảnh phụ -->
+                <div class="additional-images mt-2 d-flex flex-wrap">
+                    <img th:each="img : ${product.images}"
+                         th:src="@{'/uploads/' + ${img.imageUrl}}"
+                         class="img-thumbnail"
+                         style="width:100px; height:100px; margin:5px; cursor:pointer;"
+                         onclick="swapImages(this)">
                 </div>
             </div>
 
+            <!-- Thông tin sản phẩm -->
             <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                <h3>Bình hoa decor sang trọng</h3>
-                <div class="rating d-flex">
+                <h3 th:text="${product.name}">Tên sản phẩm</h3>
+
+                <div class="rating d-flex mb-2">
                     <p class="text-left mr-4">
                         <a href="#" class="mr-2">5.0</a>
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
@@ -43,27 +57,40 @@
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
                     </p>
                     <p class="text-left mr-4">
-                        <a href="#" class="mr-2" style="color:#000;">100 <span style="color:#bbb;">Đánh giá</span></a>
+                        <a href="#" style="color:#000;">100 <span style="color:#bbb;">Đánh giá</span></a>
                     </p>
                     <p class="text-left">
-                        <a href="#" class="mr-2" style="color:#000;">500 <span style="color:#bbb;">Đã bán</span></a>
+                        <a href="#" style="color:#000;">500 <span style="color:#bbb;">Đã bán</span></a>
                     </p>
                 </div>
 
-                <p class="price"><span class="price-sale">450.000 ₫</span></p>
-                <p>Chiếc bình hoa decor tinh tế, mang phong cách Bắc Âu, thích hợp trang trí phòng khách hoặc làm quà tặng.</p>
+                <p class="price">
+                    <span class="price-sale text-danger fw-bold"
+                          th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'">
+                        0 ₫
+                    </span>
+                </p>
 
-                <div class="row mt-4">
+                <p th:text="${product.description}">
+                    Mô tả sản phẩm ở đây...
+                </p>
+
+                <div class="row mt-4 align-items-center">
                     <div class="input-group col-md-6 d-flex mb-3">
-                <span class="input-group-btn mr-2">
-                  <button type="button" class="quantity-left-minus btn" data-type="minus"><i class="ion-ios-remove"></i></button>
-                </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="10">
+                        <span class="input-group-btn mr-2">
+                            <button type="button" class="quantity-left-minus btn" data-type="minus">
+                                <i class="ion-ios-remove"></i>
+                            </button>
+                        </span>
+                        <input type="text" id="quantity" name="quantity"
+                               class="form-control input-number" value="1" min="1" max="10">
                         <span class="input-group-btn ml-2">
-                  <button type="button" class="quantity-right-plus btn" data-type="plus"><i class="ion-ios-add"></i></button>
-                </span>
+                            <button type="button" class="quantity-right-plus btn" data-type="plus">
+                                <i class="ion-ios-add"></i>
+                            </button>
+                        </span>
                     </div>
-                    <p style="color:#000;">Còn 10 sản phẩm</p>
+                    <p style="color:#000;">Còn <span th:text="${product.stock}"></span> sản phẩm</p>
                 </div>
 
                 <button class="btn btn-primary py-3 px-5">Thêm vào giỏ</button>
@@ -79,50 +106,20 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-lg-3 ftco-animate">
+            <div class="col-md-6 col-lg-3 ftco-animate" th:each="rel : ${relatedProducts}">
                 <div class="product">
-                    <a href="product-single.html" class="img-prod">
-                        <img class="img-fluid" src="uploads/decor1.jpg" alt="Đèn treo tường decor">
+                    <a th:href="@{'/product/' + ${rel.id}}" class="img-prod">
+                        <img class="img-fluid"
+                             th:src="@{'/uploads/' + ${rel.mainImage}}"
+                             th:alt="${rel.name}">
                     </a>
                     <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="product-single.html">Đèn treo tường decor</a></h3>
-                        <p class="price"><span class="price-sale">320.000 ₫</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="product">
-                    <a href="product-single.html" class="img-prod">
-                        <img class="img-fluid" src="uploads/decor2.jpg" alt="Tranh treo phòng khách">
-                    </a>
-                    <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="product-single.html">Tranh treo phòng khách</a></h3>
-                        <p class="price"><span class="price-sale">550.000 ₫</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="product">
-                    <a href="product-single.html" class="img-prod">
-                        <img class="img-fluid" src="uploads/decor3.jpg" alt="Lọ gốm nghệ thuật">
-                    </a>
-                    <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="product-single.html">Lọ gốm nghệ thuật</a></h3>
-                        <p class="price"><span class="price-sale">280.000 ₫</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="product">
-                    <a href="product-single.html" class="img-prod">
-                        <img class="img-fluid" src="uploads/decor4.jpg" alt="Tượng decor mini">
-                    </a>
-                    <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="product-single.html">Tượng decor mini</a></h3>
-                        <p class="price"><span class="price-sale">310.000 ₫</span></p>
+                        <h3><a th:href="@{'/product/' + ${rel.id}}" th:text="${rel.name}"></a></h3>
+                        <p class="price">
+                            <span class="price-sale text-danger fw-bold"
+                                  th:text="${#numbers.formatDecimal(rel.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'">
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -136,28 +133,28 @@
 
 <script>
     function swapImages(thumb) {
-      let mainImage = document.getElementById("main-image");
-      let mainImageLink = document.getElementById("main-image-link");
-      let tempSrc = mainImage.src;
-      mainImage.src = thumb.src;
-      mainImageLink.href = thumb.src;
-      thumb.src = tempSrc;
+        let mainImage = document.getElementById("main-image");
+        let mainImageLink = document.getElementById("main-image-link");
+        let tempSrc = mainImage.src;
+        mainImage.src = thumb.src;
+        mainImageLink.href = thumb.src;
+        thumb.src = tempSrc;
     }
 
     $(document).ready(function(){
-      $(".quantity-right-plus").click(function(e){
-        e.preventDefault();
-        var quantity = parseInt($("#quantity").val());
-        $("#quantity").val(quantity + 1);
-      });
+        $(".quantity-right-plus").click(function(e){
+            e.preventDefault();
+            let quantity = parseInt($("#quantity").val());
+            $("#quantity").val(quantity + 1);
+        });
 
-      $(".quantity-left-minus").click(function(e){
-        e.preventDefault();
-        var quantity = parseInt($("#quantity").val());
-        if(quantity > 1){
-          $("#quantity").val(quantity - 1);
-        }
-      });
+        $(".quantity-left-minus").click(function(e){
+            e.preventDefault();
+            let quantity = parseInt($("#quantity").val());
+            if(quantity > 1){
+                $("#quantity").val(quantity - 1);
+            }
+        });
     });
 </script>
 

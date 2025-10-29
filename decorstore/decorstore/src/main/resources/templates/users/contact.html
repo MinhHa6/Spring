@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
+
+<body class="goto-here">
+
+<!-- Navbar -->
+<div>
+    <nav th:replace="users/fragments/navbar :: nav"></nav>
+</div>
+
+<!-- HERO -->
+<div class="hero-wrap hero-bread"
+     style="background-image: url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1920&q=80');"
+     role="banner"
+     aria-label="Contact page hero section">
+    <div class="container text-center">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <nav aria-label="breadcrumb">
+                    <p class="breadcrumbs">
+                        <span class="mr-2"><a th:href="@{/}">Trang chủ</a></span>
+                        <span>Liên hệ</span>
+                    </p>
+                </nav>
+                <h1 class="mb-0 bread">Liên hệ với chúng tôi</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT FORM -->
+<section class="ftco-section contact-section bg-light">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+            <div class="col-md-3 d-flex">
+                <div class="info bg-white p-4 w-100 text-center">
+                    <p><span class="font-weight-bold">Địa chỉ:</span><br> 220 Minh Khai, Hai Bà Trưng, Hà Nội</p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="info bg-white p-4 w-100 text-center">
+                    <p><span class="font-weight-bold">Số điện thoại:</span><br> <a href="tel:0386828966">038 682 8966</a></p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="info bg-white p-4 w-100 text-center">
+                    <p><span class="font-weight-bold">Email:</span><br> <a href="mailto:decorstore@gmail.com">decorstore@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="info bg-white p-4 w-100 text-center">
+                    <p><span class="font-weight-bold">Website:</span><br> <a th:href="@{/}">Decor Store</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row block-9">
+            <div class="col-md-6 order-md-last d-flex">
+                <form th:action="@{/contact}" method="post" class="bg-white p-5 contact-form w-100">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Họ và tên *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Email *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại *" required pattern="[0-9]{10,11}">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Nội dung tin nhắn *" required style="height: 160px; resize: vertical;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Gửi tin nhắn" class="btn btn-primary py-3 px-5">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 d-flex">
+                <div class="map-responsive w-100">
+                    <!-- Bản đồ 220 Minh Khai, Hai Bà Trưng, Hà Nội -->
+                    <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.678352219768!2d105.85215431533445!3d21.004050093776947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac8395b4d931%3A0x188426d33c1c894b!2zMjIwIE1pbmggS2hhaSwgTWluaCBLaGFpLCBIYWkgQsOgIFRyxrBuZywgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1234567890123!5m2!1svi!2s"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Bản đồ vị trí cửa hàng Decor Store">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer th:replace="users/fragments/footer :: footer"></footer>
+
+<!-- JS -->
+<div th:replace="users/fragments/script :: script"></div>
 
 </body>
 </html>
