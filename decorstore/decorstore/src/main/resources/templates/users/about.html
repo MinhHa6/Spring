@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
+
+<body class="goto-here">
+
+<!-- Navbar -->
+<div>
+    <nav th:replace="users/fragments/navbar :: nav"></nav>
+</div>
+
+<!-- HERO SECTION -->
+<div class="hero-wrap hero-bread"
+     style="background-image: url('https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=1920&q=80');"
+     role="banner"
+     aria-label="About page hero section">
+    <div class="container text-center">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <nav aria-label="breadcrumb">
+                    <p class="breadcrumbs">
+                        <span class="mr-2"><a th:href="@{/}">Trang chủ</a></span>
+                        <span>Về chúng tôi</span>
+                    </p>
+                </nav>
+                <h1 class="mb-0 bread">Về Chúng Tôi</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ABOUT SECTION -->
+<section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
+    <div class="container">
+        <div class="row">
+            <!-- Phần hình ảnh -->
+            <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center"
+                 style="background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80'); background-size: cover; background-position: center; height: 500px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                 role="img"
+                 aria-label="Decor Store interior design">
+            </div>
+
+            <!-- Phần văn bản -->
+            <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
+                <div class="heading-section-bold mb-4 mt-md-5">
+                    <div class="ml-md-0">
+                        <h2 class="mb-4" style="font-size: 2.5rem; font-weight: bold; color: #2980b9;">
+                            Chào Mừng Bạn Đến Với Decor Store
+                        </h2>
+                    </div>
+                </div>
+                <div class="pb-md-5">
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.8;">
+                        Chào mừng bạn đến với <strong>Decor Store</strong>, nơi biến không gian sống của bạn thành tổ ấm hoàn hảo với những sản phẩm trang trí nội thất độc đáo và sang trọng.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.8;">
+                        Chúng tôi cung cấp đa dạng các sản phẩm decor từ đèn trang trí, tranh nghệ thuật, gối trang trí, đồ gốm sứ đến các phụ kiện nội thất hiện đại. Tất cả đều được tuyển chọn kỹ lưỡng về chất lượng và thiết kế.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.8;">
+                        Hãy đến và khám phá Decor Store, nơi cung cấp tất cả những gì bạn cần để tạo nên một không gian sống đẹp, ấm cúng và đầy cảm hứng cho ngôi nhà của bạn.
+                    </p>
+                    <p>
+                        <a th:href="@{/shop}" class="btn btn-primary py-3 px-5"
+                           style="background-color: #2980b9; border-radius: 5px;">Mua Ngay</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="ftco-section bg-white" id="section-services">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 text-center ftco-animate">
+                <h2 class="mb-4" style="font-size: 2.5rem; font-weight: bold; color: #2980b9;">
+                    Dịch Vụ Trang Trí Nội Thất Tại Decor Store
+                </h2>
+                <p class="mb-5" style="font-size: 1.1rem; color: #777;">
+                    Chúng tôi cung cấp những dịch vụ trang trí nội thất toàn diện, giúp bạn có được không gian sống đẹp và hoàn hảo nhất.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Dịch Vụ 1 -->
+            <div class="col-md-3 col-sm-6 d-flex mb-4 ftco-animate">
+                <div class="service-item text-center w-100"
+                     style="background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 30px; transition: all 0.3s ease;">
+                    <div class="icon mb-3" style="overflow: hidden; border-radius: 8px;">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&q=80"
+                             alt="Tư vấn thiết kế nội thất"
+                             class="img-fluid"
+                             style="width: 100%; height: 200px; object-fit: cover;">
+                    </div>
+                    <h3 style="font-size: 1.4rem; color: #2980b9; margin-bottom: 15px; font-weight: 600;">
+                        Tư Vấn Thiết Kế
+                    </h3>
+                    <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                        Đội ngũ chuyên gia của chúng tôi sẵn sàng tư vấn thiết kế không gian nội thất phù hợp với phong cách và nhu cầu của bạn.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dịch Vụ 2 -->
+            <div class="col-md-3 col-sm-6 d-flex mb-4 ftco-animate">
+                <div class="service-item text-center w-100"
+                     style="background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 30px; transition: all 0.3s ease;">
+                    <div class="icon mb-3" style="overflow: hidden; border-radius: 8px;">
+                        <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=400&q=80"
+                             alt="Thi công lắp đặt"
+                             class="img-fluid"
+                             style="width: 100%; height: 200px; object-fit: cover;">
+                    </div>
+                    <h3 style="font-size: 1.4rem; color: #2980b9; margin-bottom: 15px; font-weight: 600;">
+                        Thi Công Lắp Đặt
+                    </h3>
+                    <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                        Dịch vụ thi công và lắp đặt chuyên nghiệp, đảm bảo chất lượng và tiến độ theo yêu cầu của khách hàng.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dịch Vụ 3 -->
+            <div class="col-md-3 col-sm-6 d-flex mb-4 ftco-animate">
+                <div class="service-item text-center w-100"
+                     style="background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 30px; transition: all 0.3s ease;">
+                    <div class="icon mb-3" style="overflow: hidden; border-radius: 8px;">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&q=80"
+                             alt="Sản phẩm độc quyền"
+                             class="img-fluid"
+                             style="width: 100%; height: 200px; object-fit: cover;">
+                    </div>
+                    <h3 style="font-size: 1.4rem; color: #2980b9; margin-bottom: 15px; font-weight: 600;">
+                        Sản Phẩm Độc Quyền
+                    </h3>
+                    <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                        Cung cấp các sản phẩm decor độc quyền, thiết kế riêng biệt phù hợp với từng không gian và phong cách.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dịch Vụ 4 -->
+            <div class="col-md-3 col-sm-6 d-flex mb-4 ftco-animate">
+                <div class="service-item text-center w-100"
+                     style="background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 30px; transition: all 0.3s ease;">
+                    <div class="icon mb-3" style="overflow: hidden; border-radius: 8px;">
+                        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&q=80"
+                             alt="Bảo hành dài hạn"
+                             class="img-fluid"
+                             style="width: 100%; height: 200px; object-fit: cover;">
+                    </div>
+                    <h3 style="font-size: 1.4rem; color: #2980b9; margin-bottom: 15px; font-weight: 600;">
+                        Bảo Hành Dài Hạn
+                    </h3>
+                    <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                        Cam kết bảo hành dài hạn cho tất cả sản phẩm, đảm bảo quyền lợi và sự hài lòng của khách hàng.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIAL SECTION -->
+<section class="ftco-section testimony-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <span class="subheading">Đánh giá</span>
+                <h2 class="mb-4">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel">
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Sản phẩm đẹp, chất lượng tốt, tư vấn nhiệt tình. Nhà mình đẹp hơn hẳn sau khi mua đồ tại Decor Store!</p>
+                                <p class="name">Nguyễn Thị Lan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Giao hàng nhanh, đóng gói cẩn thận. Đội ngũ nhân viên chuyên nghiệp và thân thiện.</p>
+                                <p class="name">Trần Văn Minh</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Mình rất hài lòng với dịch vụ tư vấn thiết kế. Không gian nhà mình đẹp đúng như ý tưởng!</p>
+                                <p class="name">Phạm Thu Hà</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Giá cả hợp lý, sản phẩm đa dạng. Chắc chắn sẽ quay lại mua thêm!</p>
+                                <p class="name">Lê Hoàng Nam</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&q=80)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Shop 10 điểm! Sản phẩm chất lượng, giá tốt, giao hàng đúng hẹn.</p>
+                                <p class="name">Hoàng Thị Mai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="ftco-section bg-white">
+    <div class="container">
+        <div class="row no-gutters ftco-services">
+            <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services mb-md-0 mb-4">
+                    <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
+                        <span class="flaticon-shipped"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">Giao Hàng Miễn Phí</h3>
+                        <span>Cho hóa đơn trên 2.000.000đ</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services mb-md-0 mb-4">
+                    <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
+                        <span class="flaticon-diet"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">Luôn Mới</h3>
+                        <span>Cập nhật xu hướng mới nhất</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services mb-md-0 mb-4">
+                    <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
+                        <span class="flaticon-award"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">Chất Lượng Cao</h3>
+                        <span>Sản phẩm chính hãng 100%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services mb-md-0 mb-4">
+                    <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
+                        <span class="flaticon-customer-service"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">Hỗ Trợ</h3>
+                        <span>Hỗ trợ 24/7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer th:replace="users/fragments/footer :: footer"></footer>
+
+<!-- SCRIPTS -->
+<div th:replace="users/fragments/script :: script"></div>
+
+<style>
+    .service-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .service-item .icon img {
+        transition: transform 0.3s ease;
+    }
+
+    .service-item:hover .icon img {
+        transform: scale(1.1);
+    }
+
+    .btn-primary:hover {
+        background-color: #1a67a2 !important;
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .img-2 {
+            height: 300px !important;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2rem !important;
+        }
+
+        .service-item {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+</body>
+</html>
