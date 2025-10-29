@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="vi"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
 
+
+<body class="goto-here">
+
+<!-- Navbar -->
+<div>
+    <nav th:replace="users/fragments/navbar :: nav"></nav>
+</div>
+<!-- HERO -->
+<div class="hero-wrap hero-bread" style="background-image: url('images/banner2.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span><a href="index.html">Home</a></span> <span>Products</span></p>
+                <h1 class="mb-0 bread">Sản phẩm</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHOP SECTION -->
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <!-- SIDEBAR -->
+            <div class="col-md-3 mb-5">
+                <div class="search-container">
+                    <input type="text" placeholder="Tìm kiếm">
+                    <button type="button">Tìm kiếm</button>
+                </div>
+                <h3>DANH MỤC</h3>
+                <table class="product-category">
+                    <tr><td><a href="#">All</a></td></tr>
+                    <tr><td><a href="#">Chó</a></td></tr>
+                    <tr><td><a href="#">Mèo</a></td></tr>
+                    <tr><td><a href="#">Thức ăn</a></td></tr>
+                    <tr><td><a href="#">Phụ kiện</a></td></tr>
+                </table>
+            </div>
+
+            <!-- PRODUCTS -->
+            <div class="col-md-9 mb-5">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="product">
+                            <a href="#" class="img-prod">
+                                <img class="img-fluid" src="images/product1.jpg" alt="Sản phẩm 1">
+                            </a>
+                            <div class="text py-3 text-center">
+                                <h3><a href="#">Chó Poodle</a></h3>
+                                <p class="price"><span class="price-sale">3.500.000 ₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="product">
+                            <a href="#" class="img-prod">
+                                <img class="img-fluid" src="images/product2.jpg" alt="Sản phẩm 2">
+                            </a>
+                            <div class="text py-3 text-center">
+                                <h3><a href="#">Mèo Anh Lông Ngắn</a></h3>
+                                <p class="price"><span class="price-sale">4.000.000 ₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="product">
+                            <a href="#" class="img-prod">
+                                <img class="img-fluid" src="images/product3.jpg" alt="Sản phẩm 3">
+                            </a>
+                            <div class="text py-3 text-center">
+                                <h3><a href="#">Đồ chơi thú cưng</a></h3>
+                                <p class="price"><span class="price-sale">150.000 ₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="product">
+                            <a href="#" class="img-prod">
+                                <img class="img-fluid" src="images/product4.jpg" alt="Sản phẩm 4">
+                            </a>
+                            <div class="text py-3 text-center">
+                                <h3><a href="#">Thức ăn hạt</a></h3>
+                                <p class="price"><span class="price-sale">250.000 ₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer th:replace="users/fragments/footer :: footer"></footer>
+<!-- JS -->
+<div th:replace="users/fragments/script :: script"></div>
 </body>
 </html>

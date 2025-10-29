@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/home")
 public class UserController {
     private final ProductService productService;
     public UserController (ProductService productService)
