@@ -145,7 +145,7 @@
                 <div class="row g-4">
                     <div class="col-md-3 col-sm-6" th:each="product : ${products}">
                         <div class="product card border-0 shadow-sm h-100">
-                            <a th:href="@{'/product/' + ${product.id}}" class="img-prod">
+                            <a th:href="@{'/shop/' + ${product.id}}" class="img-prod">
                                 <img class="img-fluid"
                                      th:src="${'/uploads/' + #strings.replace(product.mainImage, ' ', '_')}"
                                      th:alt="${product.name}"
@@ -153,7 +153,7 @@
                             </a>
                             <div class="card-body text-center">
                                 <h6 class="fw-bold">
-                                    <a th:href="@{'/product/' + ${product.id}}" class="text-dark"
+                                    <a th:href="@{'/shop/' + ${product.id}}" class="text-dark"
                                        th:text="${product.name}"></a>
                                 </h6>
                                 <p class="price text-danger fw-bold"

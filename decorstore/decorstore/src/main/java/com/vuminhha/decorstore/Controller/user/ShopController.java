@@ -49,6 +49,10 @@ public class ShopController {
     public String viewProductDetail(@PathVariable("id")Long id,Model model)
     {
         Product product=productService.getProductId(id);
+        if (product == null)
+        {
+            return "redirect:/shop";
+        }
         model.addAttribute("product",product);
         return "users/product_detail";
     }
