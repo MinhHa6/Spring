@@ -39,4 +39,60 @@ public class Configuration {
     // Liên kết với ProductConfig
     @OneToMany(mappedBy = "configurations", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductConfig> productConfigs;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<ProductConfig> getProductConfigs() {
+        return productConfigs;
+    }
+
+    public void setProductConfigs(List<ProductConfig> productConfigs) {
+        this.productConfigs = productConfigs;
+    }
 }

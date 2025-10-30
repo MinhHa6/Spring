@@ -7,6 +7,8 @@ import com.vuminhha.decorstore.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,5 +60,22 @@ public class ProductService {
     public List<Product>getFeaturedProducts()
     {
         return productRepository.findByIsFeaturedTrueAndIsActiveTrue();
+    }
+    // lay 4 san pham cung danh muc tru san pham hien tai
+    public List<Product>getFindTop4ByCategory_IdAndIdNot(Long categoryId,Long productId)
+    {
+        return productRepository.findTop4ByCategory_IdAndIdNot(categoryId,productId);
+    }
+    // Load product với đầy đủ ảnh và cấu hình
+    @Transactional(readOnly = true)
+    public Product getProductWithDetails(Long id) {
+        // Load ảnh phụ trước
+        Product product = productRepository.findByIdWithImages(id)
+                .orElseThrow(() -> new RuntimeException("Not Product"));
+
+        // Load cấu hình sau (trong cùng transaction nên không bị lỗi)
+        productRepository.findByIdWithConfigs(id);
+
+        return product;
     }
 }

@@ -15,28 +15,33 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        spring:
-          # Tắt cache cho static resources (chỉ dùng khi development)
-          web:
-            resources:
-              cache:
-                period: 0
-              chain:
-                cache: false
+        format_sql: true
+        enable_lazy_load_no_trans: true
 
-          # Tự động reload static files
-          thymeleaf:
-            cache: false
+  thymeleaf:
+    cache: false
 
-          devtools:
-            restart:
-              enabled: true
-            livereload:
-              enabled: true
+  web:
+    resources:
+      cache:
+        period: 0
+      chain:
+        cache: false
 
-          # Cấu hình upload
-          servlet:
-            multipart:
-              max-file-size: 10MB
-              max-request-size: 10MB
-              enabled: true
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.vuminhha.decorstore: DEBUG

@@ -50,6 +50,9 @@ public class Product {
     private Boolean isActive = true;
     @Column(nullable = false)
     private Boolean isFeatured = false; // San pham noi bat
+   // Cấu hình sản phẩm (VD: màu sắc, kích thước...)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductConfig> productConfigs = new ArrayList<>();
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
@@ -105,5 +108,117 @@ public class Product {
 
     public void setMainImage(String mainImage) {
         this.mainImage = mainImage;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<ProductConfig> getProductConfigs() {
+        return productConfigs;
+    }
+
+    public void setProductConfigs(List<ProductConfig> productConfigs) {
+        this.productConfigs = productConfigs;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getMetaTitle() {
+        return metaTitle;
+    }
+
+    public void setMetaTitle(String metaTitle) {
+        this.metaTitle = metaTitle;
+    }
+
+    public String getMetaDescription() {
+        return metaDescription;
+    }
+
+    public void setMetaDescription(String metaDescription) {
+        this.metaDescription = metaDescription;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Boolean getFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        isFeatured = featured;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
