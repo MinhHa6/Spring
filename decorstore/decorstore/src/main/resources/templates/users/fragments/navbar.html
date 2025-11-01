@@ -18,9 +18,10 @@
                 <li class="nav-item cta cta-colored">
                     <a th:href="@{/cart}" class="nav-link">
                         <span class="icon-shopping_cart"></span>
-                        [<span th:text="${cartCount}">0</span>]
+                        <span class="cart-count" th:text="${cartCount != null ? cartCount : 0}">0</span>
                     </a>
                 </li>
+
 
                 <!-- Nếu đã đăng nhập -->
                 <li class="nav-item dropdown" th:if="${user != null}">

@@ -35,6 +35,13 @@ public class CartItem {
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
+    // ham tinh tien cho tung san pham trong gio
+    public BigDecimal getTotal() {
+        if (product == null || product.getPrice() == null) {
+            return BigDecimal.ZERO;
+        }
+        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
+    }
     public Product getProduct() {
         return product;
     }

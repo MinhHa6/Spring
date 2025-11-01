@@ -2,75 +2,53 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="users/fragments/head :: head"></head>
 <body class="goto-here">
-<nav th:replace="users/fragments/navbar :: nav"></nav>
 
-<div class="hero-wrap hero-bread" style="background-image: url('/images/banner2.jpg');">
-    <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-            <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs">
-                    <span class="mr-2"><a th:href="@{/}">Trang chủ</a></span>
-                    <span>Giỏ hàng</span>
-                </p>
-                <h1 class="mb-0 bread">Giỏ hàng</h1>
-            </div>
-        </div>
-    </div>
+<div>
+    <nav th:replace="users/fragments/navbar :: nav"></nav>
 </div>
 
 <section class="ftco-section ftco-cart">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 ftco-animate">
+            <div class="col-md-12 ftco-animate fadeInUp ftco-animated">
                 <div class="cart-list">
                     <table class="table">
                         <thead class="thead-primary">
                         <tr class="text-center">
                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
+                            <th>Hình ảnh</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
-                            <th>Thành tiền</th>
+                            <th>Tổng</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <!-- Lặp qua danh sách sản phẩm trong giỏ hàng -->
                         <tr th:each="item : ${cartItems}" class="text-center">
                             <td class="product-remove">
-                                <a th:href="@{'/cart/remove/' + ${item.product.id}}"><span>x</span></a>
+                                <a th:href="@{/cart/remove/{id}(id=${item.product.id})}"><span class="ion-ios-close"></span></a>
                             </td>
 
                             <td class="image-prod">
-                                <div class="img"
-                                     th:style="'background-image: url(' + @{/uploads/{img}(img=${item.product.image})} + ');'"></div>
+                                <img th:src="@{'/uploads/' + ${item.product.mainImage}}" class="img" style="width: 100px; height: 100px;">
                             </td>
 
                             <td class="product-name">
                                 <h3 th:text="${item.product.name}"></h3>
                             </td>
 
-                            <td class="price"
-                                th:text="${#numbers.formatInteger(item.product.price, 0, 'POINT')} + ' ₫'"></td>
+                            <td class="price" th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
 
                             <td class="quantity">
-                                <div class="d-flex align-items-center">
-                                    <a th:href="@{'/cart/minus/' + ${item.product.id}}" class="btn btn-link px-2">
-                                        <i class="ion-ios-remove"></i>
-                                    </a>
-                                    <input th:value="${item.quantity}" type="number" class="form-control input-number"
-                                           readonly>
-                                    <a th:href="@{'/cart/plus/' + ${item.product.id}}" class="btn btn-link px-2">
-                                        <i class="ion-ios-add"></i>
-                                    </a>
-                                </div>
+                                <form th:action="@{/cart/update}" method="post">
+                                    <input type="hidden" name="id" th:value="${item.product.id}">
+                                    <input type="number" name="quantity" th:value="${item.quantity}" min="1" class="form-control text-center" style="width: 80px; display: inline-block;">
+                                    <button type="submit" class="btn btn-sm btn-outline-dark">Cập nhật</button>
+                                </form>
                             </td>
 
-                            <td class="total"
-                                th:text="${#numbers.formatInteger(item.total, 0, 'POINT')} + ' ₫'"></td>
-                        </tr>
-
-                        <tr th:if="${#lists.isEmpty(cartItems)}">
-                            <td colspan="6" class="text-center">Không có sản phẩm nào trong giỏ hàng</td>
+                            <td class="total" th:text="${#numbers.formatDecimal(item.total, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,32 +56,33 @@
             </div>
         </div>
 
-        <div th:if="${!#lists.isEmpty(cartItems)}" class="row justify-content-end">
-            <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+        <!-- Tổng tiền -->
+        <div class="row justify-content-end">
+            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                 <div class="cart-total mb-3">
-                    <h3>Tổng số giỏ hàng</h3>
+                    <h3>Tổng giỏ hàng</h3>
                     <p class="d-flex">
-                        <span>Tổng phụ</span>
-                        <span th:text="${#numbers.formatInteger(subTotal, 0, 'POINT')} + ' ₫'"></span>
+                        <span>Tạm tính</span>
+                        <span th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                     </p>
                     <p class="d-flex">
-                        <span>Vận chuyển</span>
-                        <span th:text="${#numbers.formatInteger(shipping, 0, 'POINT')} + ' ₫'"></span>
+                        <span>Phí vận chuyển</span>
+                        <span th:text="${#numbers.formatDecimal(shipping, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                     </p>
                     <hr>
                     <p class="d-flex total-price">
-                        <span>Tổng</span>
-                        <span th:text="${#numbers.formatInteger(subTotal + shipping, 0, 'POINT')} + ' ₫'"></span>
+                        <span>Tổng cộng</span>
+                        <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                     </p>
                 </div>
-                <p><a th:href="@{/checkout}" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
+                <p>
+                    <a th:href="@{/checkout}" class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
+                </p>
             </div>
         </div>
     </div>
 </section>
 
 <footer th:replace="users/fragments/footer :: footer"></footer>
-
-<div th:replace="users/fragments/script :: script"></div>
 </body>
 </html>

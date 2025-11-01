@@ -1,7 +1,11 @@
 package com.vuminhha.decorstore.Controller.user;
 
 import com.vuminhha.decorstore.entity.Cart;
+import com.vuminhha.decorstore.entity.CartItem;
+import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.service.CartService;
+import com.vuminhha.decorstore.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -10,10 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.security.Principal;
+import java.util.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -23,60 +29,123 @@ public class CartController {
     private static final Logger log = LoggerFactory.getLogger(CartService.class);
 
     private final CartService cartService;
-    public CartController (CartService cartService)
+    private final ProductService productService;
+    public CartController (CartService cartService,ProductService productService)
     {
         this.cartService=cartService;
+        this.productService=productService;
     }
+
+    @GetMapping
+    public String viewCart(Model model, Principal principal, HttpSession session) {
+        List<CartItem> cartItems = new ArrayList<>();
+        BigDecimal subTotal = BigDecimal.ZERO;
+
+        if (principal != null) {
+            // 🔹 Người dùng đã đăng nhập → lấy giỏ hàng trong DB
+            String username = principal.getName();
+            Cart cart = cartService.getCartByUsername(username);
+
+            if (cart == null) {
+                cart = cartService.createCartForUser(username);
+            }
+
+            cartItems = (cart.getItems() != null) ? cart.getItems() : new ArrayList<>();
+            subTotal = cartItems.stream()
+                    .map(item -> item.getTotal() != null ? item.getTotal() : BigDecimal.ZERO)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } else {
+            // 🔹 Người dùng chưa đăng nhập → lấy giỏ hàng từ session
+            Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
+
+            if (sessionCart != null && !sessionCart.isEmpty()) {
+                // Lấy sản phẩm từ DB để hiển thị thông tin
+                for (Map.Entry<Long, Integer> entry : sessionCart.entrySet()) {
+                    Long productId = entry.getKey();
+                    int quantity = entry.getValue();
+
+                    Product product = productService.getProductId(productId);
+                    if (product != null) {
+                        CartItem item = new CartItem();
+                        item.setProduct(product);
+                        item.setQuantity(quantity);
+                        item.getTotal();
+                        cartItems.add(item);
+                    }
+                }
+
+                subTotal = cartItems.stream()
+                        .map(item -> item.getTotal() != null ? item.getTotal() : BigDecimal.ZERO)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            }
+        }
+
+        // 🔹 Phí vận chuyển & tổng cộng
+        BigDecimal shipping = BigDecimal.valueOf(30000);
+        BigDecimal total = subTotal.add(shipping);
+
+        // 🔹 Gửi dữ liệu sang view
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("subTotal", subTotal);
+        model.addAttribute("shipping", shipping);
+        model.addAttribute("total", total);
+        model.addAttribute("cartCount", cartItems.size());
+
+        return "users/cart";
+    }
+
+
 
     /**
      * Thêm sản phẩm vào giỏ hàng (AJAX)
      */
     @PostMapping("/add")
-    @ResponseBody
     public ResponseEntity<Map<String, Object>> addToCart(
             @RequestParam Long productId,
-            @RequestParam int quantity,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @RequestParam(defaultValue = "1") int quantity,
+            @AuthenticationPrincipal UserDetails userDetails,
+            HttpSession session) {
 
         Map<String, Object> response = new HashMap<>();
 
         try {
-            // Kiểm tra user đã đăng nhập chưa
-            if (userDetails == null) {
-                response.put("success", false);
-                response.put("message", "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
-                response.put("redirect", "/login");
-                return ResponseEntity.ok(response);
+            String username = (userDetails != null) ? userDetails.getUsername() : null;
+
+            // ✅ Gọi service thêm sản phẩm (cả đăng nhập & chưa đăng nhập)
+            cartService.addToCart(productId, quantity, session, username);
+
+            // ✅ Nếu đăng nhập → đếm số lượng sản phẩm trong giỏ DB
+            int totalItems = 0;
+            if (username != null) {
+                Cart cart = cartService.getCartByUsername(username);
+                totalItems = (cart != null && cart.getItems() != null)
+                        ? cart.getItems().stream().mapToInt(i -> i.getQuantity()).sum()
+                        : 0;
+            } else {
+                // ✅ Nếu chưa đăng nhập → đếm trong session
+                Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
+                totalItems = (sessionCart != null)
+                        ? sessionCart.values().stream().mapToInt(Integer::intValue).sum()
+                        : 0;
             }
 
-            // Lấy thông tin user và cart
-            // Giả sử bạn có method để lấy User từ UserDetails
-            Long cartId = getCurrentUserCartId(userDetails);
-
-            // Thêm sản phẩm vào giỏ
-            Cart cart = cartService.addProductCart(cartId, productId, quantity);
-
-            // Tính tổng số lượng items trong giỏ
-            int totalItems = cart.getItems().stream()
-                    .mapToInt(item -> item.getQuantity())
-                    .sum();
-
             response.put("success", true);
-            response.put("message", "Đã thêm sản phẩm vào giỏ hàng!");
+            response.put("message", "🛒 Đã thêm sản phẩm vào giỏ hàng!");
             response.put("cartCount", totalItems);
 
-            log.info("User {} added product {} (qty: {}) to cart",
-                    userDetails.getUsername(), productId, quantity);
+            log.info("✅ Product {} (qty: {}) added by {}",
+                    productId, quantity, (username != null ? username : "guest"));
 
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
-            log.error("Error adding product to cart: ", e);
+            log.error("❌ Lỗi khi thêm sản phẩm vào giỏ hàng: ", e);
             response.put("success", false);
             response.put("message", e.getMessage());
             return ResponseEntity.badRequest().body(response);
+
         } catch (Exception e) {
-            log.error("Unexpected error: ", e);
+            log.error("⚠️ Lỗi không mong muốn: ", e);
             response.put("success", false);
             response.put("message", "Có lỗi xảy ra. Vui lòng thử lại!");
             return ResponseEntity.internalServerError().body(response);
@@ -91,14 +160,24 @@ public class CartController {
                                @AuthenticationPrincipal UserDetails userDetails) {
         try {
             Long cartId = getCurrentUserCartId(userDetails);
-            Cart cart = cartService.addProductCart(cartId, productId, 1);
-            log.info("Increased quantity for product {}", productId);
+            Cart cart = cartService.getCartById(cartId);
+
+            Optional<CartItem> itemOpt = cart.getItems().stream()
+                    .filter(i -> i.getProduct().getId().equals(productId))
+                    .findFirst();
+
+            if (itemOpt.isPresent()) {
+                CartItem item = itemOpt.get();
+                int newQty = item.getQuantity() + 1;
+                cartService.updateQuantity(cartId, productId, newQty);
+                log.info("Increased quantity for product {} to {}", productId, newQty);
+            }
+
         } catch (Exception e) {
             log.error("Error increasing quantity: ", e);
         }
         return "redirect:/cart";
     }
-
     /**
      * Giảm số lượng sản phẩm
      */

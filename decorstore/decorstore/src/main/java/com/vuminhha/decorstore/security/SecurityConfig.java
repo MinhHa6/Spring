@@ -9,38 +9,37 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-//    @Bean
-//    public PasswordEncoder passwordEncoder()
-//    {
-//        return new BCryptPasswordEncoder();// su dung BCrypt de ma hoa mat khau
-//    }
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/register", "/css/**", "/js/**").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin(form -> form
-//                        .loginPage("/auth/login")
-//                        .defaultSuccessUrl("/admin/index", true)
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .logoutSuccessUrl("/auth/login?logout")
-//                        .permitAll()
-//                );
-//
-//        return http.build();
-//    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // ✅ Dùng BCrypt mã hóa mật khẩu
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()  // Cho phép truy cập tất cả
+                        // ✅ Các trang cho phép truy cập tự do
+                        .requestMatchers("/", "/home", "/shop", "/about", "/blog", "/contact",
+                                "/cart/**", "/product/**", "/images/**", "/css/**", "/js/**").permitAll()
+
+                        // ✅ Các trang yêu cầu đăng nhập (admin, checkout, v.v.)
+                        .requestMatchers("/admin/**", "/checkout/**", "/account/**").authenticated()
+
+                        // ✅ Mặc định tất cả phải xác thực
+                        .anyRequest().permitAll()
                 )
-                .csrf(csrf -> csrf.disable()); // Tắt kiểm tra CSRF (nếu dùng form)
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/home?logout")
+                        .permitAll()
+                )
+                .csrf(csrf -> csrf.disable()); // Có thể bật lại nếu dùng form chuẩn
+
         return http.build();
     }
 }
