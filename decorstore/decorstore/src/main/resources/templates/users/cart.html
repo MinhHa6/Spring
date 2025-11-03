@@ -15,6 +15,9 @@
                     <table class="table">
                         <thead class="thead-primary">
                         <tr class="text-center">
+                            <th>
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
+                            </th>
                             <th>&nbsp;</th>
                             <th>Hình ảnh</th>
                             <th>Tên sản phẩm</th>
@@ -24,14 +27,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- Lặp qua danh sách sản phẩm trong giỏ hàng -->
                         <tr th:each="item : ${cartItems}" class="text-center">
+                            <td>
+                                <input type="checkbox"
+                                       class="item-checkbox"
+                                       th:data-product-id="${item.product.id}"
+                                       th:data-price="${item.total}"
+                                       onclick="calculateSelectedTotal()">
+                            </td>
+
                             <td class="product-remove">
-                                <a th:href="@{/cart/remove/{id}(id=${item.product.id})}"><span class="ion-ios-close"></span></a>
+                                <a th:href="@{/cart/remove/{id}(id=${item.product.id})}">
+                                    <span class="ion-ios-close"></span>
+                                </a>
                             </td>
 
                             <td class="image-prod">
-                                <img th:src="@{'/uploads/' + ${item.product.mainImage}}" class="img" style="width: 100px; height: 100px;">
+                                <img th:src="@{'/uploads/' + ${item.product.mainImage}}"
+                                     class="img"
+                                     style="width: 100px; height: 100px;">
                             </td>
 
                             <td class="product-name">
@@ -43,8 +57,13 @@
                             <td class="quantity">
                                 <form th:action="@{/cart/update}" method="post">
                                     <input type="hidden" name="id" th:value="${item.product.id}">
-                                    <input type="number" name="quantity" th:value="${item.quantity}" min="1" class="form-control text-center" style="width: 80px; display: inline-block;">
-                                    <button type="submit" class="btn btn-sm btn-outline-dark">Cập nhật</button>
+                                    <input type="number"
+                                           name="quantity"
+                                           th:value="${item.quantity}"
+                                           min="1"
+                                           class="form-control text-center"
+                                           style="width: 80px; display: inline-block;"
+                                           onchange="this.form.submit()">
                                 </form>
                             </td>
 
@@ -62,21 +81,27 @@
                 <div class="cart-total mb-3">
                     <h3>Tổng giỏ hàng</h3>
                     <p class="d-flex">
-                        <span>Tạm tính</span>
+                        <span>Tổng tất cả sản phẩm</span>
                         <span th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                     </p>
                     <p class="d-flex">
+                        <span>Tổng sản phẩm đã chọn</span>
+                        <span id="selectedSubTotal">0 ₫</span>
+                    </p>
+                    <p class="d-flex">
                         <span>Phí vận chuyển</span>
-                        <span th:text="${#numbers.formatDecimal(shipping, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+                        <span id="shippingFee" th:text="${#numbers.formatDecimal(shipping, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                     </p>
                     <hr>
                     <p class="d-flex total-price">
-                        <span>Tổng cộng</span>
-                        <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+                        <span>Tổng thanh toán</span>
+                        <span id="finalTotal">0 ₫</span>
                     </p>
                 </div>
                 <p>
-                    <a th:href="@{/checkout}" class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
+                    <button onclick="proceedToCheckout()" class="btn btn-primary py-3 px-4">
+                        Thanh toán (<span id="selectedCount">0</span> sản phẩm)
+                    </button>
                 </p>
             </div>
         </div>
@@ -84,5 +109,74 @@
 </section>
 
 <footer th:replace="users/fragments/footer :: footer"></footer>
+
+<script th:inline="javascript">
+    const shippingFee = /*[[${shipping}]]*/ 30000;
+
+    // Chọn tất cả checkbox
+    function toggleSelectAll() {
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.item-checkbox');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAll.checked;
+        });
+
+        calculateSelectedTotal();
+    }
+
+    // Tính tổng tiền các sản phẩm đã chọn
+    function calculateSelectedTotal() {
+        const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+        let selectedTotal = 0;
+        let selectedCount = 0;
+
+        checkboxes.forEach(checkbox => {
+            const price = parseFloat(checkbox.dataset.price);
+            selectedTotal += price;
+            selectedCount++;
+        });
+
+        // Cập nhật UI
+        document.getElementById('selectedSubTotal').textContent = formatMoney(selectedTotal);
+        document.getElementById('selectedCount').textContent = selectedCount;
+
+        // Tính tổng cuối (có phí ship nếu chọn ít nhất 1 sản phẩm)
+        const finalTotal = selectedCount > 0 ? selectedTotal + shippingFee : 0;
+        document.getElementById('finalTotal').textContent = formatMoney(finalTotal);
+
+        // Cập nhật trạng thái "Chọn tất cả"
+        const allCheckboxes = document.querySelectorAll('.item-checkbox');
+        const selectAllCheckbox = document.getElementById('selectAll');
+        selectAllCheckbox.checked = (checkboxes.length === allCheckboxes.length && allCheckboxes.length > 0);
+    }
+
+    // Format tiền VNĐ
+    function formatMoney(amount) {
+        return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
+    }
+
+    // Tiến hành thanh toán
+    function proceedToCheckout() {
+        const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+
+        if (checkboxes.length === 0) {
+            alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán!');
+            return;
+        }
+
+        // Lấy danh sách ID sản phẩm đã chọn
+        const selectedProductIds = Array.from(checkboxes).map(cb => cb.dataset.productId);
+
+        // Chuyển sang trang checkout với danh sách sản phẩm đã chọn
+        window.location.href = '/checkout?products=' + selectedProductIds.join(',');
+    }
+
+    // Tự động tính toán khi load trang (nếu có sản phẩm được chọn sẵn)
+    window.addEventListener('DOMContentLoaded', function() {
+        calculateSelectedTotal();
+    });
+</script>
+
 </body>
 </html>

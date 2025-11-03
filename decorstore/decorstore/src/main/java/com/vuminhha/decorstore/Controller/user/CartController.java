@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cart")
@@ -69,7 +70,6 @@ public class CartController {
                         CartItem item = new CartItem();
                         item.setProduct(product);
                         item.setQuantity(quantity);
-                        item.getTotal();
                         cartItems.add(item);
                     }
                 }
@@ -152,91 +152,135 @@ public class CartController {
         }
     }
 
+
     /**
-     * Tăng số lượng sản phẩm
+     * Update
      */
-    @GetMapping("/plus/{productId}")
-    public String plusQuantity(@PathVariable Long productId,
-                               @AuthenticationPrincipal UserDetails userDetails) {
+    @PostMapping("/update")
+    public String updateCart(@RequestParam Long id,
+                             @RequestParam int quantity,
+                             Principal principal,
+                             HttpSession session) {
         try {
-            Long cartId = getCurrentUserCartId(userDetails);
-            Cart cart = cartService.getCartById(cartId);
-
-            Optional<CartItem> itemOpt = cart.getItems().stream()
-                    .filter(i -> i.getProduct().getId().equals(productId))
-                    .findFirst();
-
-            if (itemOpt.isPresent()) {
-                CartItem item = itemOpt.get();
-                int newQty = item.getQuantity() + 1;
-                cartService.updateQuantity(cartId, productId, newQty);
-                log.info("Increased quantity for product {} to {}", productId, newQty);
+            if (principal != null) {
+                // Đã đăng nhập - cập nhật trong DB
+                String username = principal.getName();
+                Cart cart = cartService.getCartByUsername(username);
+                if (cart != null) {
+                    cartService.updateQuantity(cart.getId(), id, quantity);
+                }
+            } else {
+                // Chưa đăng nhập - cập nhật trong session
+                Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
+                if (sessionCart != null && sessionCart.containsKey(id)) {
+                    if (quantity > 0) {
+                        sessionCart.put(id, quantity);
+                    } else {
+                        sessionCart.remove(id);
+                    }
+                    session.setAttribute("cart", sessionCart);
+                    log.info("Updated session cart: product {} to quantity {}", id, quantity);
+                }
             }
-
         } catch (Exception e) {
-            log.error("Error increasing quantity: ", e);
+            log.error("Error updating cart: ", e);
         }
         return "redirect:/cart";
     }
     /**
-     * Giảm số lượng sản phẩm
+     * xoa san pham khoi cart theo id
      */
-    @GetMapping("/minus/{productId}")
-    public String minusQuantity(@PathVariable Long productId,
-                                @AuthenticationPrincipal UserDetails userDetails) {
+    @GetMapping("/remove/{id}")
+    public String removeFromCart(@PathVariable Long id,
+                                 Principal principal,
+                                 HttpSession session) {
         try {
-            Long cartId = getCurrentUserCartId(userDetails);
-            // Lấy số lượng hiện tại và giảm đi 1
-            Cart cart = cartService.updateQuantity(cartId, productId, -1);
-            log.info("Decreased quantity for product {}", productId);
-        } catch (Exception e) {
-            log.error("Error decreasing quantity: ", e);
-        }
-        return "redirect:/cart";
-    }
-
-    /**
-     * Xóa sản phẩm khỏi giỏ hàng
-     */
-    @GetMapping("/remove/{productId}")
-    public String removeFromCart(@PathVariable Long productId,
-                                 @AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            Long cartId = getCurrentUserCartId(userDetails);
-            cartService.removeProduct(cartId, productId);
-            log.info("Removed product {} from cart", productId);
+            if (principal != null) {
+                // Đã đăng nhập
+                String username = principal.getName();
+                Cart cart = cartService.getCartByUsername(username);
+                if (cart != null) {
+                    cartService.removeProduct(cart.getId(), id);
+                }
+            } else {
+                // Chưa đăng nhập - xóa khỏi session
+                Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
+                if (sessionCart != null) {
+                    sessionCart.remove(id);
+                    session.setAttribute("cart", sessionCart);
+                    log.info("Removed product {} from session cart", id);
+                }
+            }
         } catch (Exception e) {
             log.error("Error removing product: ", e);
         }
         return "redirect:/cart";
     }
+    @GetMapping("/checkout")
+    public String checkout(@RequestParam(required = false) String products,
+                           Model model,
+                           Principal principal,
+                           HttpSession session) {
 
-    /**
-     * Xóa toàn bộ giỏ hàng
-     */
-    @PostMapping("/clear")
-    public String clearCart(@AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            Long cartId = getCurrentUserCartId(userDetails);
-            cartService.clearCart(cartId);
-            log.info("Cleared cart");
-        } catch (Exception e) {
-            log.error("Error clearing cart: ", e);
+        if (products == null || products.isEmpty()) {
+            return "redirect:/cart";
         }
-        return "redirect:/cart";
-    }
 
-    /**
-     * Helper method để lấy cartId của user hiện tại
-     * Bạn cần implement method này dựa vào cấu trúc User của bạn
-     */
-    private Long getCurrentUserCartId(UserDetails userDetails) {
-        // TODO: Implement logic để lấy cartId từ user
-        // Ví dụ:
-        // User user = userRepository.findByUsername(userDetails.getUsername());
-        // return user.getCart().getId();
+        // Chuyển đổi chuỗi ID thành List
+        List<Long> selectedProductIds = Arrays.stream(products.split(","))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
 
-        // Tạm thời return 1L, bạn cần thay đổi logic này
-        throw new UnsupportedOperationException("Please implement getCurrentUserCartId method");
+        List<CartItem> selectedItems = new ArrayList<>();
+        BigDecimal selectedSubTotal = BigDecimal.ZERO;
+
+        if (principal != null) {
+            // Người dùng đã đăng nhập
+            String username = principal.getName();
+            Cart cart = cartService.getCartByUsername(username);
+
+            if (cart != null && cart.getItems() != null) {
+                // Lọc chỉ lấy sản phẩm đã chọn
+                selectedItems = cart.getItems().stream()
+                        .filter(item -> selectedProductIds.contains(item.getProduct().getId()))
+                        .collect(Collectors.toList());
+
+                selectedSubTotal = selectedItems.stream()
+                        .map(CartItem::getTotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            }
+        } else {
+            // Người dùng chưa đăng nhập
+            Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
+
+            if (sessionCart != null) {
+                for (Long productId : selectedProductIds) {
+                    if (sessionCart.containsKey(productId)) {
+                        Product product = productService.getProductId(productId);
+                        if (product != null) {
+                            CartItem item = new CartItem();
+                            item.setProduct(product);
+                            item.setQuantity(sessionCart.get(productId));
+                            selectedItems.add(item);
+                        }
+                    }
+                }
+
+                selectedSubTotal = selectedItems.stream()
+                        .map(CartItem::getTotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            }
+        }
+
+        BigDecimal shipping = BigDecimal.valueOf(30000);
+        BigDecimal total = selectedSubTotal.add(shipping);
+
+        // Gửi dữ liệu sang view
+        model.addAttribute("cartItems", selectedItems);
+        model.addAttribute("subTotal", selectedSubTotal);
+        model.addAttribute("shipping", shipping);
+        model.addAttribute("total", total);
+
+        return "users/checkout"; // Trang checkout của bạn
     }
 }

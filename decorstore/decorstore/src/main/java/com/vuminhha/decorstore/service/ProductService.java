@@ -1,7 +1,6 @@
 package com.vuminhha.decorstore.service;
 
-import com.vuminhha.decorstore.dto.productRequest.ProductCreateRequest;
-import com.vuminhha.decorstore.dto.productRequest.ProductUpdateRequest;
+
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;

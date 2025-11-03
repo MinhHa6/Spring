@@ -24,7 +24,7 @@ public class SecurityConfig {
                                 "/cart/**", "/product/**", "/images/**", "/css/**", "/js/**").permitAll()
 
                         // ✅ Các trang yêu cầu đăng nhập (admin, checkout, v.v.)
-                        .requestMatchers("/admin/**", "/checkout/**", "/account/**").authenticated()
+                        .requestMatchers("/admin","admin/**", "/checkout/**", "/account/**").authenticated()
 
                         // ✅ Mặc định tất cả phải xác thực
                         .anyRequest().permitAll()

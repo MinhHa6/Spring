@@ -1,6 +1,5 @@
 package com.vuminhha.decorstore.service;
 
-import com.vuminhha.decorstore.dto.productRequest.ProductUpdateRequest;
 import com.vuminhha.decorstore.entity.*;
 import com.vuminhha.decorstore.repository.CartRepository;
 import com.vuminhha.decorstore.repository.OrderDetailRepository;
