@@ -1,10 +1,10 @@
 package com.vuminhha.decorstore.Controller.user;
 
-import com.vuminhha.decorstore.entity.Cart;
-import com.vuminhha.decorstore.entity.CartItem;
-import com.vuminhha.decorstore.entity.Product;
+import com.vuminhha.decorstore.entity.*;
 import com.vuminhha.decorstore.service.CartService;
+import com.vuminhha.decorstore.service.PaymentMethodService;
 import com.vuminhha.decorstore.service.ProductService;
+import com.vuminhha.decorstore.service.TransportMethodService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +27,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CartController {
 
-    private static final Logger log = LoggerFactory.getLogger(CartService.class);
+    private static final Logger log = LoggerFactory.getLogger(CartController.class);
 
     private final CartService cartService;
     private final ProductService productService;
-    public CartController (CartService cartService,ProductService productService)
+    private final TransportMethodService transportMethodService;
+    private final PaymentMethodService paymentMethodService;
+    public CartController (CartService cartService,ProductService productService,PaymentMethodService paymentMethodService,
+    TransportMethodService transportMethodService)
     {
         this.cartService=cartService;
         this.productService=productService;
+        this.paymentMethodService=paymentMethodService;
+        this.transportMethodService=transportMethodService;
     }
 
     @GetMapping
@@ -216,71 +221,5 @@ public class CartController {
         }
         return "redirect:/cart";
     }
-    @GetMapping("/checkout")
-    public String checkout(@RequestParam(required = false) String products,
-                           Model model,
-                           Principal principal,
-                           HttpSession session) {
 
-        if (products == null || products.isEmpty()) {
-            return "redirect:/cart";
-        }
-
-        // Chuyển đổi chuỗi ID thành List
-        List<Long> selectedProductIds = Arrays.stream(products.split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-
-        List<CartItem> selectedItems = new ArrayList<>();
-        BigDecimal selectedSubTotal = BigDecimal.ZERO;
-
-        if (principal != null) {
-            // Người dùng đã đăng nhập
-            String username = principal.getName();
-            Cart cart = cartService.getCartByUsername(username);
-
-            if (cart != null && cart.getItems() != null) {
-                // Lọc chỉ lấy sản phẩm đã chọn
-                selectedItems = cart.getItems().stream()
-                        .filter(item -> selectedProductIds.contains(item.getProduct().getId()))
-                        .collect(Collectors.toList());
-
-                selectedSubTotal = selectedItems.stream()
-                        .map(CartItem::getTotal)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add);
-            }
-        } else {
-            // Người dùng chưa đăng nhập
-            Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
-
-            if (sessionCart != null) {
-                for (Long productId : selectedProductIds) {
-                    if (sessionCart.containsKey(productId)) {
-                        Product product = productService.getProductId(productId);
-                        if (product != null) {
-                            CartItem item = new CartItem();
-                            item.setProduct(product);
-                            item.setQuantity(sessionCart.get(productId));
-                            selectedItems.add(item);
-                        }
-                    }
-                }
-
-                selectedSubTotal = selectedItems.stream()
-                        .map(CartItem::getTotal)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add);
-            }
-        }
-
-        BigDecimal shipping = BigDecimal.valueOf(30000);
-        BigDecimal total = selectedSubTotal.add(shipping);
-
-        // Gửi dữ liệu sang view
-        model.addAttribute("cartItems", selectedItems);
-        model.addAttribute("subTotal", selectedSubTotal);
-        model.addAttribute("shipping", shipping);
-        model.addAttribute("total", total);
-
-        return "users/checkout"; // Trang checkout của bạn
-    }
 }

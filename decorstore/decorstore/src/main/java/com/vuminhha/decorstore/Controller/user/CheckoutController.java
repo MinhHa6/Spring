@@ -6,6 +6,9 @@ import com.vuminhha.decorstore.service.PaymentMethodService;
 import com.vuminhha.decorstore.service.TransportMethodService;
 import com.vuminhha.decorstore.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,21 +21,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@RequestMapping("/checkout")
 @Controller
 public class CheckoutController {
-    private final CartService cartService;
-    private final TransportMethodService transportMethodService;
-    private final PaymentMethodService paymentMethodService;
-    private final UserService userService;
-    public CheckoutController(CartService cartService,TransportMethodService transportMethodService,PaymentMethodService paymentMethodService,UserService userService)
-    {
-        this.cartService=cartService;
-        this.paymentMethodService=paymentMethodService;
-        this.transportMethodService=transportMethodService;
-        this.userService=userService;
-    }
-    @GetMapping("/checkout")
+    @Autowired
+    private  CartService cartService;
+    @Autowired
+    private  PaymentMethodService paymentMethodService;
+    @Autowired
+    private  TransportMethodService transportMethodService;
+    @Autowired
+    private UserService userService; // Thêm service này
+
+    private static final Logger log = LoggerFactory.getLogger(CheckoutController.class);
+
+    @GetMapping
     public String checkout(@RequestParam(required = false) String products,
                            Model model,
                            Principal principal,
@@ -48,51 +51,63 @@ public class CheckoutController {
             return "redirect:/cart";
         }
 
-        // Chuyển đổi chuỗi ID thành List
-        List<Long> selectedProductIds = Arrays.stream(products.split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
+        try {
+            // Chuyển đổi chuỗi ID thành List
+            List<Long> selectedProductIds = Arrays.stream(products.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
 
-        List<CartItem> selectedItems = new ArrayList<>();
-        BigDecimal selectedSubTotal = BigDecimal.ZERO;
+            String username = principal.getName();
+            Cart cart = cartService.getCartByUsername(username);
 
-        String username = principal.getName();
-        Cart cart = cartService.getCartByUsername(username);
+            if (cart == null || cart.getItems() == null || cart.getItems().isEmpty()) {
+                log.warn("Cart is empty for user: {}", username);
+                return "redirect:/cart";
+            }
 
-        if (cart != null && cart.getItems() != null) {
             // Lọc chỉ lấy sản phẩm đã chọn
-            selectedItems = cart.getItems().stream()
+            List<CartItem> selectedItems = cart.getItems().stream()
                     .filter(item -> selectedProductIds.contains(item.getProduct().getId()))
                     .collect(Collectors.toList());
 
-            selectedSubTotal = selectedItems.stream()
+            if (selectedItems.isEmpty()) {
+                log.warn("No selected items found for user: {}", username);
+                return "redirect:/cart";
+            }
+
+            // Tính tổng tiền
+            BigDecimal selectedSubTotal = selectedItems.stream()
                     .map(CartItem::getTotal)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            // Lấy danh sách phương thức thanh toán
+            List<PaymentMethod> paymentMethods = paymentMethodService.getAll();
+
+            // Lấy danh sách phương thức vận chuyển
+            List<TransportMethod> transportMethods = transportMethodService.getAll();
+
+            // Lấy thông tin user
+            User user = userService.findByUsername(username);
+
+            // Phí ship mặc định
+            BigDecimal shipping = BigDecimal.valueOf(30000);
+            BigDecimal total = selectedSubTotal.add(shipping);
+
+            // Gửi dữ liệu sang view
+            model.addAttribute("cartItems", selectedItems);
+            model.addAttribute("subTotal", selectedSubTotal);
+            model.addAttribute("shipping", shipping);
+            model.addAttribute("total", total);
+            model.addAttribute("paymentMethods", paymentMethods);
+            model.addAttribute("transportMethods", transportMethods);
+            model.addAttribute("user", user);
+
+            log.info("Checkout page loaded for user: {} with {} items", username, selectedItems.size());
+            return "users/checkout";
+
+        } catch (Exception e) {
+            log.error("Error loading checkout page: ", e);
+            return "redirect:/cart?error=checkout_failed";
         }
-
-        // Lấy danh sách phương thức thanh toán (active và chưa xóa)
-        List<PaymentMethod> paymentMethods = paymentMethodService.getAll();
-
-        //  Lấy danh sách phương thức vận chuyển (active và chưa xóa)
-        List<TransportMethod> transportMethods = transportMethodService.getAll();
-
-        // Lấy thông tin user
-
-        // Phí ship mặc định (lấy từ phương thức vận chuyển đầu tiên)
-        BigDecimal shipping = transportMethods.isEmpty() ?
-                BigDecimal.valueOf(30000) :
-                BigDecimal.valueOf(30000); // Bạn có thể thêm field fee vào TransportMethod
-
-        BigDecimal total = selectedSubTotal.add(shipping);
-
-        // Gửi dữ liệu sang view
-        model.addAttribute("cartItems", selectedItems);
-        model.addAttribute("subTotal", selectedSubTotal);
-        model.addAttribute("shipping", shipping);
-        model.addAttribute("total", total);
-        model.addAttribute("paymentMethods", paymentMethods);
-        model.addAttribute("transportMethods", transportMethods);
-
-        return "users/checkout";
     }
 }

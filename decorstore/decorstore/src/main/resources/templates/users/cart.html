@@ -107,11 +107,16 @@
         </div>
     </div>
 </section>
+<div th:replace="users/fragments/script :: script"></div>
 
 <footer th:replace="users/fragments/footer :: footer"></footer>
 
 <script th:inline="javascript">
+    /*<![CDATA[*/
+    // Lấy giá trị từ server
     const shippingFee = /*[[${shipping}]]*/ 30000;
+
+    console.log('Shipping fee:', shippingFee); // Debug
 
     // Chọn tất cả checkbox
     function toggleSelectAll() {
@@ -127,15 +132,25 @@
 
     // Tính tổng tiền các sản phẩm đã chọn
     function calculateSelectedTotal() {
+        console.log("=== Calculating Total ===");
+
         const checkboxes = document.querySelectorAll('.item-checkbox:checked');
         let selectedTotal = 0;
         let selectedCount = 0;
 
         checkboxes.forEach(checkbox => {
+            // Lấy giá trị trực tiếp (đã là số từ Thymeleaf)
             const price = parseFloat(checkbox.dataset.price);
-            selectedTotal += price;
-            selectedCount++;
+            console.log('Product ID:', checkbox.dataset.productId, 'Price:', price);
+
+            if (!isNaN(price)) {
+                selectedTotal += price;
+                selectedCount++;
+            }
         });
+
+        console.log('Selected Total:', selectedTotal);
+        console.log('Selected Count:', selectedCount);
 
         // Cập nhật UI
         document.getElementById('selectedSubTotal').textContent = formatMoney(selectedTotal);
@@ -168,14 +183,19 @@
         // Lấy danh sách ID sản phẩm đã chọn
         const selectedProductIds = Array.from(checkboxes).map(cb => cb.dataset.productId);
 
+        console.log('Selected products:', selectedProductIds);
+
+
         // Chuyển sang trang checkout với danh sách sản phẩm đã chọn
         window.location.href = '/checkout?products=' + selectedProductIds.join(',');
     }
 
-    // Tự động tính toán khi load trang (nếu có sản phẩm được chọn sẵn)
+    // Tự động tính toán khi load trang
     window.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded, calculating initial total...');
         calculateSelectedTotal();
     });
+    /*]]>*/
 </script>
 
 </body>

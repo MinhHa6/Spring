@@ -94,10 +94,10 @@ public class UserService {
         return userRepository.findById(id);
     }
     /**
-     * Tim kiem theo user name
+     * Tìm user theo username (trả về User trực tiếp)
      */
-    public Optional<User> getByUsername(String key)
-    {
-        return userRepository.findByUsername(key);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
     }
 }
