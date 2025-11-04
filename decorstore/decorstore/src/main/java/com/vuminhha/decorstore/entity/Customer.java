@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customers")
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -150,5 +149,6 @@ public class Customer {// thong tin khach hang
     public void setUser(User user) {
         this.user = user;
     }
+
 
 }

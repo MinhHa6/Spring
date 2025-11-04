@@ -3,6 +3,7 @@ package com.vuminhha.decorstore.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Cart {
 
     // Một giỏ có nhiều item
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> items;
+    private List<CartItem> items= new ArrayList<>();
 
     public List<CartItem> getItems() {
         return items;
