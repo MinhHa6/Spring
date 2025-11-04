@@ -1,107 +1,66 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title> Sign Up</title>
-
-    <!-- CSS FILES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/slick.css"/>
-
-    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-</head>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
 <body>
 
-<main>
-    <section class="sign-in-form section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto col-12">
-                    <h1 class="hero-title text-center mb-5">Đăng ký</h1>
-                    <div class="row">
-                        <div class="col-lg-8 col-11 mx-auto">
-                            <form role="form" method="post">
-                                <div class="form-floating">
-                                    <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" required>
-                                    <br>
-                                </div>
-                                <div class="form-floating">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-                                </div>
-                                <div class="form-floating my-4">
-                                    <input type="password" name="password" id="password" class="form-control" placeholder="Mật khẩu" required>
-                                </div>
-                                <div class="form-floating">
-                                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Xác nhận mật khẩu" required>
-                                </div>
-                                <button name="submit" type="submit" class="btn custom-btn form-control mt-4 mb-3">Đăng ký</button>
-                                <p class="text-center">Bạn đã có tài khoản? <a href="sign-in.php">Đăng nhập</a></p>
-                            </form>
+<nav th:replace="users/fragments/navbar :: nav"></nav>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Đăng ký tài khoản</h3>
+
+                        <!-- Thông báo lỗi -->
+                        <div th:if="${error}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
                         </div>
+
+                        <!-- Thông báo thành công -->
+                        <div th:if="${success}" class="alert alert-success" role="alert">
+                            <span th:text="${success}"></span>
+                        </div>
+
+                        <form th:action="@{/register}" th:object="${user}" method="post">
+                            <div class="form-group mb-3">
+                                <label for="username">Tên đăng nhập</label>
+                                <input type="text" th:field="*{username}" class="form-control" id="username" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" th:field="*{email}" class="form-control" id="email" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password">Mật khẩu</label>
+                                <input type="password" th:field="*{password}" class="form-control" id="password" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="confirmPassword">Nhập lại mật khẩu</label>
+                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100 mb-3">
+                                Đăng ký
+                            </button>
+
+                            <div class="text-center">
+                                <p>Đã có tài khoản? <a th:href="@{/login}">Đăng nhập ngay</a></p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <?php
-include("control.php");
-$get_Data = new data_user();
+<div th:replace="users/fragments/script :: script"></div>
+<footer th:replace="users/fragments/footer :: footer"></footer>
 
-if (isset($_POST['submit'])) {
-    if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['email'])) {
-        if ($_POST['password'] != $_POST['confirm_password']) {
-            echo "<script>alert('Passwords do not match')</script>";
-    } else {
-    // Kiểm tra xem tên đăng nhập đã tồn tại chưa
-    $select = $get_Data->select_user($_POST['username']);
-    $check = 0;
-    foreach ($select as $sel) {
-    $check++;
-    }
-
-    if ($check >= 1) {
-    echo "<script>alert('Tên đăng nhập đã tồn tại')</script>";
-    } else {
-    // Mã hóa mật khẩu bằng bcrypt
-    $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-
-    // Chèn người dùng mới vào cơ sở dữ liệu
-    $insert = $get_Data->insert_User($_POST['username'], $hashed_password, $_POST['email']);
-    if ($insert) {
-    echo "<script>alert('Đăng ký thành công'); window.location='sign-in.php';</script>";
-    } else {
-    echo "<script>alert('Đăng ký thất bại')</script>";
-    }
-    }
-    }
-    } else {
-    echo "<script>alert('Vui lòng nhập đủ thông tin')</script>";
-    }
-    }
-    ?>
-
-
-</main>
-
-<!-- JAVASCRIPT FILES -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/Headroom.js"></script>
-<script src="js/jQuery.headroom.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/custom.js"></script>
 </body>
 </html>

@@ -1,107 +1,80 @@
-<?php
-session_start(); ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Sign-in</title>
-
-    <!-- CSS FILES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/slick.css"/>
-
-    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-
-    <!--
-
-    Tooplate 2127 Little Fashion
-
-    https://www.tooplate.com/view/2127-little-fashion
-
-    -->
-</head>
-
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
 <body>
 
+<nav th:replace="users/fragments/navbar :: nav"></nav>
 
-<main>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Đăng nhập</h3>
 
-    <section class="sign-in-form section-padding">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-lg-8 mx-auto col-12">
-
-                    <h1 class="hero-title text-center mb-5">Đăng nhập</h1>
-
-                    <div class="row">
-                        <div class="col-lg-8 col-11 mx-auto">
-                            <form role="form" method="post">
-
-                                <div class="form-floating mb-4 p-0">
-                                    <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" required>
-                                </div>
-
-                                <div class="form-floating p-0">
-                                    <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
-                                </div>
-
-                                <button name="submit" type="submit" class="btn custom-btn form-control mt-4 mb-3">
-                                    Đăng nhập
-                                </button>
-
-                                <p class="text-center">Bạn không có tài khoản? <a href="sign-up.php">Tạo tài khoản</a></p>
-
-                            </form>
+                        <!-- Thông báo lỗi -->
+                        <div th:if="${error}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
                         </div>
-                        <?php
-include("control.php");
 
-$get_Data = new data_user();
+                        <!-- Thông báo thông thường -->
+                        <div th:if="${message}" class="alert alert-info" role="alert">
+                            <span th:text="${message}"></span>
+                        </div>
 
-if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+                        <!-- Form đăng nhập -->
+                        <form th:action="@{/login}" method="post">
+                            <div class="form-group mb-3">
+                                <label for="username">Tên đăng nhập</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="username"
+                                       name="username"
+                                       required
+                                       autofocus>
+                            </div>
 
-    // Gọi hàm login để kiểm tra tên đăng nhập và mật khẩu
-    $user = $get_Data->login($username, $password);
+                            <div class="form-group mb-3">
+                                <label for="password">Mật khẩu</label>
+                                <input type="password"
+                                       class="form-control"
+                                       id="password"
+                                       name="password"
+                                       required>
+                            </div>
 
-                        if ($user) {
-                        // Đăng nhập thành công
-                        $_SESSION['user'] = $username;
-                        echo "<script>alert('Đăng nhập thành công'); window.location='index.php';</script>";
-                        } else {
-                        // Đăng nhập thất bại
-                        echo "<script>alert('Đăng nhập thất bại');</script>";
-                        }
-                        }
-                        ?>
+                            <div class="form-group mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           id="remember-me"
+                                           name="remember-me">
+                                    <label class="form-check-label" for="remember-me">
+                                        Ghi nhớ đăng nhập
+                                    </label>
+                                </div>
+                            </div>
 
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                Đăng nhập
+                            </button>
 
-
-
+                            <div class="text-center">
+                                <p>Chưa có tài khoản? <a th:href="@{/register}">Đăng ký ngay</a></p>
+                                <a th:href="@{/forgot-password}">Quên mật khẩu?</a>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
-
             </div>
         </div>
-    </section>
+    </div>
+</section>
+<div th:replace="users/fragments/script :: script"></div>
 
-</main>
+
+<footer th:replace="users/fragments/footer :: footer"></footer>
 
 </body>
 </html>

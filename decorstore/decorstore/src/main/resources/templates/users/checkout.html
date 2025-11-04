@@ -119,7 +119,7 @@
                                                class="form-control"
                                                id="fullName"
                                                name="fullName"
-                                               th:value="${user != null ? user.fullName : ''}"
+                                               th:value="${user != null ? user.customer.fullName : ''}"
                                                required>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                                class="form-control"
                                                id="phone"
                                                name="phone"
-                                               th:value="${user != null ? user.phone : ''}"
+                                               th:value="${user != null ? user.customer.phone : ''}"
                                                required>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@
                                        class="form-control"
                                        id="address"
                                        name="address"
-                                       th:value="${user != null ? user.address : ''}"
+                                       th:value="${user != null ? user.customer.address : ''}"
                                        placeholder="Số nhà, tên đường"
                                        required>
                             </div>

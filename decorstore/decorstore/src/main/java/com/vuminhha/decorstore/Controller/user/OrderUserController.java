@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/order")
-public class OrderController {
+public class OrderUserController {
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -26,7 +26,7 @@ public class OrderController {
     private TransportMethodService transportMethodService;
     @Autowired
     private UserService userService;
-    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger log = LoggerFactory.getLogger(OrderUserController.class);
 
 
     /**

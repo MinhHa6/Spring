@@ -1,6 +1,6 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar"
-     th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml">
+     th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container">
         <a class="navbar-brand" th:href="@{/home}">Decor Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav">
@@ -24,16 +24,22 @@
 
 
                 <!-- Nếu đã đăng nhập -->
-                <li class="nav-item dropdown" th:if="${user != null}">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" th:text="${user.username}"></a>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
+                        <span sec:authentication="name">User</span>
+                    </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/account}">Thông tin tài khoản</a>
-                        <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
+                        <a class="dropdown-item" th:href="@{/profile}">Thông tin cá nhân</a>
+                        <a class="dropdown-item" th:href="@{/order/history}">Đơn hàng</a>
+                        <div class="dropdown-divider"></div>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                        </form>
                     </div>
                 </li>
 
                 <!-- Nếu chưa đăng nhập -->
-                <li class="nav-item dropdown" th:if="${user == null}">
+                <li class="nav-item dropdown" sec:authorize="!isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown">Tài khoản</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" th:href="@{/register}">Đăng ký</a>

@@ -150,4 +150,5 @@ public class Customer {// thong tin khach hang
     public void setUser(User user) {
         this.user = user;
     }
+
 }
