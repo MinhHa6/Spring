@@ -253,8 +253,8 @@
                         <!-- Danh sách sản phẩm -->
                         <div class="products-list mb-3">
                             <div th:each="item : ${cartItems}" class="product-item">
-                                <input type="hidden" name="productIds" th:value="${item.product.id}">
-                                <input type="hidden" name="quantities" th:value="${item.quantity}">
+                                <input type="hidden" name="productIds" th:value="${productIdsString}">
+                                <input type="hidden" name="quantities" th:value="${quantitiesString}">
 
                                 <img th:src="@{'/uploads/' + ${item.product.mainImage}}"
                                      class="product-img"
@@ -302,6 +302,8 @@
         </form>
     </div>
 </section>
+<div th:replace="users/fragments/script :: script"></div>
+
 
 <footer th:replace="users/fragments/footer :: footer"></footer>
 

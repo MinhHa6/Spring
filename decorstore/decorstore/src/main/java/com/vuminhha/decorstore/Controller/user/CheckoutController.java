@@ -101,6 +101,17 @@ public class CheckoutController {
             model.addAttribute("paymentMethods", paymentMethods);
             model.addAttribute("transportMethods", transportMethods);
             model.addAttribute("user", user);
+            //Tạo chuỗi productIds và quantities
+            String productIdsString = selectedItems.stream()
+                    .map(item -> String.valueOf(item.getProduct().getId()))
+                    .collect(Collectors.joining(","));
+
+            String quantitiesString = selectedItems.stream()
+                    .map(item -> String.valueOf(item.getQuantity()))
+                    .collect(Collectors.joining(","));
+
+            model.addAttribute("productIdsString", productIdsString);
+            model.addAttribute("quantitiesString", quantitiesString);
 
             log.info("Checkout page loaded for user: {} with {} items", username, selectedItems.size());
             return "users/checkout";

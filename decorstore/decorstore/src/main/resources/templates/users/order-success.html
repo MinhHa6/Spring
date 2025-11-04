@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
+<body>
+
+<nav th:replace="users/fragments/navbar :: nav"></nav>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="alert alert-success" role="alert">
+                    <h2>✅ Đặt hàng thành công!</h2>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Mã đơn hàng: <strong th:text="${order.orderCode}"></strong></h4>
+                        <p>Cảm ơn bạn đã đặt hàng!</p>
+                        <p>Chúng tôi sẽ liên hệ với bạn sớm nhất có thể.</p>
+
+                        <hr>
+
+                        <p><strong>Thông tin đơn hàng:</strong></p>
+                        <p>Người nhận: <span th:text="${order.receiverName}"></span></p>
+                        <p>Địa chỉ: <span th:text="${order.address}"></span></p>
+                        <p>Số điện thoại: <span th:text="${order.phone}"></span></p>
+                        <p>Tổng tiền: <span th:text="${#numbers.formatDecimal(order.totalMoney, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span></p>
+
+                        <div class="mt-4">
+                            <a th:href="@{/order/history}" class="btn btn-primary">Xem đơn hàng</a>
+                            <a th:href="@{/home}" class="btn btn-outline-secondary">Về trang chủ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="users/fragments/footer :: footer"></footer>
+
+</body>
+</html>
