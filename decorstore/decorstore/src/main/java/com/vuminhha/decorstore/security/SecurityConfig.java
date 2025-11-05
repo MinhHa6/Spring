@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .csrf(csrf ->csrf.disable())// tam thoi disable csrf cho de test
                 .authorizeHttpRequests(auth -> auth// cac url cong khai khong can dang nhap
                         .requestMatchers("/",
-                                "/home","/shop/**","/product/**","/about",
+                                "/home","/shop/**","/product/**","/about","/contact",
                                 "/blog/**",
                                 "/login",
                                 "/register",
