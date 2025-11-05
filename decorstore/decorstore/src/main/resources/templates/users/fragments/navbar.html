@@ -22,21 +22,27 @@
                     </a>
                 </li>
 
-
-                <!-- Nếu đã đăng nhập -->
+                <!-- Trong navbar.html, thay thế phần dropdown tài khoản -->
                 <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
-                        <span sec:authentication="name">User</span>
+                        <i class="fas fa-user"></i> <span sec:authentication="name">User</span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/profile}">Thông tin cá nhân</a>
-                        <a class="dropdown-item" th:href="@{/order/history}">Đơn hàng</a>
+                        <a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-user-circle"></i> Thông tin cá nhân
+                        </a>
+                        <a class="dropdown-item" th:href="@{/order/history}">
+                            <i class="fas fa-shopping-bag"></i> Đơn hàng của tôi
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="dropdown-item">Đăng xuất</button>
-                        </form>
+                        <a class="dropdown-item text-danger" th:href="@{/logout}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </a>
                     </div>
                 </li>
+
+                <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
 
                 <!-- Nếu chưa đăng nhập -->
                 <li class="nav-item dropdown" sec:authorize="!isAuthenticated()">

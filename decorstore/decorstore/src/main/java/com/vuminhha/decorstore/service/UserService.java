@@ -111,4 +111,11 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
     }
+    /**
+     * Cập nhật mật khẩu
+     */
+    @Transactional
+    public void updatePassword(User user) {
+        userRepository.save(user);
+    }
 }

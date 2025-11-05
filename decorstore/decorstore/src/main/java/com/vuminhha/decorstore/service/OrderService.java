@@ -38,16 +38,28 @@ public class OrderService {
      *  Lấy đơn hàng theo ID (THÊM METHOD NÀY)
      */
     public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
+        Order order=orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+        order.getOrderDetails().size(); // Trigger lazy loading
+        order.getOrderDetails().forEach(detail -> {
+            detail.getProduct().getName(); // Trigger lazy loading for product
+        });
+
+        return order;
     }
 
     /**
      * Lấy đơn hàng theo order code
      */
     public Order getOrderByCode(String orderCode) {
-        return orderRepository.findByOrderCode(orderCode)
+        Order order= orderRepository.findByOrderCode(orderCode)
                 .orElseThrow(() -> new RuntimeException("Order not found with code: " + orderCode));
+        order.getOrderDetails().size();
+        order.getOrderDetails().forEach(detail -> {
+            detail.getProduct().getName();
+        });
+
+        return order;
     }
 
     /**

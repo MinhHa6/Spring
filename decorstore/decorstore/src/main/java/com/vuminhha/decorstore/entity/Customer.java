@@ -150,5 +150,11 @@ public class Customer {// thong tin khach hang
         this.user = user;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

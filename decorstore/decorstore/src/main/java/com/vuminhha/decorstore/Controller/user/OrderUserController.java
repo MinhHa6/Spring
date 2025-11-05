@@ -163,6 +163,19 @@ public class OrderUserController {
         try {
             Order order = orderService.getOrderById(orderId);
 
+            // ✅ Thêm log để debug
+            log.info("📦 Order loaded: {}", order.getOrderCode());
+            log.info("📦 OrderDetails count: {}", order.getOrderDetails() != null ? order.getOrderDetails().size() : 0);
+
+            if (order.getOrderDetails() != null) {
+                order.getOrderDetails().forEach(detail -> {
+                    log.info("  - Product: {}, Qty: {}, Price: {}",
+                            detail.getProduct().getName(),
+                            detail.getQty(),
+                            detail.getPrice());
+                });
+            }
+
             // Kiểm tra quyền truy cập
             if (!order.getUser().getUsername().equals(principal.getName())) {
                 return "redirect:/order/history?error=unauthorized";
@@ -172,7 +185,8 @@ public class OrderUserController {
             return "users/order-detail";
 
         } catch (Exception e) {
-            log.error("Error loading order detail: ", e);
+            log.error(" Error loading order detail: ", e);
+            e.printStackTrace(); // ✅ In stack trace để debug
             return "redirect:/order/history?error=order_not_found";
         }
     }
