@@ -79,10 +79,14 @@
                                         <button th:if="${order.active}"
                                                 type="button"
                                                 class="btn btn-sm btn-danger"
-                                                onclick="confirmCancel(/*[[${order.id}]]*/, /*[[${order.orderCode}]]*/)"
+                                                th:attr="data-id=${order.id}, data-code=${order.orderCode}"
+                                                onclick="confirmCancel(this)"
                                                 title="Hủy đơn hàng">
                                             <i class="fas fa-ban"></i> Hủy
                                         </button>
+
+
+
                                     </div>
                                 </td>
                             </tr>
@@ -133,13 +137,18 @@
         </div>
     </div>
 </div>
+<div th:replace="users/fragments/script :: script"></div>
 
 <script>
-    function confirmCancel(orderId, orderCode) {
-        document.getElementById('orderCodeText').textContent = orderCode;
-        document.getElementById('cancelForm').action = '/order/cancel/' + orderId;
-        $('#cancelModal').modal('show');
-    }
+    function confirmCancel(btn) {
+     const orderId = btn.getAttribute('data-id');
+     const orderCode = btn.getAttribute('data-code');
+     document.getElementById('orderCodeText').textContent = orderCode;
+     document.getElementById('cancelForm').action = '/order/cancel/' + orderId;
+     $('#cancelModal').modal('show');
+ }
+
+
 </script>
 
 </body>
