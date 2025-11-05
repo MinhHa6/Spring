@@ -54,9 +54,9 @@
                     <tr th:each="detail, iterStat : ${order.orderDetails}">
                         <td th:text="${iterStat.count}"></td>
                         <td th:text="${detail.product.name}"></td>
-                        <td th:text="${detail.quantity}"></td>
-                        <td th:text="${#numbers.formatDecimal(detail.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
-                        <td th:text="${#numbers.formatDecimal(detail.unitPrice.multiply(T(java.math.BigDecimal).valueOf(detail.quantity)), 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
+                        <td th:text="${detail.qty}"></td>
+                        <td th:text="${#numbers.formatDecimal(detail.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
+                        <td th:text="${#numbers.formatDecimal(detail.price.multiply(T(java.math.BigDecimal).valueOf(detail.qty.longValue())), 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
                     </tr>
                     </tbody>
                 </table>

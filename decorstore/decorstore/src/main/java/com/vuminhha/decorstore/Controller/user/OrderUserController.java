@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/order")
@@ -218,4 +219,24 @@ public class OrderUserController {
             return "redirect:/order/history?error=cancel_failed";
         }
     }
+//    /**
+//     * xoa don hang khoi lich su don hang
+//     */
+//    @PostMapping("/delete/{orderId}")
+//    public String deleteOrderFromHistory(@PathVariable Long orderId,Principal principal)
+//    {
+//        if(principal ==null)
+//        {
+//            return "redirect:/login";
+//        }
+//        try {
+//            orderService.deleteByUser(orderId, principal.getName());
+//            return "redirect:/order/history?success=deleted";
+//        }
+//        catch (Exception e)
+//        {
+//            log.error("Error deleting order from user history:",e);
+//            return  "redirect:/order/history?error=delete_failed";
+//        }
+//    }
 }

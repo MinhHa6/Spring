@@ -172,4 +172,19 @@ public class OrderService {
     public List<Order> searchOrders(String keyword) {
         return orderRepository.findByKeyword(keyword);
     }
+//    /**
+//     * xoa don hang trong lich su don hang nguoi dung
+//     */
+//    public void deleteByUser(Long orderId,String username)
+//    {
+//        Order order=orderRepository.findById(orderId).orElseThrow(()-> new RuntimeException("Khong tim thay don hang"));
+//        // Kiem tra quyen
+//        if(!order.getUser().getUsername().equals(username))
+//        {
+//            throw  new RuntimeException("Khong co quyen xoa don nay");
+//
+//        }
+//        order.setDeletedByUser(true);
+//        orderRepository.save(order);
+//    }
 }
