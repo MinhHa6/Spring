@@ -28,7 +28,9 @@ public class CategoryController {
      * Trang ds san pham
      */
     @GetMapping
-    public String listCategories(Model model)
+    public String listCategories(Model model,@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "6") int size,
+                                 @RequestParam(required = false) String keyword)
     {
         model.addAttribute("categories",categoryService.getAll());
         return "admin/category-list";// tro den file category-list.html
