@@ -25,7 +25,7 @@ public class BlogPost {
     @Column(unique = true, length = 250)
     private String slug; // link SEO
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Column(length = 500)

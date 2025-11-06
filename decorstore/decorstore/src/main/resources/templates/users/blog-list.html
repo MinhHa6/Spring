@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
+<body class="goto-here">
+
+<div>
+  <nav th:replace="users/fragments/navbar :: nav"></nav>
+</div>
+
+<!-- Header -->
+<div class="hero-wrap hero-bread"th:style="'background-image: url(https://images.unsplash.com/photo-1505691938895-1758d7feb511);'">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <p class="breadcrumbs"><span class="mr-2"><a th:href="@{/home}">Trang chủ</a></span> <span>Blog</span></p>
+        <h1 class="mb-0 bread">Tin tức & Blog</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="ftco-section ftco-degree-bg">
+  <div class="container">
+    <div class="row">
+      <!-- Main Content -->
+      <div class="col-lg-8 ftco-animate">
+
+        <!-- Search Result / Category Title -->
+        <div th:if="${keyword != null}" class="alert alert-info">
+          <i class="fas fa-search"></i> Kết quả tìm kiếm cho: <strong th:text="${keyword}"></strong>
+        </div>
+
+        <div th:if="${currentCategory != null}" class="mb-4">
+          <h3 class="text-primary">
+            <i class="fas fa-folder-open"></i> <span th:text="${currentCategory.name}"></span>
+          </h3>
+          <p class="text-muted" th:text="${currentCategory.description}"></p>
+        </div>
+
+        <!-- Blog Posts Grid -->
+        <div class="row" th:if="${posts != null && !posts.empty}">
+          <div class="col-md-6 ftco-animate" th:each="post : ${posts}">
+            <div class="blog-entry mb-4">
+              <a th:href="@{/blog/{id}(id=${post.id})}" class="block-20"
+                 th:style="${post.thumbnail != null} ? 'background-image: url(' + @{'/uploads/' + ${post.thumbnail}} + ');' : 'background-image: url(/assets/images/blog-default.jpg);'"
+                 style="height: 250px; background-size: cover; background-position: center;">
+              </a>
+              <div class="text p-4 d-block">
+                <div class="meta mb-3">
+                  <div><a href="#"><i class="far fa-calendar"></i> <span th:text="${#temporals.format(post.createdDate, 'dd/MM/yyyy')}">01/01/2024</span></a></div>
+                  <div><a th:href="@{/blog/category/{id}(id=${post.category.id})}"><i class="fas fa-folder"></i> <span th:text="${post.category.name}">Danh mục</span></a></div>
+                </div>
+                <h3 class="heading mt-3">
+                  <a th:href="@{/blog/{id}(id=${post.id})}" th:text="${post.title}">Tiêu đề bài viết</a>
+                </h3>
+                <p th:text="${#strings.abbreviate(post.content, 150)}">Nội dung tóm tắt...</p>
+                <a th:href="@{/blog/{id}(id=${post.id})}" class="btn btn-primary btn-sm">
+                  Đọc thêm <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${posts == null || posts.empty}" class="text-center py-5">
+          <i class="fas fa-newspaper fa-5x text-muted mb-3"></i>
+          <h4 class="text-muted">Không có bài viết nào</h4>
+          <p class="text-muted">Hãy quay lại sau hoặc tìm kiếm bài viết khác!</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-5" th:if="${totalPages > 1}">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                <!-- Previous -->
+                <li th:if="${currentPage > 0}">
+                  <a th:href="@{${#httpServletRequest.requestURI}(page=${currentPage - 1}, size=6, keyword=${keyword}, categoryId=${currentCategory?.id})}">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+
+                <!-- Pages -->
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:class="${i == currentPage} ? 'active' : ''">
+                  <a th:href="@{${#httpServletRequest.requestURI}(page=${i}, size=6, keyword=${keyword}, categoryId=${currentCategory?.id})}"
+                     th:text="${i + 1}">1</a>
+                </li>
+
+                <!-- Next -->
+                <li th:if="${currentPage < totalPages - 1}">
+                  <a th:href="@{${#httpServletRequest.requestURI}(page=${currentPage + 1}, size=6, keyword=${keyword}, categoryId=${currentCategory?.id})}">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4 sidebar ftco-animate">
+        <!-- Search Box -->
+        <div class="sidebar-box">
+          <form th:action="@{/blog/search}" method="get" class="search-form">
+            <div class="form-group">
+              <span class="icon fas fa-search"></span>
+              <input type="text"
+                     name="keyword"
+                     class="form-control"
+                     placeholder="Tìm kiếm bài viết..."
+                     th:value="${keyword}">
+            </div>
+          </form>
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-box ftco-animate">
+          <h3>Danh mục</h3>
+          <ul class="categories">
+            <li th:each="category : ${categories}">
+              <a th:href="@{/blog/category/{id}(id=${category.id})}">
+                <span th:text="${category.name}">Trang trí</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recent Posts -->
+        <div class="sidebar-box ftco-animate" th:if="${recentPosts != null && !recentPosts.empty}">
+          <h3>Bài viết mới nhất</h3>
+          <div class="block-21 mb-4 d-flex" th:each="recent : ${recentPosts}">
+            <a class="blog-img mr-4"
+               th:style="${recent.thumbnail != null} ? 'background-image: url(' + @{'/uploads/' + ${recent.thumbnail}} + ');' : 'background-image: url(/assets/images/blog-default.jpg);'"
+               style="width: 80px; height: 80px; background-size: cover;">
+            </a>
+            <div class="text">
+              <h3 class="heading">
+                <a th:href="@{/blog/{id}(id=${recent.id})}" th:text="${#strings.abbreviate(recent.title, 50)}">Tiêu đề</a>
+              </h3>
+              <div class="meta">
+                <div><i class="far fa-calendar"></i> <span th:text="${#temporals.format(recent.createdDate, 'dd/MM/yyyy')}">01/01/2024</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div th:replace="users/fragments/script :: script"></div>
+
+<footer th:replace="users/fragments/footer :: footer"></footer>
+
+</body>
+</html>

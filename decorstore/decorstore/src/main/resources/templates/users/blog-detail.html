@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="users/fragments/head :: head"></head>
+<body class="goto-here">
+
+<div>
+    <nav th:replace="users/fragments/navbar :: nav"></nav>
+</div>
+
+<!-- Header -->
+<div class="hero-wrap hero-bread" style="background-image: url('/assets/images/bg_1.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a th:href="@{/home}">Trang chủ</a></span>
+                    <span class="mr-2"><a th:href="@{/blog}">Blog</a></span>
+                    <span>Chi tiết</span>
+                </p>
+                <h1 class="mb-0 bread" th:text="${post.title}">Tiêu đề bài viết</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8 ftco-animate">
+                <div class="blog-entry">
+                    <!-- Featured Image -->
+                    <div th:if="${post.thumbnail != null}" class="mb-4">
+                        <img th:src="@{'/uploads/' + ${post.thumbnail}}"
+                             class="img-fluid rounded"
+                             th:alt="${post.title}"
+                             style="width: 100%; height: 400px; object-fit: cover;">
+                    </div>
+
+                    <!-- Meta Info -->
+                    <div class="text">
+                        <div class="meta mb-3">
+                            <div class="d-flex">
+                                <span class="mr-3">
+                                    <i class="far fa-calendar"></i>
+                                    <span th:text="${#temporals.format(post.createdDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</span>
+                                </span>
+                                <span class="mr-3">
+                                    <i class="fas fa-folder"></i>
+                                    <a th:href="@{/blog/category/{id}(id=${post.category.id})}"
+                                       th:text="${post.category.name}">Danh mục</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <h2 class="heading mb-4" th:text="${post.title}">Tiêu đề bài viết</h2>
+
+                        <!-- Content -->
+                        <div class="blog-content" th:utext="${post.content}">
+                            <p>Nội dung bài viết...</p>
+                        </div>
+
+                        <!-- Tags / Share -->
+                        <div class="tag-widget post-tag-container mt-5 mb-5 d-flex flex-wrap align-items-center">
+                            <div class="mr-3">
+                                <strong>Chia sẻ:</strong>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-primary mr-2">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="#" class="btn btn-sm btn-info mr-2">
+                                <i class="fab fa-twitter"></i> Twitter
+                            </a>
+                            <a href="#" class="btn btn-sm btn-danger mr-2">
+                                <i class="fab fa-pinterest"></i> Pinterest
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Posts -->
+                <div class="related-posts mt-5" th:if="${relatedPosts != null && !relatedPosts.empty}">
+                    <h3 class="mb-4">Bài viết liên quan</h3>
+                    <div class="row">
+                        <div class="col-md-4" th:each="related : ${relatedPosts}">
+                            <div class="blog-entry mb-4">
+                                <a th:href="@{/blog/{id}(id=${related.id})}"
+                                   class="block-20 d-block"
+                                   th:style="${related.thumbnail != null} ? 'background-image: url(' + @{'/uploads/' + ${related.thumbnail}} + ');' : 'background-image: url(/assets/images/blog-default.jpg);'"
+                                   style="height: 200px; background-size: cover; background-position: center;">
+                                </a>
+                                <div class="text p-3">
+                                    <div class="meta mb-2">
+                                        <div><i class="far fa-calendar"></i> <span th:text="${#temporals.format(related.createdDate, 'dd/MM/yyyy')}">01/01/2024</span></div>
+                                    </div>
+                                    <h3 class="heading" style="font-size: 1rem;">
+                                        <a th:href="@{/blog/{id}(id=${related.id})}" th:text="${related.title}">Tiêu đề</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="pt-5 mt-5">
+                    <a th:href="@{/blog}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 sidebar ftco-animate">
+                <!-- Search Box -->
+                <div class="sidebar-box">
+                    <form th:action="@{/blog/search}" method="get" class="search-form">
+                        <div class="form-group">
+                            <span class="icon fas fa-search"></span>
+                            <input type="text"
+                                   name="keyword"
+                                   class="form-control"
+                                   placeholder="Tìm kiếm bài viết...">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Categories -->
+                <div class="sidebar-box ftco-animate">
+                    <h3>Danh mục</h3>
+                    <ul class="categories">
+                        <li th:each="category : ${categories}">
+                            <a th:href="@{/blog/category/{id}(id=${category.id})}"
+                               th:classappend="${category.id == post.category.id} ? 'active' : ''">
+                                <span th:text="${category.name}">Trang trí</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="users/fragments/script :: script"></div>
+
+<footer th:replace="users/fragments/footer :: footer"></footer>
+
+<style>
+    .blog-content {
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+
+    .blog-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-content img {
+        max-width: 100%;
+        height: auto;
+        margin: 20px 0;
+        border-radius: 8px;
+    }
+
+    .blog-content h2, .blog-content h3 {
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .categories li a.active {
+        color: #007bff;
+        font-weight: 600;
+    }
+</style>
+
+</body>
+</html>
