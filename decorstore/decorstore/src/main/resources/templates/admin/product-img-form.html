@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body>
+<div class="d-flex">
+    <div th:replace="admin/fragments/sidebar :: slide"></div>
+
+    <div class="content flex-grow-1 p-4 bg-light min-vh-100">
+        <div class="card shadow-sm border-0 p-4">
+            <h4 class="fw-bold text-primary mb-4">
+                <i class="fas fa-plus-circle me-2"></i>Thêm ảnh phụ mới
+            </h4>
+
+            <form th:action="@{/productImg/add|}" method="post" th:object="${newImage}">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tên ảnh</label>
+                    <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên ảnh..." required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Đường dẫn URL ảnh</label>
+                    <input type="text" th:field="*{urlImg}" class="form-control" placeholder="https://example.com/image.jpg" required>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="fas fa-save"></i> Lưu ảnh
+                    </button>
+                    <a th:href="@{/productImg}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>
