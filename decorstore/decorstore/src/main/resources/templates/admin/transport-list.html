@@ -1,72 +1,120 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/fragments/head :: head"></head>
-
 <body>
-<div class="container mt-5">
+<div class="d-flex">
     <!-- Sidebar -->
     <div th:replace="admin/fragments/sidebar :: slide"></div>
 
-    <div class="content p-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Danh sách phương thức vận chuyển</h2>
-            <a th:href="@{/transport/create}" class="btn btn-primary">
-                <i class="fa fa-plus"></i> Thêm mới
-            </a>
+    <!-- Nội dung chính -->
+    <div class="content flex-grow-1 p-4" style="background-color: #f8f9fa; min-height: 100vh;">
+        <div class="card shadow-sm p-4 border-0">
+            <!-- Tiêu đề & nút thêm -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0 text-primary">
+                    <i class="fas fa-users me-2"></i>Danh sách khách hàng
+                </h4>
+                <a th:href="@{/customers/create}" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Thêm khách hàng mới
+                </a>
+            </div>
+
+            <!-- Thông báo -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Tìm kiếm -->
+            <form class="input-group mb-4" th:action="@{/customers/search}" method="get">
+                <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                       placeholder="🔍 Nhập tên, email hoặc số điện thoại...">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+            </form>
+
+            <!-- Bảng khách hàng -->
+            <div th:if="${#lists.isEmpty(customers)}" class="alert alert-info text-center">
+                <i class="fas fa-info-circle"></i> Không có khách hàng nào được tìm thấy.
+            </div>
+
+            <div class="table-responsive" th:if="${!#lists.isEmpty(customers)}">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Tên khách hàng</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td>
+                            <img th:if="${customer.avatar != null}"
+                                 th:src="${customer.avatar.startsWith('/uploads/') ? customer.avatar : '/uploads/' + customer.avatar}"
+                                 class="rounded-circle shadow-sm"
+                                 style="width: 55px; height: 55px; object-fit: cover;"
+                                 alt="Avatar">
+                            <img th:if="${customer.avatar == null}"
+                                 src="https://via.placeholder.com/55x55?text=👤"
+                                 class="rounded-circle shadow-sm"
+                                 alt="No Avatar">
+                        </td>
+                        <td><strong th:text="${customer.name}">Nguyễn Văn A</strong></td>
+                        <td th:text="${customer.user.email}">email@example.com</td>
+                        <td th:text="${customer.phone}">0123456789</td>
+                        <td th:text="${#strings.abbreviate(customer.address, 35)}">123 ABC, Quận 1, TP.HCM</td>
+                        <td>
+                                <span th:if="${customer.active}" class="badge bg-success">
+                                    <i class="fas fa-check-circle"></i> Hoạt động
+                                </span>
+                            <span th:unless="${customer.active}" class="badge bg-secondary">
+                                    <i class="fas fa-lock"></i> Khóa
+                                </span>
+                        </td>
+                        <td th:text="${#temporals.format(customer.createdDate, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="@{'/customers/detail/' + ${customer.id}}" class="btn btn-sm btn-outline-info" title="Xem">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a th:href="@{'/customers/edit/' + ${customer.id}}" class="btn btn-sm btn-outline-warning" title="Sửa">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a th:href="@{'/customers/toggle-active/' + ${customer.id}}" class="btn btn-sm btn-outline-secondary" title="Đổi trạng thái">
+                                    <i class="fas fa-toggle-on"></i>
+                                </a>
+                                <a th:href="@{'/customers/delete/' + ${customer.id}}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này không?')"
+                                   title="Xóa">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tổng số khách hàng -->
+            <div class="mt-3 text-end text-muted">
+                Tổng số khách hàng: <strong th:text="${#lists.size(customers)}">0</strong>
+            </div>
         </div>
-
-        <!-- Form tìm kiếm -->
-        <form class="d-flex mb-4" th:action="@{/transport/search}" method="get">
-            <input type="text" class="form-control me-2" name="keyword"
-                   th:value="${keyword}" placeholder="Nhập tên phương thức vận chuyển...">
-            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
-        </form>
-
-        <!-- Kiểm tra nếu danh sách rỗng -->
-        <div th:if="${#lists.isEmpty(transports)}" class="alert alert-info text-center">
-            Không có phương thức vận chuyển nào được tìm thấy.
-        </div>
-
-        <!-- Bảng danh sách -->
-        <table class="table table-hover align-middle" th:if="${!#lists.isEmpty(transports)}">
-            <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Tên phương thức</th>
-                <th>Ghi chú</th>
-                <th>Trạng thái</th>
-                <th>Ngày tạo</th>
-                <th>Ngay sua</th>
-                <th>Hành động</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="tran : ${transports}">
-                <td th:text="${tran.id}"></td>
-                <td th:text="${tran.name}"></td>
-                <td th:text="${tran.notes}"></td>
-                <td>
-                    <span th:if="${tran.isActive}" class="badge bg-success">Hoạt động</span>
-                    <span th:unless="${tran.isActive}" class="badge bg-secondary">Ẩn</span>
-                </td>
-                <td th:text="${#temporals.format(tran.createdDate, 'dd/MM/yyyy HH:mm')}"></td>
-                <td th:text="${#temporals.format(tran.updatedDate, 'dd/MM/yyyy HH:mm')}"></td>
-                <td>
-                    <a th:href="@{'/transport/edit/' + ${tran.id}}" class="btn btn-sm btn-warning">
-                        <i class="fa fa-edit"></i> Sửa
-                    </a>
-                    <a th:href="@{'/transport/delete/' + ${tran.id}}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Bạn có chắc chắn muốn xóa phương thức này không?')">
-                        <i class="fa fa-trash"></i> Xóa
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
     </div>
 </div>
+
 <div th:replace="admin/fragments/script :: script"></div>
 </body>
 </html>
