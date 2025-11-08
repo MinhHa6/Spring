@@ -76,7 +76,7 @@ public class CustomerService {
     }
 
     /**
-     * 🔍 Lấy thông tin Customer theo User ID
+     *  Lấy thông tin Customer theo User ID
      */
     public Optional<Customer> getCustomerByUserId(Long userId) {
         return customerRepository.findByUserId(userId);
