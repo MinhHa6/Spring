@@ -5,29 +5,64 @@
 <div class="d-flex">
     <div th:replace="admin/fragments/sidebar :: slide"></div>
 
-    <div class="content flex-grow-1 p-4 bg-light min-vh-100">
+    <div class="content flex-grow-1 p-4 bg-light min-vh-100 d-flex justify-content-center align-items-start">
         <div class="card shadow-sm border-0 p-4">
             <h4 class="fw-bold text-primary mb-4">
                 <i class="fas fa-plus-circle me-2"></i>Thêm ảnh phụ mới
             </h4>
 
-            <form th:action="@{/productImg/add|}" method="post" th:object="${newImage}">
+            <!-- Thông tin sản phẩm -->
+            <div class="mb-4 p-3 bg-white rounded shadow-sm">
+                <h6><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></h6>
+                <h6><strong>ID:</strong> <span th:text="${product.id}"></span></h6>
+            </div>
+
+            <!-- Form upload ảnh -->
+            <form th:action="@{/productImg/{productId}/add(productId=${product.id})}"
+                  method="post"
+                  enctype="multipart/form-data">
+
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Tên ảnh</label>
-                    <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên ảnh..." required>
+                    <label class="form-label fw-bold">
+                        <i class="fas fa-tag me-1"></i>Tên ảnh <span class="text-danger">*</span>
+                    </label>
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           placeholder="Nhập tên ảnh..."
+                           required>
+                    <small class="form-text text-muted">Ví dụ: Ảnh góc trái, Ảnh chi tiết, Ảnh toàn cảnh...</small>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Đường dẫn URL ảnh</label>
-                    <input type="text" th:field="*{urlImg}" class="form-control" placeholder="https://example.com/image.jpg" required>
+                    <label class="form-label fw-bold">
+                        <i class="fas fa-upload me-1"></i>Chọn ảnh từ máy tính <span class="text-danger">*</span>
+                    </label>
+                    <input type="file"
+                           name="imageFile"
+                           class="form-control"
+                           accept="image/*"
+                           id="imageFileInput"
+                           required>
+                    <small class="form-text text-muted">Chấp nhận: JPG, PNG, GIF (Tối đa 5MB)</small>
+                </div>
+
+                <!-- Preview ảnh -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">
+                        <i class="fas fa-eye me-1"></i>Xem trước ảnh
+                    </label>
+                    <div id="imagePreview" class="border rounded p-3 text-center bg-light" style="min-height: 200px;">
+                        <p class="text-muted">Chọn ảnh để xem trước</p>
+                    </div>
                 </div>
 
                 <div class="text-end">
                     <button type="submit" class="btn btn-success me-2">
                         <i class="fas fa-save"></i> Lưu ảnh
                     </button>
-                    <a th:href="@{/productImg}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Quay lại
+                    <a th:href="@{/productImg/{productId}(productId=${product.id})}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Hủy
                     </a>
                 </div>
             </form>
@@ -36,5 +71,55 @@
 </div>
 
 <div th:replace="admin/fragments/script :: script"></div>
+
+<!-- Script xem trước ảnh khi upload -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('imageFileInput');
+        const previewDiv = document.getElementById('imagePreview');
+
+        if (fileInput && previewDiv) {
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+
+                if (file) {
+                    // Kiểm tra kích thước file (5MB = 5 * 1024 * 1024 bytes)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('Kích thước file quá lớn! Vui lòng chọn ảnh nhỏ hơn 5MB.');
+                        fileInput.value = '';
+                        previewDiv.innerHTML = '<p class="text-muted">Chọn ảnh để xem trước</p>';
+                        return;
+                    }
+
+                    // Kiểm tra loại file
+                    if (!file.type.startsWith('image/')) {
+                        alert('Vui lòng chọn file ảnh!');
+                        fileInput.value = '';
+                        previewDiv.innerHTML = '<p class="text-muted">Chọn ảnh để xem trước</p>';
+                        return;
+                    }
+
+                    // Đọc và hiển thị ảnh
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        previewDiv.innerHTML = `
+                            <img src="${event.target.result}"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 400px; object-fit: contain;"
+                                 alt="Preview">
+                            <p class="text-muted mt-2">
+                                <small>Tên file: ${file.name}</small><br>
+                                <small>Kích thước: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                            </p>
+                        `;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewDiv.innerHTML = '<p class="text-muted">Chọn ảnh để xem trước</p>';
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

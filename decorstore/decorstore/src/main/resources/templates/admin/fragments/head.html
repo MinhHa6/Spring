@@ -1,7 +1,7 @@
 <head th:fragment="head" xmlns:th="http://www.w3.org/1999/xhtml">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta charset="UTF-8"/>
-    <title>Trang chủ</title>
+    <title>Trang chủ - Admin</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
     <link rel="icon" th:href="@{/assets/img/kaiadmin/favicon.ico}" type="image/x-icon"/>
 
@@ -17,7 +17,8 @@
                     "Font Awesome 5 Brands",
                     "simple-line-icons"
                 ],
-                urls: ["assets/css/fonts.min.css"],
+                //  Đường dẫn tuyệt đối - bắt đầu bằng /
+                urls: ["/assets/css/fonts.min.css"],
             },
             active: function () {
                 sessionStorage.fonts = true;

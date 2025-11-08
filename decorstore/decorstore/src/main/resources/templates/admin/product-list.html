@@ -51,19 +51,13 @@
                     <thead class="table-primary text-center">
                     <tr>
                         <th>ID</th>
-                        <th>Ảnh</th>
+                        <th>Ảnh chính</th>
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Tồn kho</th>
-                        <th>Slug</th>
-                        <th>Meta Title</th>
-                        <th>Meta Description</th>
-                        <th>Mô tả</th>
                         <th>Trạng thái</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày cập nhật</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -82,24 +76,31 @@
                         <td th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>
                         <td th:text="${product.quantity}"></td>
                         <td th:text="${product.stock != null ? product.stock : 0}"></td>
-                        <td th:text="${product.slug}"></td>
-                        <td th:text="${product.metaTitle}"></td>
-                        <td th:text="${product.metaDescription}"></td>
-                        <td class="text-truncate" style="max-width: 200px;" th:text="${product.description}"></td>
                         <td>
                             <span th:if="${product.isActive}" class="badge bg-success">Hoạt động</span>
                             <span th:unless="${product.isActive}" class="badge bg-secondary">Ẩn</span>
                         </td>
-                        <td th:text="${#temporals.format(product.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:text="${#temporals.format(product.updatedDate, 'yyyy-MM-dd HH:mm')}"></td>
                         <td>
-                            <div class="d-flex justify-content-center gap-1">
-                                <a th:href="@{'/product/edit/' + ${product.id}}" class="btn btn-sm btn-warning">
+                            <div class="d-flex justify-content-center gap-1 flex-wrap">
+                                <!-- Nút Sửa -->
+                                <a th:href="@{/product/edit/{id}(id=${product.id})}"
+                                   class="btn btn-sm btn-warning"
+                                   title="Chỉnh sửa">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a th:href="@{'/product/delete/' + ${product.id}}"
+
+                                <!-- ✅ NÚT ẢNH PHỤ - QUAN TRỌNG -->
+                                <a th:href="@{/productImg/{productId}(productId=${product.id})}"
+                                   class="btn btn-sm btn-info"
+                                   title="Quản lý ảnh phụ">
+                                    <i class="fa fa-images"></i>
+                                </a>
+
+                                <!-- Nút Xóa -->
+                                <a th:href="@{/product/delete/{id}(id=${product.id})}"
                                    class="btn btn-sm btn-danger"
-                                   onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')"
+                                   title="Xóa">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>
