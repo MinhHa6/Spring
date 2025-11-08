@@ -31,14 +31,22 @@ public class RegisterController {
             @RequestParam("fullName") String fullName, // Thêm input fullName từ form
             Model model) {
 
+        String password= user.getPassword();
+        // regex mat khau manh
+        String regex="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
         try {
-            // 1️⃣ Kiểm tra mật khẩu nhập lại
+            if(!password.matches(regex))
+            {
+                model.addAttribute("error","Mat khau chua dung dinh dang!");
+                return "users/register";
+            }
+            // 1 Kiểm tra mật khẩu nhập lại
             if (!user.getPassword().equals(confirmPassword)) {
                 model.addAttribute("error", "Mật khẩu nhập lại không khớp!");
                 return "users/register";
             }
 
-            // 2️⃣ Kiểm tra dữ liệu bắt buộc
+            //  Kiểm tra dữ liệu bắt buộc
             if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
                 model.addAttribute("error", "Tên đăng nhập không được để trống!");
                 return "users/register";
@@ -52,14 +60,14 @@ public class RegisterController {
                 return "users/register";
             }
 
-            // 3️⃣ Gọi service để xử lý đăng ký (User + Customer)
+            // Gọi service để xử lý đăng ký (User + Customer)
             userService.register(
                     user.getUsername(),
                     user.getEmail(),
                     user.getPassword(),
                     fullName
             );
-            // 4️⃣ Thông báo thành công
+            //  Thông báo thành công
             model.addAttribute("success", "Đăng ký thành công! Vui lòng đăng nhập.");
             model.addAttribute("user", new User()); // Reset form
             return "users/register";

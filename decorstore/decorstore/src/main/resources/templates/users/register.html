@@ -23,7 +23,7 @@
                             <span th:text="${success}"></span>
                         </div>
 
-                        <form th:action="@{/register}" th:object="${user}" method="post">
+                        <form th:action="@{/register}" th:object="${user}" method="post" onsubmit="return validatePassword()">
                             <div class="form-group mb-3">
                                 <label for="fullName">Họ và tên</label>
                                 <input type="text" name="fullName" class="form-control" id="fullName" required>
@@ -42,6 +42,9 @@
                             <div class="form-group mb-3">
                                 <label for="password">Mật khẩu</label>
                                 <input type="password" th:field="*{password}" class="form-control" id="password" required>
+                                <div id="passwordHelp" class="form-text">
+                                    Mật khẩu tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.
+                                </div>
                             </div>
 
                             <div class="form-group mb-3">
@@ -65,6 +68,26 @@
 </section>
 
 <div th:replace="users/fragments/script :: script"></div>
+<script>
+    function validatePassword() {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\S+$).{8,}$/;
+
+        if (!regex.test(password)) {
+            alert("Mật khẩu chưa đúng định dạng! Ít nhất 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+            return false;
+        }
+
+        return true; // submit form
+    }
+</script>
 <footer th:replace="users/fragments/footer :: footer"></footer>
 
 </body>
