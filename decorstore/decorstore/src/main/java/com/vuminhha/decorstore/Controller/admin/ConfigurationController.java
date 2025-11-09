@@ -1,7 +1,7 @@
 package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Configuration;
-import com.vuminhha.decorstore.service.ConfigurationsService;
+import com.vuminhha.decorstore.service.configurations.ConfigurationsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

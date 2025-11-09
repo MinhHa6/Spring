@@ -1,8 +1,7 @@
 package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.PaymentMethod;
-import com.vuminhha.decorstore.service.PaymentMethodService;
-import org.springframework.boot.Banner;
+import com.vuminhha.decorstore.service.payment.PaymentMethodService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

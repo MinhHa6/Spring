@@ -2,8 +2,8 @@ package com.vuminhha.decorstore.Controller.user;
 
 import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.User;
-import com.vuminhha.decorstore.service.CustomerService;
-import com.vuminhha.decorstore.service.UserService;
+import com.vuminhha.decorstore.service.customer.CustomerService;
+import com.vuminhha.decorstore.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

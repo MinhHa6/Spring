@@ -1,10 +1,11 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.order.impl;
 
 import com.vuminhha.decorstore.entity.*;
 import com.vuminhha.decorstore.repository.CartRepository;
 import com.vuminhha.decorstore.repository.OrderDetailRepository;
 import com.vuminhha.decorstore.repository.OrderRepository;
 import com.vuminhha.decorstore.repository.ProductRepository;
+import com.vuminhha.decorstore.service.order.OrderService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class OrderService {
+public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
 
-    public OrderService(OrderRepository orderRepository, CartRepository cartRepository,
+    public OrderServiceImpl(OrderRepository orderRepository, CartRepository cartRepository,
                         OrderDetailRepository orderDetailRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
@@ -30,6 +31,7 @@ public class OrderService {
     /**
      * Danh sách tất cả đơn hàng
      */
+    @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -37,6 +39,7 @@ public class OrderService {
     /**
      *  Lấy đơn hàng theo ID (THÊM METHOD NÀY)
      */
+    @Override
     public Order getOrderById(Long orderId) {
         Order order=orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
@@ -51,6 +54,7 @@ public class OrderService {
     /**
      * Lấy đơn hàng theo order code
      */
+    @Override
     public Order getOrderByCode(String orderCode) {
         Order order= orderRepository.findByOrderCode(orderCode)
                 .orElseThrow(() -> new RuntimeException("Order not found with code: " + orderCode));
@@ -63,8 +67,9 @@ public class OrderService {
     }
 
     /**
-     * ✅ Lấy danh sách đơn hàng theo userId (SỬA LẠI TÊN METHOD)
+     *  Lấy danh sách đơn hàng theo userId (SỬA LẠI TÊN METHOD)
      */
+    @Override
     public List<Order> getOrdersByUserId(Long userId) {
         //  createdDate thay vì createDate
         return orderRepository.findByUserIdOrderByCreatedDateDesc(userId);
@@ -74,6 +79,7 @@ public class OrderService {
      * Tạo đơn hàng từ giỏ hàng
      */
     @Transactional
+    @Override
     public Order createOrderFromCart(Long cartId, PaymentMethod paymentMethod,
                                      TransportMethod transportMethod, String receiverName,
                                      String address, String email, String phone, String notes) {
@@ -135,6 +141,7 @@ public class OrderService {
      * Hủy đơn hàng
      */
     @Transactional
+    @Override
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -158,6 +165,7 @@ public class OrderService {
      * Cập nhật trạng thái đơn hàng
      */
     @Transactional
+    @Override
     public Order updateOrderStatus(Long orderId, String status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -169,6 +177,7 @@ public class OrderService {
     /**
      * Tìm kiếm đơn hàng
      */
+    @Override
     public List<Order> searchOrders(String keyword) {
         return orderRepository.findByKeyword(keyword);
     }

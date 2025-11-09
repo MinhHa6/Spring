@@ -1,8 +1,8 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.product.Impl;
 
 import com.vuminhha.decorstore.entity.ProductImage;
 import com.vuminhha.decorstore.repository.ProductImagesRepository;
-import lombok.RequiredArgsConstructor;
+import com.vuminhha.decorstore.service.product.ProductImagesService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,26 +10,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
 @Service
-public class ProductImagesService {
+public class ProductImagesServiceImpl implements ProductImagesService {
     private final ProductImagesRepository productImagesRepository;
-    public ProductImagesService (ProductImagesRepository productImagesRepository)
+    public ProductImagesServiceImpl (ProductImagesRepository productImagesRepository)
     {
         this.productImagesRepository=productImagesRepository;
     }
 
     // Lay tat ca anh theo ProductId
+    @Override
     public List<ProductImage> getByProductId(Long productId)
     {
         return productImagesRepository.findByProductId(productId);
     }
     //them hoac cap nhat anh moi
+    @Override
     public ProductImage saveProductImages(ProductImage productImage)
     {
         return productImagesRepository.save(productImage);
     }
     //xoa anh theo Id
+    @Override
     public void deleteProductImages(Long id)
     {
         ProductImage img = productImagesRepository.findById(id).orElseThrow();

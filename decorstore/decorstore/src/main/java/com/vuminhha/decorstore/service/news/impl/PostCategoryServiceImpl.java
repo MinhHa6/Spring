@@ -1,33 +1,31 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.news.impl;
 
 import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.repository.BlogCategoryRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.vuminhha.decorstore.service.news.PostCategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-@Slf4j
-public class PostCategoryService {
-
+public class PostCategoryServiceImpl implements PostCategoryService {
     private static final Logger log = LoggerFactory.getLogger(PostCategoryService.class);
     private final BlogCategoryRepository blogCategoryRepository;
-    public PostCategoryService (BlogCategoryRepository blogCategoryRepository)
+    public PostCategoryServiceImpl(BlogCategoryRepository blogCategoryRepository)
     {
-       this.blogCategoryRepository=blogCategoryRepository;
+        this.blogCategoryRepository=blogCategoryRepository;
     }
 
     // Lấy tất cả danh mục
+    @Override
     public List<BlogCategory> getAll() {
         log.info("Fetching all post categories");
         return blogCategoryRepository.findAll();
     }
 
     // Lấy chi tiết theo ID
+    @Override
     public BlogCategory getById(Long id) {
         log.info("Fetching post category by id: {}", id);
         return blogCategoryRepository.findById(id)
@@ -35,6 +33,7 @@ public class PostCategoryService {
     }
 
     // Lấy chi tiết theo slug
+    @Override
     public BlogCategory getBySlug(String slug) {
         log.info("Fetching post category by slug: {}", slug);
         return blogCategoryRepository.findBySlug(slug)
@@ -42,12 +41,14 @@ public class PostCategoryService {
     }
 
     // Tạo danh mục mới
+    @Override
     public BlogCategory create(BlogCategory blogCategory) {
         return blogCategoryRepository.save(blogCategory);
     }
-    
+
 
     // Xóa danh mục
+    @Override
     public void delete(Long id) {
         log.info("Deleting post category id: {}", id);
         blogCategoryRepository.deleteById(id);

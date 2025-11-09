@@ -1,8 +1,7 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.user;
 
 import com.vuminhha.decorstore.entity.Permission;
 import com.vuminhha.decorstore.repository.PermissionRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

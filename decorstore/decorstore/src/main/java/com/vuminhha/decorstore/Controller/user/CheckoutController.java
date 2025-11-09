@@ -1,10 +1,10 @@
 package com.vuminhha.decorstore.Controller.user;
 
 import com.vuminhha.decorstore.entity.*;
-import com.vuminhha.decorstore.service.CartService;
-import com.vuminhha.decorstore.service.PaymentMethodService;
-import com.vuminhha.decorstore.service.TransportMethodService;
-import com.vuminhha.decorstore.service.UserService;
+import com.vuminhha.decorstore.service.cart.CartService;
+import com.vuminhha.decorstore.service.payment.PaymentMethodService;
+import com.vuminhha.decorstore.service.transport.TransportMethodService;
+import com.vuminhha.decorstore.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

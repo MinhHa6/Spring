@@ -1,42 +1,36 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.category;
 
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.repository.CategoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-@Service
-public class CategoryService {
 
+public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 
     //  inject CategoryRepository
-    public CategoryService (CategoryRepository categoryRepository)
+    public CategoryServiceImpl (CategoryRepository categoryRepository)
     {
-         this.categoryRepository=categoryRepository;
+        this.categoryRepository=categoryRepository;
     }
+    @Override
     public List<Category> getAll() {
         return categoryRepository.findAll();
     }
-
+@Override
     public Category getCategoryId(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
-
+@Override
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
-
+@Override
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
-    // tim kiem category
+    @Override
     public List<Category>searchByName(String keyword)
     {
         return categoryRepository.findByNameContainingIgnoreCase(keyword);

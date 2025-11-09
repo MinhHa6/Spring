@@ -1,4 +1,4 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.cart.impl;
 
 import com.vuminhha.decorstore.entity.Cart;
 import com.vuminhha.decorstore.entity.CartItem;
@@ -8,13 +8,11 @@ import com.vuminhha.decorstore.repository.CartItemRepository;
 import com.vuminhha.decorstore.repository.CartRepository;
 import com.vuminhha.decorstore.repository.ProductRepository;
 import com.vuminhha.decorstore.repository.UserRepository;
+import com.vuminhha.decorstore.service.cart.CartService;
 import jakarta.servlet.http.HttpSession;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,15 +21,14 @@ import java.util.Map;
 import java.util.Optional;
 @Service
 @Slf4j
-
-public class CartService {
-    private static final Logger log = LoggerFactory.getLogger(CartService.class);
+public class CartServiceImpl implements CartService {
+    private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private  final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public CartService (CartRepository cartRepository, CartItemRepository cartItemRepository, ProductRepository productRepository,UserRepository userRepository)
+    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository, ProductRepository productRepository,UserRepository userRepository)
     {
         this.cartRepository=cartRepository;
         this.productRepository=productRepository;
@@ -39,6 +36,7 @@ public class CartService {
         this.userRepository=userRepository;
     }
     // Them san pham vao gio
+    @Override
     public void addToCart(Long productId, int qty, HttpSession session, String username) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -87,6 +85,7 @@ public class CartService {
         }
     }
     // Cap nhat so luong san pham trong gio
+    @Override
     public Cart updateQuantity(Long cartId,Long productId,int qty)
     {
         Cart cart= cartRepository.findById(cartId).
@@ -100,6 +99,7 @@ public class CartService {
         return cart;
     }
     // xoa san pham khoi gio
+    @Override
     public Cart removeProduct (Long cartId,Long productId )
     {
         Cart cart = cartRepository.findById(cartId)
@@ -110,6 +110,7 @@ public class CartService {
         return cart;
     }
     // xoa san pham toan bo khoi gio
+    @Override
     public void clearCart (Long cartId )
     {
         Cart cart= cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("cart not found "));
@@ -117,17 +118,19 @@ public class CartService {
         cartRepository.save(cart);
         log.info("Clear cart {}",cartId);
     }
-    // Lay gio hang theo user name
     //  Lấy giỏ hàng theo username (dành cho user đã đăng nhập)
+    @Override
     public Cart getCartByUsername(String username) {
         return cartRepository.findByUser_Username(username).orElse(null);
     }
     // Lấy giỏ hàng theo ID
+    @Override
     public Cart getCartById(Long id) {
         return cartRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
     }
     //  Tạo giỏ hàng mới cho user (nếu chưa có)
+    @Override
     public Cart createCartForUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user: " + username));
@@ -138,5 +141,4 @@ public class CartService {
 
         return cartRepository.save(newCart);
     }
-
 }

@@ -1,9 +1,8 @@
 package com.vuminhha.decorstore.Controller.admin;
 
-import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.entity.Product;
-import com.vuminhha.decorstore.service.CategoryService;
-import com.vuminhha.decorstore.service.ProductService;
+import com.vuminhha.decorstore.service.category.CategoryService;
+import com.vuminhha.decorstore.service.product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

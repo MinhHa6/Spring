@@ -1,10 +1,6 @@
 package com.vuminhha.decorstore.controller;
 
-import com.vuminhha.decorstore.entity.User;
-import com.vuminhha.decorstore.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller

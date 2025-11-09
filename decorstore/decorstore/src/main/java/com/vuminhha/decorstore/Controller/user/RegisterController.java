@@ -1,11 +1,8 @@
 package com.vuminhha.decorstore.Controller.user;
 
 import com.vuminhha.decorstore.entity.User;
-import com.vuminhha.decorstore.repository.RoleRepository;
-import com.vuminhha.decorstore.repository.UserRepository;
-import com.vuminhha.decorstore.service.UserService;
+import com.vuminhha.decorstore.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

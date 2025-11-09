@@ -2,8 +2,8 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.entity.ProductImage;
-import com.vuminhha.decorstore.service.ProductImagesService;
-import com.vuminhha.decorstore.service.ProductService;
+import com.vuminhha.decorstore.service.product.ProductImagesService;
+import com.vuminhha.decorstore.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

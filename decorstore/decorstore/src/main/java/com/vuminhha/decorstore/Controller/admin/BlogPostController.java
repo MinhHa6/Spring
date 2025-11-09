@@ -2,8 +2,8 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.entity.BlogPost;
-import com.vuminhha.decorstore.service.PostCategoryService;
-import com.vuminhha.decorstore.service.PostService;
+import com.vuminhha.decorstore.service.news.PostCategoryService;
+import com.vuminhha.decorstore.service.news.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

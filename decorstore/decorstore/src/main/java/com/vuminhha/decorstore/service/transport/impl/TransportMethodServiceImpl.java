@@ -1,18 +1,16 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.transport.impl;
 
+import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
 import com.vuminhha.decorstore.entity.TransportMethod;
 import com.vuminhha.decorstore.repository.TransportMethodRepository;
-
-import com.vuminhha.decorstore.service.impl.TransportMethodServiceImpl;
-import lombok.RequiredArgsConstructor;
+import com.vuminhha.decorstore.service.transport.TransportMethodService;
 import org.springframework.stereotype.Service;
-import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
-import java.util.List;
 
+import java.util.List;
 @Service
-public class TransportMethodService implements TransportMethodServiceImpl {
+public class TransportMethodServiceImpl implements TransportMethodService {
     private final TransportMethodRepository transportMethodRepository;
-    public TransportMethodService(TransportMethodRepository transportMethodRepository)
+    public TransportMethodServiceImpl(TransportMethodRepository transportMethodRepository)
     {
         this.transportMethodRepository=transportMethodRepository;
     }

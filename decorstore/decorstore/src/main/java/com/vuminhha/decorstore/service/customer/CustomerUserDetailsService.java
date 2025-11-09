@@ -1,4 +1,4 @@
-package com.vuminhha.decorstore.service;
+package com.vuminhha.decorstore.service.customer;
 import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

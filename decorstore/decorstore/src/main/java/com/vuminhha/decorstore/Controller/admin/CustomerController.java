@@ -1,8 +1,7 @@
 package com.vuminhha.decorstore.Controller.admin;
 
-import com.vuminhha.decorstore.Controller.user.CartController;
 import com.vuminhha.decorstore.entity.Customer;
-import com.vuminhha.decorstore.service.CustomerService;
+import com.vuminhha.decorstore.service.customer.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
