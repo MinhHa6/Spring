@@ -1,4 +1,4 @@
-package com.vuminhha.decorstore.Controller.user;
+package com.vuminhha.decorstore.Controller.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

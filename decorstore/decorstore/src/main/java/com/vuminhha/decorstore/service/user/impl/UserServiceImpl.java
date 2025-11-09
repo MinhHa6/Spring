@@ -10,6 +10,7 @@ import com.vuminhha.decorstore.service.user.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -119,4 +120,23 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(User user) {
         userRepository.save(user);
     }
+    /**
+     * tim user theo email
+     */
+    @Override
+    public User findByEmail(String email)
+    {
+        return userRepository.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException("Email not found:"+email));
+    }
+    @Override
+    public User findByResetToken(String resetToken)
+    {
+        return userRepository.findByResetToken(resetToken).orElseThrow(()-> new ResourceNotFoundException("Reset token not found"));
+    }
+    @Override
+    public  void saveUser(User user)
+    {
+        userRepository.save(user);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.vuminhha.decorstore.Controller.user;
+package com.vuminhha.decorstore.Controller.auth;
 
 import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.service.user.UserService;

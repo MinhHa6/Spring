@@ -41,7 +41,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
-    // ✅ Thêm liên kết tới Customer (One-to-One, optional)
+    //  Thêm liên kết tới Customer (One-to-One, optional)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
@@ -57,6 +57,29 @@ public class User {
         this.updatedDate = LocalDateTime.now();
     }
 
+    // Thêm các field mới cho chức năng reset password
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
+    // Getters and Setters
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getResetTokenExpiry() {
+        return resetTokenExpiry;
+    }
+
+    public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) {
+        this.resetTokenExpiry = resetTokenExpiry;
+    }
 
 
     public String getUsername() {

@@ -11,4 +11,15 @@ public interface UserService {
     Optional<User> getUserById(Long id);
     User findByUsername(String username);
     void updatePassword(User user);
+    User findByEmail(String email);
+
+    /**
+     * Tìm user theo reset token
+     */
+    User findByResetToken(String resetToken);
+
+    /**
+     * Lưu/cập nhật user
+     */
+    void saveUser(User user);
 }
