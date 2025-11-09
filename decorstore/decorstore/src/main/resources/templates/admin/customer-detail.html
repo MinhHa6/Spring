@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head :: head"></head>
+<head th:replace="fragments/head :: head"></head>
 
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="admin/fragments/sidebar :: slide"></div>
+        <div th:replace="fragments/sidebar :: slide"></div>
 
         <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 bg-light min-vh-100">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -81,6 +81,6 @@
     </div>
 </div>
 
-<div th:replace="admin/fragments/script :: script"></div>
+<div th:replace="fragments/script :: script"></div>
 </body>
 </html>

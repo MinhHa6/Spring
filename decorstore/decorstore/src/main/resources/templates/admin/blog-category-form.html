@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head :: head"></head>
+<head th:replace="fragments/head :: head"></head>
 <body>
 <div class="container mt-5">
-    <div th:replace="admin/fragments/sidebar :: slide"></div>
+    <div th:replace="fragments/sidebar :: slide"></div>
 
     <div class="content p-4">
         <h2 th:text="${category.id} == null ? 'Tạo danh mục mới' : 'Chỉnh sửa danh mục'"></h2>
@@ -29,6 +29,6 @@
         </form>
     </div>
 </div>
-<div th:replace="admin/fragments/script :: script"></div>
+<div th:replace="fragments/script :: script"></div>
 </body>
 </html>

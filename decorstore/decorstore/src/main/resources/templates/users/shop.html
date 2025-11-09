@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="users/fragments/head :: head"></head>
+<head th:replace="fragments/heads :: head"></head>
 <style>
     /* === HERO === */
     .hero-wrap {
@@ -107,7 +107,7 @@
 <body class="goto-here">
 
 <!-- Navbar -->
-<nav th:replace="users/fragments/navbar :: nav"></nav>
+<nav th:replace="fragments/nav :: nav"></nav>
 
 <!-- HERO -->
 <div class="hero-wrap hero-bread"
@@ -169,7 +169,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer th:replace="users/fragments/footer :: footer"></footer>
-<div th:replace="users/fragments/script :: script"></div>
+<footer th:replace="fragments/footers :: footer"></footer>
+<div th:replace="fragments/scripts:: script"></div>
 </body>
 </html>

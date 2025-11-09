@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="users/fragments/head :: head"></head>
+<head th:replace="fragments/heads :: head"></head>
 
 <body class="goto-here">
 
 <!-- Navbar -->
 <div>
-    <nav th:replace="users/fragments/navbar :: nav"></nav>
+    <nav th:replace="fragments/nav :: nav"></nav>
 </div>
 
 <!-- HERO SECTION -->
@@ -299,10 +299,10 @@
 </section>
 
 <!-- FOOTER -->
-<footer th:replace="users/fragments/footer :: footer"></footer>
+<footer th:replace="fragments/footers :: footer"></footer>
 
 <!-- SCRIPTS -->
-<div th:replace="users/fragments/script :: script"></div>
+<div th:replace="fragments/scripts :: script"></div>
 
 <style>
     .service-item:hover {

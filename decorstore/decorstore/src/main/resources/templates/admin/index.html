@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head::head"></head>
+<head th:replace="fragments/head::head"></head>
 
 <body>
 <div class="wrapper">
     <!-- Sidebar -->
-    <div th:replace="admin/fragments/sidebar :: slide"></div>
+    <div th:replace="fragments/sidebar :: slide"></div>
 
     <div class="main-panel">
         <!-- Header -->
@@ -22,7 +22,7 @@
                     <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
                 </div>
             </div>
-            <div th:replace="admin/fragments/navbar::nav"></div>
+            <div th:replace="fragments/navbar::nav"></div>
         </div>
 
         <!-- Content -->
@@ -322,7 +322,7 @@
     </div>
 </div>
 
-<div th:replace="admin/fragments/script::script"></div>
+<div th:replace="fragments/script::script"></div>
 
 <!-- Chart Scripts -->
 <script th:inline="javascript">
