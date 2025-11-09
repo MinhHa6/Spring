@@ -32,6 +32,8 @@ public class SecurityConfig {
                                 "/blog/**",
                                 "/login",
                                 "/register",
+                                "/forgot-password",
+                                "/reset-password",
                                 "/assets/**",
                                 "/uploads/**",
                                 "/css/**",

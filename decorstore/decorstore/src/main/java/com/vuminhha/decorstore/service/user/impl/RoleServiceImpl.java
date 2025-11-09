@@ -5,11 +5,12 @@ import com.vuminhha.decorstore.entity.Role;
 import com.vuminhha.decorstore.repository.PermissionRepository;
 import com.vuminhha.decorstore.repository.RoleRepository;
 import com.vuminhha.decorstore.service.user.RoleService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
+@Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;

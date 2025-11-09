@@ -2,9 +2,10 @@ package com.vuminhha.decorstore.service.category;
 
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.repository.CategoryRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 

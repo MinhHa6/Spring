@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Service
+@Controller
 @Slf4j
 public class ForgotPasswordController {
     @Autowired
@@ -38,6 +39,20 @@ public class ForgotPasswordController {
     private static final Logger log = LoggerFactory.getLogger(ForgotPasswordController.class);
 
 
+    @GetMapping("/test-email")
+    public String testEmail() {
+        try {
+            emailService.sendSimpleEmail(
+                    "test@gmail.com",
+                    "Test Email",
+                    "This is a test email"
+            );
+            return "Email sent!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error: " + e.getMessage();
+        }
+    }
     /**
      * Hiển thị trang quên mật khẩu
      */

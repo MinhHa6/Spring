@@ -3,9 +3,10 @@ package com.vuminhha.decorstore.service.configurations.impl;
 import com.vuminhha.decorstore.entity.Configuration;
 import com.vuminhha.decorstore.repository.ConfigurationRepository;
 import com.vuminhha.decorstore.service.configurations.ConfigurationsService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ConfigurationsServiceImpl implements ConfigurationsService {
     private final ConfigurationRepository configurationRepository;
     public ConfigurationsServiceImpl (ConfigurationRepository configurationRepository)

@@ -125,7 +125,7 @@ public class EmailService {
                 "<head><meta charset='UTF-8'></head>" +
                 "<body style='font-family: Arial, sans-serif;'>" +
                 "<div style='max-width: 600px; margin: 0 auto; padding: 20px;'>" +
-                "<h2 style='color: #4CAF50;'>✅ Xác nhận đơn hàng #" + orderCode + "</h2>" +
+                "<h2 style='color: #4CAF50;'> Xác nhận đơn hàng #" + orderCode + "</h2>" +
                 "<p>Cảm ơn bạn đã đặt hàng tại DecorStore!</p>" +
                 "<div style='background-color: #f9f9f9; padding: 20px; border-radius: 5px;'>" +
                 orderDetails +
