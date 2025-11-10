@@ -52,9 +52,13 @@ spring:
           starttls:
             enable: true
 
-
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     com.vuminhha.decorstore: DEBUG
+
+ai:
+  api:
+    url: https://api.gemini.google/v1/your-endpoint
+    key: YOUR_API_KEY_HERE

@@ -172,6 +172,23 @@
         </div>
     </div>
 </section>
+<!-- Nút Messenger AI -->
+<div id="ai-chat-btn" onclick="toggleChat()" title="Hỏi AI">
+    <i class="fa-solid fa-robot"></i>
+</div>
+
+<!-- Popup chat -->
+<div id="ai-chat-popup">
+    <div id="ai-chat-header">
+        <span>💬 Chat với AI</span>
+        <button onclick="toggleChat()">✖</button>
+    </div>
+    <div id="ai-chat-messages"></div>
+    <div id="ai-chat-input">
+        <input type="text" id="aiInput" placeholder="Bạn muốn hỏi gì?" />
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+</div>
 
 <section class="ftco-section testimony-section bg-light">
     <div class="container">
@@ -270,6 +287,52 @@
 
 <footer th:replace="fragments/footers :: footer"></footer>
 <div th:replace="fragments/scripts :: script"></div>
+<script>
+    function toggleChat() {
+        const popup = document.getElementById('ai-chat-popup');
+        popup.style.display = popup.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('aiInput');
+        const msg = input.value.trim();
+        if(!msg) return;
+
+        // Hiển thị tin nhắn user
+        const messagesDiv = document.getElementById('ai-chat-messages');
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.className = 'ai-message user-message';
+        userMsgDiv.innerText = msg;
+        messagesDiv.appendChild(userMsgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        input.value = '';
+
+        // Gửi lên API
+        fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({message: msg})
+        })
+        .then(res => res.text())
+        .then(text => {
+            const aiMsgDiv = document.createElement('div');
+            aiMsgDiv.className = 'ai-message ai-response';
+            aiMsgDiv.innerText = text;
+            messagesDiv.appendChild(aiMsgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        })
+        .catch(err => {
+            console.error(err);
+            const aiMsgDiv = document.createElement('div');
+            aiMsgDiv.className = 'ai-message ai-response';
+            aiMsgDiv.innerText = 'Lỗi AI, vui lòng thử lại.';
+            messagesDiv.appendChild(aiMsgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+    }
+</script>
+
 
 </body>
 </html>
