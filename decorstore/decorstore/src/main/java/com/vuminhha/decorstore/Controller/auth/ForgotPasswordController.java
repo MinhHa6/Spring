@@ -81,7 +81,7 @@ public class ForgotPasswordController {
             userService.saveUser(user);
 
             // Gửi email
-            String resetUrl = "http://localhost:8080/reset-password?token=" + resetToken;
+            String resetUrl = "http://localhost:8060/reset-password?token=" + resetToken;
             emailService.sendResetPasswordEmail(user.getEmail(), user.getUsername(), resetUrl);
 
             log.info("Password reset email sent to: {}", email);
