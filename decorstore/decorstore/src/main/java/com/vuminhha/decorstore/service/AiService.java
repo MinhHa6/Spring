@@ -1,5 +1,7 @@
 package com.vuminhha.decorstore.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,14 +44,25 @@ public class AiService {
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // ❗ Parse JSON
-        JSONObject json = new JSONObject(response.body());
-        JSONArray candidates = json.getJSONArray("candidates");
-        JSONObject content = candidates.getJSONObject(0).getJSONObject("content");
-        JSONArray parts = content.getJSONArray("parts");
+        // Parse JSON bằng Jackson
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.body());
 
-        return parts.getJSONObject(0).getString("text");
+        // Nếu API trả về error
+        if (root.has("error")) {
+            return "API Error: " + root.get("error").get("message").asText();
+        }
+
+        // Lấy text từ Gemini
+        return root.get("candidates")
+                .get(0)
+                .get("content")
+                .get("parts")
+                .get(0)
+                .get("text")
+                .asText();
     }
 }

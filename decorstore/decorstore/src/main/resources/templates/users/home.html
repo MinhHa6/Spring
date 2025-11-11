@@ -287,24 +287,32 @@
 
 <footer th:replace="fragments/footers :: footer"></footer>
 <div th:replace="fragments/scripts :: script"></div>
-function sendMessage() {
-const message = document.getElementById("aiInput").value;
+<script>
+    function toggleChat() {
+        const popup = document.getElementById("ai-chat-popup");
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+    }
 
-fetch("/api/ai/chat", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({ message: message })
-})
-.then(res => res.text())
-.then(data => {
-const msgBox = document.getElementById("ai-chat-messages");
-msgBox.innerHTML += "<div><b>Bạn:</b> " + message + "</div>";
-msgBox.innerHTML += "<div><b>AI:</b> " + data + "</div>";
-document.getElementById("aiInput").value = "";
-});
-}
+    function sendMessage() {
+        const message = document.getElementById("aiInput").value;
+        if (!message.trim()) return;
 
+        fetch("/api/ai/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({message: message})
+        })
+        .then(res => res.text())
+        .then(data => {
+            const box = document.getElementById("ai-chat-messages");
+            box.innerHTML += `<div><b>Bạn:</b> ${message}</div>`;
+            box.innerHTML += `<div><b>AI:</b> ${data}</div>`;
+            document.getElementById("aiInput").value = "";
+            box.scrollTop = box.scrollHeight;
+        });
+    }
+</script>
 </body>
 </html>
