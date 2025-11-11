@@ -60,5 +60,6 @@ logging:
 
 ai:
   api:
-    url: https://api.gemini.google/v1/your-endpoint
-    key: YOUR_API_KEY_HERE
+    key: YOUR_GEMINI_API_KEY
+    url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+

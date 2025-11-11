@@ -287,52 +287,24 @@
 
 <footer th:replace="fragments/footers :: footer"></footer>
 <div th:replace="fragments/scripts :: script"></div>
-<script>
-    function toggleChat() {
-        const popup = document.getElementById('ai-chat-popup');
-        popup.style.display = popup.style.display === 'flex' ? 'none' : 'flex';
-    }
+function sendMessage() {
+const message = document.getElementById("aiInput").value;
 
-    function sendMessage() {
-        const input = document.getElementById('aiInput');
-        const msg = input.value.trim();
-        if(!msg) return;
-
-        // Hiển thị tin nhắn user
-        const messagesDiv = document.getElementById('ai-chat-messages');
-        const userMsgDiv = document.createElement('div');
-        userMsgDiv.className = 'ai-message user-message';
-        userMsgDiv.innerText = msg;
-        messagesDiv.appendChild(userMsgDiv);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-        input.value = '';
-
-        // Gửi lên API
-        fetch('/api/ai/chat', {
-            method: 'POST',
-            headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({message: msg})
-        })
-        .then(res => res.text())
-        .then(text => {
-            const aiMsgDiv = document.createElement('div');
-            aiMsgDiv.className = 'ai-message ai-response';
-            aiMsgDiv.innerText = text;
-            messagesDiv.appendChild(aiMsgDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        })
-        .catch(err => {
-            console.error(err);
-            const aiMsgDiv = document.createElement('div');
-            aiMsgDiv.className = 'ai-message ai-response';
-            aiMsgDiv.innerText = 'Lỗi AI, vui lòng thử lại.';
-            messagesDiv.appendChild(aiMsgDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        });
-    }
-</script>
-
+fetch("/api/ai/chat", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({ message: message })
+})
+.then(res => res.text())
+.then(data => {
+const msgBox = document.getElementById("ai-chat-messages");
+msgBox.innerHTML += "<div><b>Bạn:</b> " + message + "</div>";
+msgBox.innerHTML += "<div><b>AI:</b> " + data + "</div>";
+document.getElementById("aiInput").value = "";
+});
+}
 
 </body>
 </html>
