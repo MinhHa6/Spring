@@ -10,20 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/ai")
+@RequestMapping("/user")
 public class AiController {
     @Autowired
     private AiService aiService;
 
-    @PostMapping("/chat")
-    public ResponseEntity<String> chat(@RequestBody Map<String, String> body) {
-        try {
-            String message = body.get("message");
-            String aiResponse = aiService.askAi(message);
-            return ResponseEntity.ok(aiResponse);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error: " + e.getMessage());
-        }
+
+    @PostMapping("/ai-chat")
+    @ResponseBody
+    public Map<String, String> sendMessage(@RequestBody Map<String, String> request) {
+        String userMessage = request.get("message");
+        String aiResponse = aiService.generateContent(userMessage);
+
+        return Map.of("response", aiResponse);
     }
 }

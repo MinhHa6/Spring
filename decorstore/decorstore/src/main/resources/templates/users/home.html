@@ -172,23 +172,6 @@
         </div>
     </div>
 </section>
-<!-- Nút Messenger AI -->
-<div id="ai-chat-btn" onclick="toggleChat()" title="Hỏi AI">
-    <i class="fa-solid fa-robot"></i>
-</div>
-
-<!-- Popup chat -->
-<div id="ai-chat-popup">
-    <div id="ai-chat-header">
-        <span>💬 Chat với AI</span>
-        <button onclick="toggleChat()">✖</button>
-    </div>
-    <div id="ai-chat-messages"></div>
-    <div id="ai-chat-input">
-        <input type="text" id="aiInput" placeholder="Bạn muốn hỏi gì?" />
-        <button onclick="sendMessage()">Gửi</button>
-    </div>
-</div>
 
 <section class="ftco-section testimony-section bg-light">
     <div class="container">
@@ -284,35 +267,8 @@
     </div>
 </section>
 
-
+<div th:replace="~{fragments/chat :: chat-bubble}"></div>
 <footer th:replace="fragments/footers :: footer"></footer>
 <div th:replace="fragments/scripts :: script"></div>
-<script>
-    function toggleChat() {
-        const popup = document.getElementById("ai-chat-popup");
-        popup.style.display = popup.style.display === "block" ? "none" : "block";
-    }
-
-    function sendMessage() {
-        const message = document.getElementById("aiInput").value;
-        if (!message.trim()) return;
-
-        fetch("/api/ai/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({message: message})
-        })
-        .then(res => res.text())
-        .then(data => {
-            const box = document.getElementById("ai-chat-messages");
-            box.innerHTML += `<div><b>Bạn:</b> ${message}</div>`;
-            box.innerHTML += `<div><b>AI:</b> ${data}</div>`;
-            document.getElementById("aiInput").value = "";
-            box.scrollTop = box.scrollHeight;
-        });
-    }
-</script>
 </body>
 </html>
