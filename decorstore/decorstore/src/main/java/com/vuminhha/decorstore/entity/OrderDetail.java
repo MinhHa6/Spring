@@ -2,6 +2,7 @@ package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
@@ -11,38 +12,39 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDetail {
     // bang chi tiet don hang
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     // Liên kết về Order
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    Order order;
 
     // Liên kết về Product
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    Product product;
 
     // Giá sản phẩm tại thời điểm mua
     @Column(name = "price", precision = 12, scale = 2, nullable = false)
-    private BigDecimal price;
+    BigDecimal price;
 
     // Số lượng
     @Column(nullable = false)
-    private Integer qty = 1;
+    Integer qty = 1;
 
     // Tổng tiền của dòng sản phẩm
     @Column(name = "total", precision = 12, scale = 2, nullable = false)
-    private BigDecimal total;
+    BigDecimal total;
 
     // Số lượng trả (nếu có chức năng trả hàng)
     @Column(name = "return_qty")
-    private Integer returnQty = 0;
+    Integer returnQty = 0;
 
     @PrePersist
     @PreUpdate
@@ -50,54 +52,5 @@ public class OrderDetail {
         if (price != null && qty != null) {
             this.total = price.multiply(BigDecimal.valueOf(qty));
         }
-    }
-
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getQty() {
-        return qty;
-    }
-
-    public void setQty(Integer qty) {
-        this.qty = qty;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public Integer getReturnQty() {
-        return returnQty;
-    }
-
-    public void setReturnQty(Integer returnQty) {
-        this.returnQty = returnQty;
     }
 }

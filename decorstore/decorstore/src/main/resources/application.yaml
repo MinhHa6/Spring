@@ -58,10 +58,15 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     com.vuminhha.decorstore: DEBUG
 
-ai:
-  api:
-    key: AIzaSyAZwFIbHYqXKZd7YxzRmd0PnDnUbPVr4j4
-    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
+#ai:
+#  # Bật mock mode để test UI (không cần API key thật)
+#  mock:
+#    enabled: true
+#
+#  # API config (để sau khi fix network)
+#  api:
+#    key: ${GEMINI_API_KEY:dummy-key}
+#    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
 
 
 

@@ -1,10 +1,8 @@
 package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,28 +13,28 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentMethod {
-    // phuong thuc thanh toan
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(length = 250, nullable = false, unique = true)
-    private String name;
+    String name;
 
     @Column(length = 500)
-    private String notes;
+    String notes;
 
     @CreationTimestamp
-    private LocalDateTime createdDate;
+    LocalDateTime createdDate;
 
     @UpdateTimestamp
-    private LocalDateTime updatedDate;
+    LocalDateTime updatedDate;
 
     @Column(nullable = false)
-    private Boolean isDelete = false;
+    Boolean isDelete = false;
 
     @Column(nullable = false)
-    private Boolean isActive = true;
+    Boolean isActive = true;
 }

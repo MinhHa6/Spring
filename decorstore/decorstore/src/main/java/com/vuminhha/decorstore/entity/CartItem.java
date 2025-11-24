@@ -1,10 +1,8 @@
 package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
@@ -14,26 +12,27 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     // Sản phẩm
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    Product product;
 
     // Liên kết giỏ
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
+    Cart cart;
 
-    private Integer quantity;
+    Integer quantity;
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal price;
+    BigDecimal price;
 
     // ham tinh tien cho tung san pham trong gio
     public BigDecimal getTotal() {
@@ -41,44 +40,5 @@ public class CartItem {
             return BigDecimal.ZERO;
         }
         return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-    }
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

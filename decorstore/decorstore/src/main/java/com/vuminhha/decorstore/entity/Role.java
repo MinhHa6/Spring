@@ -2,6 +2,7 @@ package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,17 +12,18 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(length = 50, unique = true, nullable = false)
-    private String name; // ADMIN, STAFF, CUSTOMER
+    String name; // ADMIN, STAFF, CUSTOMER
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    Set<User> users;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -29,32 +31,7 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
-    private Set<Permission> permissions;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
-    }
-    // ✅ Chỉ dùng id trong equals và hashCode
+    Set<Permission> permissions;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

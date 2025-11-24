@@ -2,6 +2,7 @@ package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -12,26 +13,27 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(length = 100, unique = true, nullable = false)
-    private String username;
+    String username;
 
     @Column(length = 255, nullable = false)
-    private String password;
+    String password;
 
     @Column(length = 150)
-    private String email;
+    String email;
 
 
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    LocalDateTime createdDate;
+    LocalDateTime updatedDate;
 
-    private Boolean isActive = true;
+    Boolean isActive = true;
 
     // Liên kết Role (N-N)
     @ManyToMany(fetch = FetchType.EAGER)
@@ -40,10 +42,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    Set<Role> roles;
     //  Thêm liên kết tới Customer (One-to-One, optional)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Customer customer;
+    Customer customer;
 
 
     @PrePersist
@@ -59,98 +61,9 @@ public class User {
 
     // Thêm các field mới cho chức năng reset password
     @Column(name = "reset_token")
-    private String resetToken;
+    String resetToken;
 
     @Column(name = "reset_token_expiry")
-    private LocalDateTime resetTokenExpiry;
+    LocalDateTime resetTokenExpiry;
 
-    // Getters and Setters
-    public String getResetToken() {
-        return resetToken;
-    }
-
-    public void setResetToken(String resetToken) {
-        this.resetToken = resetToken;
-    }
-
-    public LocalDateTime getResetTokenExpiry() {
-        return resetTokenExpiry;
-    }
-
-    public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) {
-        this.resetTokenExpiry = resetTokenExpiry;
-    }
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

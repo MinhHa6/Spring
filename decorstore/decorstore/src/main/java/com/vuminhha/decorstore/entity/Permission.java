@@ -2,6 +2,7 @@ package com.vuminhha.decorstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "permissions")
@@ -9,20 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(length = 100, unique = true, nullable = false)
-    private String name; // ex: "PRODUCT_READ", "PRODUCT_CREATE", "ORDER_MANAGE"
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    String name; // ex: "PRODUCT_READ", "PRODUCT_CREATE", "ORDER_MANAGE"
 }

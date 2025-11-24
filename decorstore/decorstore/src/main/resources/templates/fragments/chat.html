@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <style>
         /* Chat Bubble Styles */
         .chat-bubble-container {
@@ -114,6 +115,7 @@
             border-radius: 18px;
             word-wrap: break-word;
             line-height: 1.4;
+            white-space: pre-wrap;
         }
 
         .user-message {
@@ -229,7 +231,8 @@
     </style>
 </head>
 <body>
-<!-- Chat Bubble Widget -->
+
+<!-- Chat Bubble Widget Fragment -->
 <div class="chat-bubble-container" th:fragment="chat-bubble">
     <!-- Toggle Button -->
     <button class="chat-bubble-btn" id="chatBubbleBtn">
@@ -242,14 +245,14 @@
     <!-- Chat Window -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <h3>🤖 AI Gemini Assistant</h3>
+            <h3>🤖 AI Assistant</h3>
             <button class="close-btn" id="closeChat">&times;</button>
         </div>
 
         <div class="chat-messages" id="chatMessages">
             <div class="message ai-message">
                 <div class="message-content">
-                    Xin chào! Tôi là trợ lý AI Gemini. Tôi có thể giúp gì cho bạn?
+                    Xin chào! Tôi là trợ lý AI của Decor Store. Tôi có thể giúp gì cho bạn?
                 </div>
             </div>
             <div class="typing-indicator" id="typingIndicator">
