@@ -7,6 +7,10 @@ import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.repository.RoleRepository;
 import com.vuminhha.decorstore.repository.UserRepository;
 import com.vuminhha.decorstore.service.user.UserService;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +19,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 @Service
+@Builder
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class UserServiceImpl implements UserService {
-    private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;// dung  BCryptPasswordEncoder
-    public UserServiceImpl (UserRepository userRepository,PasswordEncoder passwordEncoder,RoleRepository roleRepository)
-    {
-        this.userRepository=userRepository;
-        this.passwordEncoder=passwordEncoder;
-        this.roleRepository=roleRepository;
-    }
+    RoleRepository roleRepository;
+    UserRepository userRepository;
+    PasswordEncoder passwordEncoder;// dung  BCryptPasswordEncoder
     /**
      * Dang ky tai khoan moi
      */
@@ -47,12 +48,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy quyền mặc định ROLE_USER"));
 
         //  Tạo User (dùng setter để tránh lỗi constructor)
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(encodedPassword);
-        user.setRoles(Set.of(defaultRole));
-        user.setActive(true);
+        User user = User.builder()
+                .username(username)
+                .email(email)
+                .password(encodedPassword)
+                .roles(Set.of(defaultRole))
+                .isActive(true)
+                .customer(customer) // liên kết xuôi
+                .build();
 
         //  Tạo Customer liên kết 1-1 với User
         Customer customer = new Customer();

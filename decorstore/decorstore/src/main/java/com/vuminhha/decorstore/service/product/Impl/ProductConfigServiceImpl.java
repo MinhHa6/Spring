@@ -3,19 +3,19 @@ package com.vuminhha.decorstore.service.product.Impl;
 import com.vuminhha.decorstore.entity.ProductConfig;
 import com.vuminhha.decorstore.repository.ProductConfigRepository;
 import com.vuminhha.decorstore.service.product.ProductConfigService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PACKAGE,makeFinal = true)
 public class ProductConfigServiceImpl implements ProductConfigService {
-    private final ProductConfigRepository productConfigRepository;
-
-    public ProductConfigServiceImpl (ProductConfigRepository productConfigRepository)
-    {
-        this.productConfigRepository=productConfigRepository;
-    }
+    ProductConfigRepository productConfigRepository;
     // lay tat ca cau hinh cua san pham
     @Override
     public List<ProductConfig> getAll()

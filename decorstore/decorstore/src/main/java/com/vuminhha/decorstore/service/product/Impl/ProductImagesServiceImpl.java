@@ -3,6 +3,9 @@ package com.vuminhha.decorstore.service.product.Impl;
 import com.vuminhha.decorstore.entity.ProductImage;
 import com.vuminhha.decorstore.repository.ProductImagesRepository;
 import com.vuminhha.decorstore.service.product.ProductImagesService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -11,12 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ProductImagesServiceImpl implements ProductImagesService {
-    private final ProductImagesRepository productImagesRepository;
-    public ProductImagesServiceImpl (ProductImagesRepository productImagesRepository)
-    {
-        this.productImagesRepository=productImagesRepository;
-    }
+    ProductImagesRepository productImagesRepository;
 
     // Lay tat ca anh theo ProductId
     @Override

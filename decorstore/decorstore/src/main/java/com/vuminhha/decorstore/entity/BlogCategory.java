@@ -24,5 +24,5 @@ public class BlogCategory {
 
     @Column(length = 500)
     String description;
-    
+
 }

@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.repository.ProductRepository;
 import com.vuminhha.decorstore.service.product.ProductService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ProductServiceImpl implements ProductService {
-    private  final ProductRepository productRepository;
+    ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository)
-    {
-        this.productRepository=productRepository;
-    }
     @Override
     public List<Product> getAll()
     {

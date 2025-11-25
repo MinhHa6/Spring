@@ -4,16 +4,17 @@ import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
 import com.vuminhha.decorstore.entity.TransportMethod;
 import com.vuminhha.decorstore.repository.TransportMethodRepository;
 import com.vuminhha.decorstore.service.transport.TransportMethodService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class TransportMethodServiceImpl implements TransportMethodService {
-    private final TransportMethodRepository transportMethodRepository;
-    public TransportMethodServiceImpl(TransportMethodRepository transportMethodRepository)
-    {
-        this.transportMethodRepository=transportMethodRepository;
-    }
+     TransportMethodRepository transportMethodRepository;
     @Override
     public List<TransportMethod> getAll ()
     {
