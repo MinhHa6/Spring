@@ -53,19 +53,19 @@ public class UserServiceImpl implements UserService {
                 .email(email)
                 .password(encodedPassword)
                 .roles(Set.of(defaultRole))
-                .isActive(true)
-                .customer(customer) // liên kết xuôi
+                .isActive(true)// liên kết xuôi
                 .build();
 
         //  Tạo Customer liên kết 1-1 với User
-        Customer customer = new Customer();
-        customer.setName(fullName);
-        customer.setActive(true);
-        customer.setDelete(false);
-        customer.setUser(user); // liên kết ngược
-        user.setCustomer(customer); // liên kết xuôi
+        Customer customer = Customer.builder()
+                .name(fullName)
+                .isActive(true)
+                .isDelete(false)
+                .build();//
+        // liên kết ngược
+        user.setCustomer(customer);
+        // liên kết xuôi
 
-        // ⃣Lưu user (JPA sẽ tự cascade lưu customer nếu đã bật cascade)
         return userRepository.save(user);
     }
 
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         {
             throw  new RuntimeException("Invalid password");
         }
-        if(!user.getActive())
+        if(!user.getIsActive())
         {
             throw new RuntimeException("Account is inactive");
         }

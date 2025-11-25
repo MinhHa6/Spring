@@ -101,8 +101,8 @@ public class OrderServiceImpl implements OrderService {
         order.setEmail(email);
         order.setPhone(phone);
         order.setNotes(notes);
-        order.setActive(true);
-        order.setDeleted(false);
+        order.setIsActive(true);
+        order.setIsDeleted(false);
         order.setTotalMoney(BigDecimal.ZERO);
         orderRepository.save(order);
 
@@ -146,11 +146,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (!order.getActive()) {
+        if (!order.getIsActive()) {
             throw new RuntimeException("Order is already inactive");
         }
 
-        order.setActive(false);
+        order.setIsActive(false);
         orderRepository.save(order);
 
         // Hoàn lại tồn kho

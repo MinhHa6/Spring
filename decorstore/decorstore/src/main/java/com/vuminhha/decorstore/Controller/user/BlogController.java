@@ -73,14 +73,14 @@ public class BlogController {
         try {
             BlogPost post = postService.getBlogById(id);
 
-            if (!post.getActive()) {
+            if (!post.getIsActive()) {
                 return "redirect:/blog?error=post_not_found";
             }
 
             // Lấy bài viết liên quan (cùng category)
             List<BlogPost> relatedPosts = postService.getByCategory(post.getCategory().getId())
                     .stream()
-                    .filter(p -> !p.getId().equals(id) && p.getActive())
+                    .filter(p -> !p.getId().equals(id) && p.getIsActive())
                     .limit(3)
                     .toList();
 
