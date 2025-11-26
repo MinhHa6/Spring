@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.dto.ChatRequest;
 import com.vuminhha.decorstore.dto.ChatResponse;
 import com.vuminhha.decorstore.service.AiService;
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +17,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class AiController {
-    @Autowired
-    private AiService aiService;
-
-
-
+     AiService aiService;
 
     @PostMapping("/ai-chat")
     public ResponseEntity<ChatResponse> sendMessage(@Valid @RequestBody ChatRequest request) {

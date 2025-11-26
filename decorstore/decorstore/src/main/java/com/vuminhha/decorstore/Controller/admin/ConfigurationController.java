@@ -2,19 +2,19 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Configuration;
 import com.vuminhha.decorstore.service.configurations.ConfigurationsService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/configuration")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ConfigurationController {
-    private final ConfigurationsService configurationsService;
-
-    public ConfigurationController(ConfigurationsService configurationsService) {
-        this.configurationsService = configurationsService;
-    }
-
+    ConfigurationsService configurationsService;
     @GetMapping
     public String listConfigurations(Model model) {
         model.addAttribute("configurations", configurationsService.getAll());

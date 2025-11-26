@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.entity.BlogPost;
 import com.vuminhha.decorstore.service.news.PostCategoryService;
 import com.vuminhha.decorstore.service.news.PostService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class BlogController {
-    @Autowired
-    private PostService postService;
+    PostService postService;
 
-    @Autowired
-    private PostCategoryService postCategoryService;
+     PostCategoryService postCategoryService;
     private static final Logger log = LoggerFactory.getLogger(BlogController.class);
 
 

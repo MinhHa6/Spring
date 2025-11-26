@@ -7,6 +7,9 @@ import com.vuminhha.decorstore.service.EmailService;
 import com.vuminhha.decorstore.service.cart.impl.CartServiceImpl;
 import com.vuminhha.decorstore.service.user.UserService;
 import jakarta.validation.constraints.Email;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +26,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Controller
-@Slf4j
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ForgotPasswordController {
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+     UserService userService;
+     UserRepository userRepository;
+     EmailService emailService;
+     PasswordEncoder passwordEncoder;
     private static final Logger log = LoggerFactory.getLogger(ForgotPasswordController.class);
 
 

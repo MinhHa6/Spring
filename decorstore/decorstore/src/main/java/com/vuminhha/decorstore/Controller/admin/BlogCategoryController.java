@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/blog-categories")
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class BlogCategoryController {
 
      PostCategoryService categoryService;

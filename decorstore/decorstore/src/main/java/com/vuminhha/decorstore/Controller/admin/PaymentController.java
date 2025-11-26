@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.PaymentMethod;
 import com.vuminhha.decorstore.service.payment.PaymentMethodService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +13,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/payment")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class PaymentController {
-    public final PaymentMethodService paymentMethodService;
-    public PaymentController(PaymentMethodService paymentMethodService)
-    {
-        this.paymentMethodService=paymentMethodService;
-    }
+    PaymentMethodService paymentMethodService;
     @GetMapping
     public String listPayment(Model model)
     {

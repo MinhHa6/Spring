@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.service.category.CategoryService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +20,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/category")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CategoryController {
-    private final CategoryService categoryService;
-    public CategoryController (CategoryService categoryService)
-    {
-        this.categoryService=categoryService;
-    }
+     CategoryService categoryService;
     /**
      * Trang ds san pham
      */
@@ -53,7 +54,7 @@ public class CategoryController {
                                RedirectAttributes redirectAttributes) {
         try {
             if (!iconFile.isEmpty()) {
-                // ✅ Đường dẫn chính xác
+                //  Đường dẫn chính xác
                 String uploadDir = "src/main/resources/static/uploads/";
                 File directory = new File(uploadDir);
 
@@ -66,7 +67,7 @@ public class CategoryController {
                 Path path = Paths.get(uploadDir, fileName);
                 Files.write(path, iconFile.getBytes());
 
-                System.out.println("✅ File saved: " + path.toAbsolutePath()); // Log để check
+                System.out.println("File saved: " + path.toAbsolutePath()); // Log để check
 
                 // Xóa ảnh cũ
                 if (category.getId() != null) {
@@ -86,12 +87,12 @@ public class CategoryController {
                 Category existing = categoryService.getCategoryId(category.getId());
                 if (existing != null) {
                     category.setIcon(existing.getIcon());
-                    System.out.println("⚠️ Keep old icon: " + existing.getIcon());
+                    System.out.println("Keep old icon: " + existing.getIcon());
                 }
             }
 
             categoryService.saveCategory(category);
-            System.out.println("💾 Category saved with icon: " + category.getIcon());
+            System.out.println("Category saved with icon: " + category.getIcon());
 
             redirectAttributes.addFlashAttribute("success", "Lưu thành công!");
 

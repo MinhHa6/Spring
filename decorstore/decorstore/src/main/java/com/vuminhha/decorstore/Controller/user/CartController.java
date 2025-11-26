@@ -6,6 +6,9 @@ import com.vuminhha.decorstore.service.payment.PaymentMethodService;
 import com.vuminhha.decorstore.service.product.ProductService;
 import com.vuminhha.decorstore.service.transport.TransportMethodService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,30 +25,23 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/cart")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CartController {
 
     private static final Logger log = LoggerFactory.getLogger(CartController.class);
 
-    private final CartService cartService;
-    private final ProductService productService;
-    private final TransportMethodService transportMethodService;
-    private final PaymentMethodService paymentMethodService;
-    public CartController (CartService cartService,ProductService productService,PaymentMethodService paymentMethodService,
-    TransportMethodService transportMethodService)
-    {
-        this.cartService=cartService;
-        this.productService=productService;
-        this.paymentMethodService=paymentMethodService;
-        this.transportMethodService=transportMethodService;
-    }
-
+     CartService cartService;
+     ProductService productService;
+     TransportMethodService transportMethodService;
+     PaymentMethodService paymentMethodService;
     @GetMapping
     public String viewCart(Model model, Principal principal, HttpSession session) {
         List<CartItem> cartItems = new ArrayList<>();
         BigDecimal subTotal = BigDecimal.ZERO;
 
         if (principal != null) {
-            // 🔹 Người dùng đã đăng nhập → lấy giỏ hàng trong DB
+            //  Người dùng đã đăng nhập → lấy giỏ hàng trong DB
             String username = principal.getName();
             Cart cart = cartService.getCartByUsername(username);
 
@@ -58,7 +54,7 @@ public class CartController {
                     .map(item -> item.getTotal() != null ? item.getTotal() : BigDecimal.ZERO)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
         } else {
-            // 🔹 Người dùng chưa đăng nhập → lấy giỏ hàng từ session
+            // Người dùng chưa đăng nhập → lấy giỏ hàng từ session
             Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
 
             if (sessionCart != null && !sessionCart.isEmpty()) {
@@ -82,11 +78,11 @@ public class CartController {
             }
         }
 
-        // 🔹 Phí vận chuyển & tổng cộng
+        //  Phí vận chuyển & tổng cộng
         BigDecimal shipping = BigDecimal.valueOf(30000);
         BigDecimal total = subTotal.add(shipping);
 
-        // 🔹 Gửi dữ liệu sang view
+        //  Gửi dữ liệu sang view
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("subTotal", subTotal);
         model.addAttribute("shipping", shipping);
@@ -113,10 +109,10 @@ public class CartController {
         try {
             String username = (userDetails != null) ? userDetails.getUsername() : null;
 
-            // ✅ Gọi service thêm sản phẩm (cả đăng nhập & chưa đăng nhập)
+            //  Gọi service thêm sản phẩm (cả đăng nhập & chưa đăng nhập)
             cartService.addToCart(productId, quantity, session, username);
 
-            // ✅ Nếu đăng nhập → đếm số lượng sản phẩm trong giỏ DB
+            // Nếu đăng nhập → đếm số lượng sản phẩm trong giỏ DB
             int totalItems = 0;
             if (username != null) {
                 Cart cart = cartService.getCartByUsername(username);
@@ -124,7 +120,7 @@ public class CartController {
                         ? cart.getItems().stream().mapToInt(i -> i.getQuantity()).sum()
                         : 0;
             } else {
-                // ✅ Nếu chưa đăng nhập → đếm trong session
+                //  Nếu chưa đăng nhập → đếm trong session
                 Map<Long, Integer> sessionCart = (Map<Long, Integer>) session.getAttribute("cart");
                 totalItems = (sessionCart != null)
                         ? sessionCart.values().stream().mapToInt(Integer::intValue).sum()
@@ -135,7 +131,7 @@ public class CartController {
             response.put("message", "🛒 Đã thêm sản phẩm vào giỏ hàng!");
             response.put("cartCount", totalItems);
 
-            log.info("✅ Product {} (qty: {}) added by {}",
+            log.info(" Product {} (qty: {}) added by {}",
                     productId, quantity, (username != null ? username : "guest"));
 
             return ResponseEntity.ok(response);

@@ -6,6 +6,9 @@ import com.vuminhha.decorstore.entity.TransportMethod;
 import com.vuminhha.decorstore.service.order.OrderService;
 import com.vuminhha.decorstore.service.payment.PaymentMethodService;
 import com.vuminhha.decorstore.service.transport.TransportMethodService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +17,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class OrderController {
-    private final OrderService orderService;
-    private final PaymentMethodService paymentMethodService;
-    private final TransportMethodService transportMethodService;
-    public OrderController (OrderService orderService,TransportMethodService transportMethodService,PaymentMethodService paymentMethodService)
-    {
-        this.orderService=orderService;
-        this.paymentMethodService=paymentMethodService;
-        this.transportMethodService=transportMethodService;
-    }
+     OrderService orderService;
+     PaymentMethodService paymentMethodService;
+     TransportMethodService transportMethodService;
     /**
      * Hien thi ds don hang
      */

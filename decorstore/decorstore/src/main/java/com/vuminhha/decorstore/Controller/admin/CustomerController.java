@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.service.customer.CustomerService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,10 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/customers")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CustomerController {
-    @Autowired
-    private CustomerService customerService;
+     CustomerService customerService;
 
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 

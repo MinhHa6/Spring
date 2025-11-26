@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.Controller.admin;
 
 import com.vuminhha.decorstore.entity.TransportMethod;
 import com.vuminhha.decorstore.service.transport.TransportMethodService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +13,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/transport")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class TransportController {
-    private final TransportMethodService transportMethodService;
-    public TransportController (TransportMethodService transportMethodService)
-    {
-        this.transportMethodService=transportMethodService;
-    }
+     TransportMethodService transportMethodService;
     // lay ds van chuyen
     @GetMapping
     public String listTransport(Model model)

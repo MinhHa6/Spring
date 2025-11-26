@@ -3,6 +3,9 @@ package com.vuminhha.decorstore.Controller.admin;
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.service.category.CategoryService;
 import com.vuminhha.decorstore.service.product.ProductService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +20,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/product")
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class ProductController {
 
-    private final ProductService productService;
-    private final CategoryService categoryService;
-
-    public ProductController(ProductService productService, CategoryService categoryService) {
-        this.productService = productService;
-        this.categoryService = categoryService;
-    }
+     ProductService productService;
+     CategoryService categoryService;
 
     /**
      * Hien thi ds san pham

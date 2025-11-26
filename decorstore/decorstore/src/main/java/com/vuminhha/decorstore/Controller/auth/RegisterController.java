@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.Controller.auth;
 
 import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.service.user.UserService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class RegisterController {
-    @Autowired
-    private  UserService userService;
+     UserService userService;
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {

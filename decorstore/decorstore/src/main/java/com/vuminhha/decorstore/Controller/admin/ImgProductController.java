@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.entity.ProductImage;
 import com.vuminhha.decorstore.service.product.ProductImagesService;
 import com.vuminhha.decorstore.service.product.ProductService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +22,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/productImg/{productId}")  //  Đã thêm {productId}
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ImgProductController {
-    @Autowired
-    public ProductImagesService productImagesService;
-
-    @Autowired
-    public ProductService productService;
+     ProductImagesService productImagesService;
+     ProductService productService;
 
     /**
      * Hien thi ds anh cua 1 san pham
