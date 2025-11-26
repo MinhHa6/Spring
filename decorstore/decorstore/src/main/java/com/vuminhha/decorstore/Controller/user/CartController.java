@@ -128,7 +128,7 @@ public class CartController {
             }
 
             response.put("success", true);
-            response.put("message", "🛒 Đã thêm sản phẩm vào giỏ hàng!");
+            response.put("message", " Đã thêm sản phẩm vào giỏ hàng!");
             response.put("cartCount", totalItems);
 
             log.info(" Product {} (qty: {}) added by {}",
@@ -137,13 +137,13 @@ public class CartController {
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
-            log.error("❌ Lỗi khi thêm sản phẩm vào giỏ hàng: ", e);
+            log.error(" Lỗi khi thêm sản phẩm vào giỏ hàng: ", e);
             response.put("success", false);
             response.put("message", e.getMessage());
             return ResponseEntity.badRequest().body(response);
 
         } catch (Exception e) {
-            log.error("⚠️ Lỗi không mong muốn: ", e);
+            log.error(" Lỗi không mong muốn: ", e);
             response.put("success", false);
             response.put("message", "Có lỗi xảy ra. Vui lòng thử lại!");
             return ResponseEntity.internalServerError().body(response);

@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.entity.Product;
 import com.vuminhha.decorstore.service.category.CategoryService;
 import com.vuminhha.decorstore.service.product.ProductService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +18,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/shop")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ShopController {
-    private final CategoryService categoryService;
-    private final ProductService productService;
 
-    public ShopController(ProductService productService, CategoryService categoryService) {
-        this.productService = productService;
-        this.categoryService = categoryService;
-    }
-
+     CategoryService categoryService;
+     ProductService productService;
     @GetMapping
     public String viewShopPage(@RequestParam(value = "keyword", required = false) String keyword,
                                @RequestParam(value = "categoryId", required = false) Long categoryId,
@@ -56,7 +56,7 @@ public class ShopController {
             return "redirect:/shop";
         }
 
-        // ✅ QUAN TRỌNG: Force load lazy collections
+        //  QUAN TRỌNG: Force load lazy collections
         try {
             // Load ảnh phụ
             int imageCount = product.getImages().size();

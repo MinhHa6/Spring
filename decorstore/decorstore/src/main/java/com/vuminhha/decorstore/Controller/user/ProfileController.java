@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.service.customer.CustomerService;
 import com.vuminhha.decorstore.service.user.UserService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,21 +28,16 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/profile")
-@Slf4j
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ProfileController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
+     UserService userService;
+     CustomerService customerService;
+     PasswordEncoder passwordEncoder;
+     static Logger log = LoggerFactory.getLogger(ProfileController.class);
 
 
-    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
+     static String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
     /**
      * Hiển thị trang profile

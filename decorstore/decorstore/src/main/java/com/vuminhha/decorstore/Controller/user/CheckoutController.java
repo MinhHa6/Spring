@@ -6,6 +6,9 @@ import com.vuminhha.decorstore.service.payment.PaymentMethodService;
 import com.vuminhha.decorstore.service.transport.TransportMethodService;
 import com.vuminhha.decorstore.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +25,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 @RequestMapping("/checkout")
 @Controller
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CheckoutController {
-    @Autowired
-    private  CartService cartService;
-    @Autowired
-    private  PaymentMethodService paymentMethodService;
-    @Autowired
-    private  TransportMethodService transportMethodService;
-    @Autowired
-    private UserService userService; // Thêm service này
+    CartService cartService;
+     PaymentMethodService paymentMethodService;
+     TransportMethodService transportMethodService;
+     UserService userService;
 
     private static final Logger log = LoggerFactory.getLogger(CheckoutController.class);
 
@@ -40,7 +41,7 @@ public class CheckoutController {
                            Principal principal,
                            HttpSession session) {
 
-        // ✅ BẮT BUỘC ĐĂNG NHẬP
+        //  BẮT BUỘC ĐĂNG NHẬP
         if (principal == null) {
             session.setAttribute("redirectAfterLogin", "/checkout?products=" + products);
             return "redirect:/login?message=Vui lòng đăng nhập để tiếp tục thanh toán";
