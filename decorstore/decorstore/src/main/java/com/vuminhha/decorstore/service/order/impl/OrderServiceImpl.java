@@ -7,6 +7,9 @@ import com.vuminhha.decorstore.repository.OrderRepository;
 import com.vuminhha.decorstore.repository.ProductRepository;
 import com.vuminhha.decorstore.service.order.OrderService;
 import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,19 +17,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepository;
-    private final CartRepository cartRepository;
-    private final OrderDetailRepository orderDetailRepository;
-    private final ProductRepository productRepository;
-
-    public OrderServiceImpl(OrderRepository orderRepository, CartRepository cartRepository,
-                        OrderDetailRepository orderDetailRepository, ProductRepository productRepository) {
-        this.orderRepository = orderRepository;
-        this.cartRepository = cartRepository;
-        this.orderDetailRepository = orderDetailRepository;
-        this.productRepository = productRepository;
-    }
+     OrderRepository orderRepository;
+     CartRepository cartRepository;
+     OrderDetailRepository orderDetailRepository;
+     ProductRepository productRepository;
 
     /**
      * Danh sách tất cả đơn hàng

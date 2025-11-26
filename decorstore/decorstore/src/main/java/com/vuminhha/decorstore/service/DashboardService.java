@@ -5,6 +5,9 @@ import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.repository.CustomerRepository;
 import com.vuminhha.decorstore.repository.OrderDetailRepository;
 import com.vuminhha.decorstore.repository.OrderRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +20,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @Transactional(readOnly = true)
 public class DashboardService {
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderDetailRepository orderDetailRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
+    OrderRepository orderRepository;
+    OrderDetailRepository orderDetailRepository;
+    CustomerRepository customerRepository;
 
     public DashboardStatisticsDto getDashboardStatistics() {
         DashboardStatisticsDto stats = new DashboardStatisticsDto();

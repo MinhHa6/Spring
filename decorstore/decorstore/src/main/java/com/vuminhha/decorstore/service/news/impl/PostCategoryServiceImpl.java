@@ -3,19 +3,20 @@ package com.vuminhha.decorstore.service.news.impl;
 import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.repository.BlogCategoryRepository;
 import com.vuminhha.decorstore.service.news.PostCategoryService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class PostCategoryServiceImpl implements PostCategoryService {
-    private static final Logger log = LoggerFactory.getLogger(PostCategoryService.class);
-    private final BlogCategoryRepository blogCategoryRepository;
-    public PostCategoryServiceImpl(BlogCategoryRepository blogCategoryRepository)
-    {
-        this.blogCategoryRepository=blogCategoryRepository;
-    }
+     static  Logger log = LoggerFactory.getLogger(PostCategoryService.class);
+     BlogCategoryRepository blogCategoryRepository;
 
     // Lấy tất cả danh mục
     @Override

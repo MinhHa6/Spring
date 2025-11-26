@@ -4,19 +4,19 @@ import com.vuminhha.decorstore.entity.Customer;
 import com.vuminhha.decorstore.entity.User;
 import com.vuminhha.decorstore.repository.CustomerRepository;
 import com.vuminhha.decorstore.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CustomerServiceImpl implements CustomerService {
-    private final CustomerRepository customerRepository;
-    private final UserRepository userRepository;
-    public CustomerServiceImpl(UserRepository userRepository,CustomerRepository customerRepository)
-    {
-        this.userRepository=userRepository;
-        this.customerRepository=customerRepository;
-    }
+     CustomerRepository customerRepository;
+     UserRepository userRepository;
     /**
      * Admin lay ra tat ca nguoi dung
      */

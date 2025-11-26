@@ -5,20 +5,20 @@ import com.vuminhha.decorstore.entity.Role;
 import com.vuminhha.decorstore.repository.PermissionRepository;
 import com.vuminhha.decorstore.repository.RoleRepository;
 import com.vuminhha.decorstore.service.user.RoleService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class RoleServiceImpl implements RoleService {
-    private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
-    public RoleServiceImpl(RoleRepository roleRepository,PermissionRepository permissionRepository)
-    {
-        this.roleRepository=roleRepository;
-        this.permissionRepository=permissionRepository;
-    }
+     RoleRepository roleRepository;
+     PermissionRepository permissionRepository;
     // LAy tat ca Role
     @Override
     public List<Role> getAll ()

@@ -4,16 +4,17 @@ import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
 import com.vuminhha.decorstore.entity.PaymentMethod;
 import com.vuminhha.decorstore.repository.PaymentMethodRepository;
 import com.vuminhha.decorstore.service.payment.PaymentMethodService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class PaymentMethodServiceImpl implements PaymentMethodService {
-    private final PaymentMethodRepository paymentMethodRepository;
-    public PaymentMethodServiceImpl(PaymentMethodRepository paymentMethodRepository)
-    {
-        this.paymentMethodRepository=paymentMethodRepository;
-    }
+     PaymentMethodRepository paymentMethodRepository;
     public List<PaymentMethod> getAll()
     {
         return paymentMethodRepository.findAll();
