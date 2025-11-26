@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     public List<BlogPost>getAllActive()
     {
         return blogPostRepository.findAll().stream()
-                .filter(BlogPost ::getActive)
+                .filter(BlogPost ::getIsActive)
                 .sorted((a,b)->b.getCreatedDate().compareTo(a.getCreatedDate()))
                 .collect(Collectors.toList());
     }

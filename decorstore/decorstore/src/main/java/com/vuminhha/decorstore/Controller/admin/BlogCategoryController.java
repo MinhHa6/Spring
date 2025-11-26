@@ -2,6 +2,9 @@ package com.vuminhha.decorstore.controller.admin;
 
 import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.service.news.PostCategoryService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +13,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/blog-categories")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BlogCategoryController {
 
-    private final PostCategoryService categoryService;
-
-    public BlogCategoryController(PostCategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
+     PostCategoryService categoryService;
     // Hiển thị danh sách danh mục
     @GetMapping
     public String listCategories(Model model) {
@@ -32,14 +32,12 @@ public class BlogCategoryController {
         model.addAttribute("category", new BlogCategory());
         return "admin/blog-category-form";
     }
-
     // Xử lý tạo danh mục
     @PostMapping("/save")
     public String createCategory(@ModelAttribute BlogCategory category, Model model) {
         categoryService.create(category);
         return "redirect:/blog-categories";
     }
-
     // Form chỉnh sửa danh mục
     @GetMapping("/edit/{id}")
     public String editCategoryForm(@PathVariable Long id, Model model) {
@@ -51,8 +49,6 @@ public class BlogCategoryController {
         model.addAttribute("category", category);
         return "admin/blog-category-form";
     }
-
-
     // Xóa danh mục
     @GetMapping("/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {

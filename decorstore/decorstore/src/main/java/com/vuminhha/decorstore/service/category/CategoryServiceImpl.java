@@ -2,19 +2,18 @@ package com.vuminhha.decorstore.service.category;
 
 import com.vuminhha.decorstore.entity.Category;
 import com.vuminhha.decorstore.repository.CategoryRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CategoryServiceImpl implements CategoryService{
-    private final CategoryRepository categoryRepository;
-
-    //  inject CategoryRepository
-    public CategoryServiceImpl (CategoryRepository categoryRepository)
-    {
-        this.categoryRepository=categoryRepository;
-    }
-    @Override
+     CategoryRepository categoryRepository;
+     @Override
     public List<Category> getAll() {
         return categoryRepository.findAll();
     }

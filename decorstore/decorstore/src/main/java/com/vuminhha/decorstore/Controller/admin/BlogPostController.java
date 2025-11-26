@@ -4,6 +4,9 @@ import com.vuminhha.decorstore.entity.BlogCategory;
 import com.vuminhha.decorstore.entity.BlogPost;
 import com.vuminhha.decorstore.service.news.PostCategoryService;
 import com.vuminhha.decorstore.service.news.PostService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +15,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/blogs")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BlogPostController {
-    private final PostCategoryService postCategoryService;
-    private final PostService postService;
-    public BlogPostController (PostService postService,PostCategoryService postCategoryService)
-    {
-        this.postService=postService;
-        this.postCategoryService=postCategoryService;
-    }
+     PostCategoryService postCategoryService;
+     PostService postService;
     // Ds tat ca blog
     @GetMapping
     public String listBlogs(Model model)
@@ -67,7 +67,7 @@ public class BlogPostController {
     public String toggleStatus(@PathVariable("id") Long id) {
         BlogPost blog = postService.getBlogById(id);
         if (blog != null) {
-            blog.setActive(!blog.getActive());
+            blog.setIsActive(!blog.getIsActive());
             postService.saveBlog(blog);
         }
         return "redirect:/blogs";

@@ -22,10 +22,10 @@
                         </p>
                     </div>
                     <div>
-                        <span th:if="${order.active}" class="badge badge-success badge-lg px-3 py-2">
+                        <span th:if="${order.isActive}" class="badge badge-success badge-lg px-3 py-2">
                             <i class="fas fa-check-circle"></i> Đang xử lý
                         </span>
-                        <span th:unless="${order.active}" class="badge badge-secondary badge-lg px-3 py-2">
+                        <span th:unless="${order.isActive}" class="badge badge-secondary badge-lg px-3 py-2">
                             <i class="fas fa-times-circle"></i> Đã hủy
                         </span>
                     </div>
@@ -167,7 +167,7 @@
                         </div>
 
                         <!-- Hành động -->
-                        <div class="card" th:if="${order.active}">
+                        <div class="card" th:if="${order.isActive}">
                             <div class="card-header bg-success  text-white">
                                 <h5 class="mb-0"><i class="fas fa-cog"></i> Hành động</h5>
                             </div>
@@ -185,7 +185,7 @@
                         </div>
 
                         <!-- Thông báo đã hủy -->
-                        <div class="card" th:unless="${order.active}">
+                        <div class="card" th:unless="${order.isActive}">
                             <div class="card-body text-center">
                                 <i class="fas fa-times-circle fa-3x text-muted mb-3"></i>
                                 <h5 class="text-muted">Đơn hàng đã bị hủy</h5>

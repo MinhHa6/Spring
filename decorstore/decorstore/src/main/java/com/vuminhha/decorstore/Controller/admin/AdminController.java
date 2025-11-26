@@ -3,6 +3,9 @@ package com.vuminhha.decorstore.Controller.admin;
 import com.vuminhha.decorstore.dto.DashboardStatisticsDto;
 import com.vuminhha.decorstore.dto.OrderStatusStatistics;
 import com.vuminhha.decorstore.service.DashboardService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminController {
-
-    @Autowired
-    private DashboardService dashboardService;
+     DashboardService dashboardService;
 
     @GetMapping
     public String index(Model model) {

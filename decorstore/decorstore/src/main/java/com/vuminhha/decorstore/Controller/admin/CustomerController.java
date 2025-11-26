@@ -36,7 +36,7 @@ public class CustomerController {
     public String listCustomers(Model model) {
         try {
             List<Customer> customers = customerService.getAll().stream()
-                    .filter(c -> !c.getDelete()) // Chỉ lấy customer chưa xóa
+                    .filter(c -> !c.getIsDelete()) // Chỉ lấy customer chưa xóa
                     .toList();
 
             model.addAttribute("customers", customers);
@@ -139,8 +139,8 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             Customer customer = customerService.getCustomerById(id);
-            customer.setDelete(true);
-            customer.setActive(false);
+            customer.setIsDelete(true);
+            customer.setIsActive(false);
             customerService.saveCustomer(customer);
 
             log.info(" Customer soft deleted: {}", id);
@@ -161,7 +161,7 @@ public class CustomerController {
     public String toggleActive(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             Customer customer = customerService.getCustomerById(id);
-            customer.setActive(!customer.getActive());
+            customer.setIsActive(!customer.getIsActive());
             customerService.saveCustomer(customer);
 
             log.info("Customer active status toggled: {}", id);

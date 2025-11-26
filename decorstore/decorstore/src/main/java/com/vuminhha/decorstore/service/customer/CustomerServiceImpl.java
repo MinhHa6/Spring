@@ -72,8 +72,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhone(phone);
         customer.setAvatar(avatar);
         customer.setUser(user);
-        customer.setActive(true);
-        customer.setDelete(false);
+        customer.setIsActive(true);
+        customer.setIsDelete(false);
 
         return customerRepository.save(customer);
     }

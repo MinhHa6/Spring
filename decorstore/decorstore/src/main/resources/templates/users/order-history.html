@@ -60,10 +60,10 @@
                                     </strong>
                                 </td>
                                 <td>
-                                        <span th:if="${order.active}" class="badge badge-success">
+                                        <span th:if="${order.isActive}" class="badge badge-success">
                                             <i class="fas fa-check-circle"></i> Đang xử lý
                                         </span>
-                                    <span th:unless="${order.active}" class="badge badge-secondary">
+                                    <span th:unless="${order.isActive}" class="badge badge-secondary">
                                             <i class="fas fa-times-circle"></i> Đã hủy
                                         </span>
                                 </td>
@@ -76,7 +76,7 @@
                                         </a>
 
                                         <!-- Nút hủy đơn (chỉ hiện nếu đơn còn active) -->
-                                        <button th:if="${order.active}"
+                                        <button th:if="${order.isActive}"
                                                 type="button"
                                                 class="btn btn-sm btn-danger"
                                                 th:attr="data-id=${order.id}, data-code=${order.orderCode}"

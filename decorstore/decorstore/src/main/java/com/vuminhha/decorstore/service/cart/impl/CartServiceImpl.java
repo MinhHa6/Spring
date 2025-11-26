@@ -10,6 +10,9 @@ import com.vuminhha.decorstore.repository.ProductRepository;
 import com.vuminhha.decorstore.repository.UserRepository;
 import com.vuminhha.decorstore.service.cart.CartService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,20 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CartServiceImpl implements CartService {
     private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
-    private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
-    private  final ProductRepository productRepository;
-    private final UserRepository userRepository;
-
-    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository, ProductRepository productRepository,UserRepository userRepository)
-    {
-        this.cartRepository=cartRepository;
-        this.productRepository=productRepository;
-        this.cartItemRepository=cartItemRepository;
-        this.userRepository=userRepository;
-    }
+    CartRepository cartRepository;
+    CartItemRepository cartItemRepository;
+    ProductRepository productRepository;
+    UserRepository userRepository;
     // Them san pham vao gio
     @Override
     public void addToCart(Long productId, int qty, HttpSession session, String username) {

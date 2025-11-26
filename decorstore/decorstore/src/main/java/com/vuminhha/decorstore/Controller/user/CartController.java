@@ -22,7 +22,6 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/cart")
-@Slf4j
 public class CartController {
 
     private static final Logger log = LoggerFactory.getLogger(CartController.class);

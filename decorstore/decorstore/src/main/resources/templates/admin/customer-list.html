@@ -74,10 +74,10 @@
                         <td th:text="${customer.phone}">0123456789</td>
                         <td th:text="${#strings.abbreviate(customer.address, 30)}">123 ABC, Quận 1, TP.HCM</td>
                         <td>
-                            <span th:if="${customer.active}" class="badge bg-success">
+                            <span th:if="${customer.isActive}" class="badge bg-success">
                                 <i class="fas fa-check-circle"></i> Hoạt động
                             </span>
-                            <span th:unless="${customer.active}" class="badge bg-secondary">
+                            <span th:unless="${customer.isActive}" class="badge bg-secondary">
                                 <i class="fas fa-times-circle"></i> Khóa
                             </span>
                         </td>
@@ -94,7 +94,7 @@
                                    title="Chỉnh sửa">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a th:href="@{'/customers/toggle-active/' + ${customer.id}}"
+                                <a th:href="@{'/customers/toggle-isActive/' + ${customer.id}}"
                                    class="btn btn-sm btn-secondary"
                                    title="Đổi trạng thái">
                                     <i class="fas fa-toggle-on"></i>
