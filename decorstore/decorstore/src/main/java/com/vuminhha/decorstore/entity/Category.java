@@ -10,11 +10,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
+@Getter
+@Setter
 public class Category {
     // Danh muc san pham
     @Id

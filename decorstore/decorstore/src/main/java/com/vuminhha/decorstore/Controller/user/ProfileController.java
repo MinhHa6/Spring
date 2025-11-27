@@ -26,6 +26,8 @@ import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.vuminhha.decorstore.constants.ProfileConstants.*;
+
 @Controller
 @RequestMapping("/profile")
 @RequiredArgsConstructor
@@ -36,16 +38,13 @@ public class ProfileController {
      PasswordEncoder passwordEncoder;
      static Logger log = LoggerFactory.getLogger(ProfileController.class);
 
-
-     static String UPLOAD_DIR = "src/main/resources/static/uploads/";
-
     /**
      * Hiển thị trang profile
      */
     @GetMapping
     public String showProfile(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/login";
+            return REDIRECT_LOGIN;
         }
 
         try {
@@ -55,14 +54,14 @@ public class ProfileController {
             // Lấy thông tin customer (nếu có)
             Optional<Customer> customerOpt = customerService.getCustomerByUserId(user.getId());
 
-            model.addAttribute("user", user);
-            model.addAttribute("customer", customerOpt.orElse(null));
+            model.addAttribute(USER_ATTRIBUTE, user);
+            model.addAttribute(CUSTOMER_ATTRIBUTE, customerOpt.orElse(null));
 
-            return "users/profile";
+            return PROFILE_VIEW;
 
         } catch (Exception e) {
             log.error("Error loading profile: ", e);
-            return "redirect:/home?error=profile_load_failed";
+            return REDIRECT_HOME_PROFILE_ERROR;
         }
     }
 
@@ -77,7 +76,7 @@ public class ProfileController {
                                 Principal principal,
                                 Model model) {
         if (principal == null) {
-            return "redirect:/login";
+            return REDIRECT_LOGIN;
         }
 
         try {
@@ -115,11 +114,11 @@ public class ProfileController {
             }
 
             log.info("Profile updated successfully for user: {}", username);
-            return "redirect:/profile?success=true";
+            return REDIRECT_PROFILE_SUCCESS;
 
         } catch (Exception e) {
             log.error("Error updating profile: ", e);
-            model.addAttribute("error", "Có lỗi xảy ra khi cập nhật thông tin!");
+            model.addAttribute(ERROR_ATTRIBUTE, "Có lỗi xảy ra khi cập nhật thông tin!");
             return showProfile(model, principal);
         }
     }
@@ -134,7 +133,7 @@ public class ProfileController {
                                  Principal principal,
                                  Model model) {
         if (principal == null) {
-            return "redirect:/login";
+            return REDIRECT_LOGIN;
         }
 
         try {
@@ -143,13 +142,13 @@ public class ProfileController {
 
             // Kiểm tra mật khẩu hiện tại
             if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-                model.addAttribute("passwordError", "Mật khẩu hiện tại không đúng!");
+                model.addAttribute(PASSWORD_ERROR, "Mật khẩu hiện tại không đúng!");
                 return showProfile(model, principal);
             }
 
             // Kiểm tra mật khẩu mới khớp
             if (!newPassword.equals(confirmPassword)) {
-                model.addAttribute("passwordError", "Mật khẩu xác nhận không khớp!");
+                model.addAttribute(PASSWORD_ERROR, "Mật khẩu xác nhận không khớp!");
                 return showProfile(model, principal);
             }
 
@@ -158,11 +157,11 @@ public class ProfileController {
             userService.updatePassword(user);
 
             log.info("Password changed successfully for user: {}", username);
-            return "redirect:/profile?passwordChanged=true";
+            return REDIRECT_PROFILE_PASSWORD_CHANGED;
 
         } catch (Exception e) {
             log.error("Error changing password: ", e);
-            model.addAttribute("passwordError", "Có lỗi xảy ra khi đổi mật khẩu!");
+            model.addAttribute(PASSWORD_ERROR, "Có lỗi xảy ra khi đổi mật khẩu!");
             return showProfile(model, principal);
         }
     }

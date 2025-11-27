@@ -60,7 +60,6 @@ public class OrderUserController {
             }
 
             String username = principal.getName();
-            User user = userService.findByUsername(username);
             Cart cart = cartService.getCartByUsername(username);
 
             if (cart == null || cart.getItems().isEmpty()) {

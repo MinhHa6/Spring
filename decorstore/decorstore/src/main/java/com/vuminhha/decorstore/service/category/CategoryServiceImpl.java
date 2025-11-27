@@ -1,6 +1,8 @@
 package com.vuminhha.decorstore.service.category;
 
+import com.vuminhha.decorstore.config.exception.ResourceNotFoundException;
 import com.vuminhha.decorstore.entity.Category;
+import com.vuminhha.decorstore.mapper.CategoryMapper;
 import com.vuminhha.decorstore.repository.CategoryRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CategoryServiceImpl implements CategoryService{
      CategoryRepository categoryRepository;
+     CategoryMapper categoryMapper;
      @Override
     public List<Category> getAll() {
         return categoryRepository.findAll();
@@ -20,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService{
 @Override
     public Category getCategoryId(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Not category"));
     }
 @Override
     public Category saveCategory(Category category) {
