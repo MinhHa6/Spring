@@ -1,7 +1,7 @@
 package com.vuminhha.decorstore.mapper;
 
-import com.vuminhha.decorstore.dto.category.CategoryRequest;
-import com.vuminhha.decorstore.dto.category.CategoryResponse;
+import com.vuminhha.decorstore.dto.request.CategoryRequest;
+import com.vuminhha.decorstore.dto.response.CategoryResponse;
 import com.vuminhha.decorstore.entity.Category;
 import org.springframework.stereotype.Component;
 

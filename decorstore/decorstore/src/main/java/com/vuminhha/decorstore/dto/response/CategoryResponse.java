@@ -1,4 +1,4 @@
-package com.vuminhha.decorstore.dto.category;
+package com.vuminhha.decorstore.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;
